@@ -1,0 +1,207 @@
+/*FUENTES USADAS*/
+@font-face {
+    font-family: 'black';
+    src: url('assets/fonts/black.otf') format('truetype'); /* Ruta al archivo de fuente */
+}
+
+@font-face {
+    font-family: 'bold';
+    src: url('assets/fonts/bold.ttf') format('truetype'); /* Ruta al archivo de fuente */
+}
+
+@font-face {
+    font-family: 'book';
+    src: url('assets/fonts/book.ttf') format('truetype'); /* Ruta al archivo de fuente */
+}
+
+/*AJUSTES DE ESTILO DE TEXTO*/
+
+h1 {
+    font-family: "black", sans-serif;
+    font-size: 6vw;
+    text-transform: uppercase;
+    margin: 10px auto;
+}
+
+h2 {
+    font-family: "black", sans-serif;
+    font-size: 5vw;
+    margin: 10px auto;
+}
+
+h3 {
+    font-family: "black", sans-serif;
+    font-size: 4vw;
+    margin: 10px auto;
+}
+
+h4 {
+    font-family: "book", sans-serif;
+    font-size: 3vw;
+    margin: 10px auto;
+}
+
+h5 {
+    font-family: "book", sans-serif;
+    font-size: 2vw;
+    margin: 20px auto;
+}
+
+h6 {
+    font-family: "book", sans-serif;
+    font-size: 1vw;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #050505;
+    font-size: 2vw;
+    font-family: "book", sans-serif;
+    user-select: none
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+    font-family: "book", sans-serif;
+}
+
+/*BARRA LATERAL*/
+.tabsStatic {
+    position: relative;
+    left: 1%;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 160px;
+    background-color: #121212;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.tabsScroll {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 1%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 200px;
+    height: calc(99.7% - 300px);
+    background-color: #121212;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.tabsButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    filter: invert(40%) sepia(8%) saturate(0%) hue-rotate(225deg) brightness(96%) contrast(106%);
+}
+
+.tabsButton:hover, .tabsIcon:focus{
+    transition-duration: 0.25s;
+    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(500%) contrast(100%);
+}
+
+.tabsIcon {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+    margin-right: 20px
+}
+
+.tabsButtonName {
+    font-size: 15px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+/*BARRA DE CANCION EN PLAY*/
+.taskbar {
+    position: fixed;
+    bottom: 1%;
+    left: 1%;
+    width: 98%;
+    height: 85px;
+    background-color: #121212;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: white;
+}
+
+/*BOTONES ARRIBA DE PAGINA ANTERIOR Y BOTON DE USUARIO*/
+.topButtons {
+    position: fixed;
+    top: 1%;
+    right: 0.5%;
+    width: 78.5%;
+    height: 8%;
+    overflow-y: hidden;
+    color: white;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/*VENTANA PRINCIPAL DE LAS DEMAS PÁGINAS*/
+.main {
+    position: fixed;
+    top: 1%;
+    right: 0.5%;
+    width: 78.5%;
+    height: 84%;
+    overflow-y: auto;
+    color: white;
+    background: transparent;
+    box-sizing: border-box;
+    padding: 3% 1%;
+}
+
+/* Son usados para la pagina de libreria, pagina de plugins y para cargar el inicio */
+.itemsContainer {
+    background: transparent;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.itemButton {
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.itemButton:hover {
+    background-color: #373737;
+    transition-duration: 0.2s;
+}
+
+.itemButton:active {background-color: #010101;}
+
+.itemImage {
+    width: 175px;
+    height: 175px;
+    border-radius: 15px;
+    margin: 10px 10px;
+}
+
+.itemName {
+    font-size: 15px;
+    margin: 0 20px;
+}
+
+.itemAuthor {
+    font-size: 12px;
+    color: gray;
+    margin: 5px 0 10px 0;
+}

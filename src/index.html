@@ -1,0 +1,56 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectral</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<!--Este div carga el apartado lateral, con todas las demas pestañas etc-->
+<!--El de clase tabsStatic carga el logo, los primeros 3 botones y un separador-->
+<!--El de clase tabsScroll carga el boton de biblioteca y, supuestamente ahi iria tu biblioteca
+es scrolleable osea se mueve pa abajo si se llena-->
+
+    <div class="tabsStatic">
+
+        <button class="tabsButton" id="homeButton">
+            <img src="assets/icons/home.svg" alt="Home Button" class="tabsIcon">
+            <span class="tabsButtonName">Inicio</span>
+        </button>
+
+        <button class="tabsButton" id="searchButton">
+            <img src="assets/icons/search.svg" alt="Search Button" class="tabsIcon">
+            <span class="tabsButtonName">Buscar</span>
+        </button>
+
+        <button class="tabsButton" id="pluginsButton">
+            <img src="assets/icons/bulb.svg" alt="Plugins Button" class="tabsIcon">
+            <span class="tabsButtonName">Plugins</span>
+        </button>
+
+    </div>
+    <div class="tabsScroll">
+
+        <button class="tabsButton" id="libraryButton">
+            <img src="assets/icons/library.svg" alt="Library Button" class="tabsIcon">
+            <span class="tabsButtonName">Mi biblioteca</span>
+        </button>
+
+    </div>
+<!--Este div carga la barra de musica de abajo, aqui iria el play, pausa, etc-->
+<div class="taskbar">
+    <h1>hola</h1>
+</div>
+<!--Este div debe estar vacio, en si no carga nada por si solo-->
+<!--JavaScript carga los demas HTMLs que existen, asi cada pestaña que abra un boton carga una diferente pagina
+sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la musica aunque explores la pagina-->
+<div class="main">
+    <!--Aunque pongas algo aqui, nunca cargara-->
+</div>
+<div class="topButtons">
+    <p>aqui iran los botones xd</p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="indexloader.js"></script>
+</body>
+</html>
