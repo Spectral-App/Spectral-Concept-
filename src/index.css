@@ -70,6 +70,33 @@ p {
     font-family: "book", sans-serif;
 }
 
+/* Estilos para la barra de scroll */
+::-webkit-scrollbar {
+    width: 7px;
+    height:7px;
+
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #5a5a5a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-button {display: none;}
+
+::-webkit-scrollbar-thumb:hover {
+    transition-duration: 1s;
+    background: #898989;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    width: 7px
+}
+
+::-webkit-scrollbar-thumb:active {background: #b8b8b8;}
+
 /*BARRA LATERAL*/
 .tabsStatic {
     position: relative;
@@ -107,23 +134,27 @@ p {
     display: flex;
     align-items: center;
     width: 100%;
-    filter: invert(40%) sepia(8%) saturate(0%) hue-rotate(225deg) brightness(96%) contrast(106%);
+    filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(106%);
 }
 
-.tabsButton:hover, .tabsIcon:focus{
-    transition-duration: 0.25s;
-    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(500%) contrast(100%);
+.tabsButton:hover {
+    transition-duration: 1s;
+    filter: invert(50%) sepia(6%) saturate(0%) hue-rotate(180deg) brightness(300%) contrast(100%);
 }
 
-.tabsIcon {
+.tabsButton:active {text-decoration: underline;}
+
+.tabsButton img {
     width: 25px;
     height: 25px;
     margin-left: 20px;
     margin-right: 20px
 }
 
-.tabsButtonName {
+.tabsButton span {
+    font-family: "book", sans-serif;
     font-size: 15px;
+    font-weight: bold;
     margin-top: 14px;
     margin-bottom: 14px;
 }
@@ -131,54 +162,261 @@ p {
 /*BARRA DE CANCION EN PLAY*/
 .taskbar {
     position: fixed;
-    bottom: 1%;
+    bottom: 10px;
     left: 1%;
     width: 98%;
-    height: 85px;
+    height: 83px;
     background-color: #121212;
     border-radius: 10px;
     box-sizing: border-box;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*Area de los detalles de la cancion que se reproduce actualmente*/
+.songDetails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 7px;
+}
+
+.coverButton {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.coverButton:hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(150%) contrast(100%);
+}
+
+.coverButton:active {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(80%) contrast(100%);
+}
+
+.songCover {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+
+.songText {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 3px;
+    border: none;
+    background-color: transparent;
+}
+
+.songName {
+    font-family: "book", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.songName:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.songArtist {
+    font-family: "book", sans-serif;
+    font-size: 12px;
+    margin-top: 3px;
+    color: #b8b8b8
+}
+
+.songArtist:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*Area de los controles de la reproduccion*/
+
+.songControl {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+}
+
+.buttonsRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonsRow button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(300%) contrast(100%);
+}
+
+.buttonsRow button:hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(0%);
+}
+
+.buttonsRow button:active {
+    transform: scale(0.9);
+}
+
+.buttonsRow button:nth-child(2){
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50px;
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%);
+}
+
+.playIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.buttonsRow button:nth-child(2):hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(80%) contrast(100%);
+}
+
+.buttonsRow button:nth-child(2):active  {
+    transform: scale(0.9);
+}
+
+.songPos {
+    -webkit-appearance: none;
+    width: 250px;
+    height: 5px;
+    background: linear-gradient(to right, #2B78F7 0%, #2B78F7 00%, #FFFFFF 00%, #FFFFFF 0%);
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.songPos::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #2B78F7;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+
+}
+
+.songPos::-webkit-slider-thumb:hover {
+    border: 6px solid #fff;
 }
 
 /*BOTONES ARRIBA DE PAGINA ANTERIOR Y BOTON DE USUARIO*/
 .topButtons {
     position: fixed;
     top: 1%;
-    right: 0.5%;
-    width: 78.5%;
-    height: 8%;
+    left: calc(1% + 210px);
+    width: calc(99% - 220px);
+    height: 50px;
+    margin-top: 5px;
+    padding: 10px;
     overflow-y: hidden;
     color: white;
-    background: transparent;
+    background: #121212;
     box-sizing: border-box;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.webControlsButtons {
+    margin-left: 10px;
+}
+
+.webControlsButtons button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50px;
+}
+
+.webControlsButtons img {
+    width: 15px;
+    height: 15px;
+    align-items: center;
+    filter: invert(100%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(100%) contrast(100%);
+}
+
+.webControlsButtons button:hover {
+    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(150%) contrast(100%);
+}
+
+.webControlsButtons button:active {
+    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(80%) contrast(100%);
+}
+
+.spectralLogo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spectralLogo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.spectralLogo p {
+    font-family: "black", sans-serif;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.userPfp img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-right: 10px;
 }
 
 /*VENTANA PRINCIPAL DE LAS DEMAS PÁGINAS*/
 .main {
     position: fixed;
-    top: 1%;
-    right: 0.5%;
-    width: 78.5%;
-    height: 84%;
+    top: calc(1% + 55px);
+    left: calc(1% + 210px);
+    width: calc(99% - 220px);
+    height: calc(100% - 165px);
+    padding: 0 10px 0;
     overflow-y: auto;
     color: white;
-    background: transparent;
+    background: #121212;
+    border-radius: 0 0 10px 10px;
     box-sizing: border-box;
-    padding: 3% 1%;
 }
 
 /* Son usados para la pagina de libreria, pagina de plugins y para cargar el inicio */
 .itemsContainer {
     background: transparent;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .itemButton {
+    display: inline-block;
     text-align: center;
     border-radius: 15px;
+    width: 150px;
+    border: none;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .itemButton:hover {
@@ -188,20 +426,25 @@ p {
 
 .itemButton:active {background-color: #010101;}
 
-.itemImage {
-    width: 175px;
-    height: 175px;
+.itemButton img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
     border-radius: 15px;
     margin: 10px 10px;
 }
 
-.itemName {
+.itemButton p {
     font-size: 15px;
     margin: 0 20px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.itemAuthor {
+.itemButton span {
     font-size: 12px;
-    color: gray;
+    opacity: 50%;
     margin: 5px 0 10px 0;
 }

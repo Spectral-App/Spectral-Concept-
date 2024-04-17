@@ -1,28 +1,28 @@
 // Datos de los albumes, estos se generaran poquito a poquito
 var albums = [
     {   id: '1',
-        image: '../images/temp_album.jpg',
+        image: 'assets/images/temp_cover.png',
         name: 'Nombre del Álbum 1',
         artist: 'Artista del Álbum 1'
     },
     {   id: '2',
-        image: '../images/temp_album.jpg',
+        image: 'assets/images/temp_cover.png',
         name: 'Nombre del Álbum 2',
         artist: 'Artista del Álbum 2'
     },
     {   id: '3',
-        image: '../images/temp_album.jpg',
+        image: 'assets/images/temp_cover.png',
         name: 'Nombre del Álbum 3',
         artist: 'Artista del Álbum 3'
     },
     {   id: '4',
-        image: '../images/temp_album.jpg',
+        image: 'assets/images/temp_cover.png',
         name: 'Nombre del Álbum 4',
         artist: 'Artista del Álbum 4'
     },
 ];
 
-var itemsContainer = document.getElementById('itemsContainer');
+var itemsContainer = document.getElementById('yourSongsContainer');
 
 albums.forEach(function(album) {
     // Crear el boton en general
@@ -40,13 +40,13 @@ albums.forEach(function(album) {
     button.appendChild(image);
 
     // El nombre del album
-    var name = document.createElement('h6');
+    var name = document.createElement('p');
     name.classList.add('itemName');
     name.textContent = album.name;
     button.appendChild(name);
 
     // Al final el artista
-    var artist = document.createElement('p');
+    var artist = document.createElement('span');
     artist.classList.add('itemAuthor');
     artist.textContent = album.artist;
     button.appendChild(artist);

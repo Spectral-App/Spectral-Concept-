@@ -20,4 +20,16 @@ $(document).ready(function() {
     $('#libraryButton').click(function() {
         loadPage('assets/index/library.html');
     });
+
+    $('#coverButton').click(function() {
+        loadPage('assets/index/home.html');
+    });
+
+    $('#songName').click(function() {
+        loadPage('assets/index/home.html');
+    });
+
+    $('#songArtist').click(function() {
+        loadPage('assets/index/home.html');
+    });
 });

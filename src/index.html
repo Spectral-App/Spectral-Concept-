@@ -6,40 +6,90 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<!--Este div carga el apartado lateral, con todas las demas pestañas etc-->
+<!--Divs que cargan el menu lateral-->
 <!--El de clase tabsStatic carga el logo, los primeros 3 botones y un separador-->
 <!--El de clase tabsScroll carga el boton de biblioteca y, supuestamente ahi iria tu biblioteca
 es scrolleable osea se mueve pa abajo si se llena-->
-
     <div class="tabsStatic">
-
         <button class="tabsButton" id="homeButton">
-            <img src="assets/icons/home.svg" alt="Home Button" class="tabsIcon">
-            <span class="tabsButtonName">Inicio</span>
+            <img src="assets/icons/home.svg">
+            <span>Inicio</span>
         </button>
 
         <button class="tabsButton" id="searchButton">
-            <img src="assets/icons/search.svg" alt="Search Button" class="tabsIcon">
-            <span class="tabsButtonName">Buscar</span>
+            <img src="assets/icons/search.svg">
+            <span>Buscar</span>
         </button>
 
         <button class="tabsButton" id="pluginsButton">
-            <img src="assets/icons/bulb.svg" alt="Plugins Button" class="tabsIcon">
-            <span class="tabsButtonName">Plugins</span>
+            <img src="assets/icons/plugins.svg">
+            <span>Plugins</span>
         </button>
-
     </div>
     <div class="tabsScroll">
-
-        <button class="tabsButton" id="libraryButton">
-            <img src="assets/icons/library.svg" alt="Library Button" class="tabsIcon">
-            <span class="tabsButtonName">Mi biblioteca</span>
+        <button class="tabsButton" id="libraryButton" data-openData="idk">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
         </button>
-
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
+        <button class="tabsButton">
+            <img src="assets/icons/library.svg">
+            <span>Mi biblioteca</span>
+        </button>
     </div>
 <!--Este div carga la barra de musica de abajo, aqui iria el play, pausa, etc-->
 <div class="taskbar">
-    <h1>hola</h1>
+    <div class="songDetails">
+        <button class="coverButton" id="coverButton">
+            <img src="assets/images/temp_cover.png" class="songCover">
+        </button>
+
+        <div class="songText">
+            <span class="songName" id="songName">Nombre de la Canción</span>
+            <span class="songArtist" id="songArtist">Nombre del Artista</span>
+        </div>
+    </div>
+
+    <div class="songControl">
+        <audio id="SONG" preload="auto">
+            <source src="ph.ogg" type="audio/mpeg">
+        </audio>
+        <div class="buttonsRow">
+            <button><img src="assets/icons/backward.svg"></button>
+            <button id="CONTROLSONG"><img src="assets/icons/play.svg" class="playIcon"></button>
+            <button><img src="assets/icons/forward.svg"></button>
+        </div>
+        <div class="buttonsRow">
+            <input type="range" min="0" max="100" value="0" id="SONGPOS" class="songPos">
+        </div>
+    </div>
+
+    <div class="extraButtons">
+        <p>adios</p>
+    </div>
 </div>
 <!--Este div debe estar vacio, en si no carga nada por si solo-->
 <!--JavaScript carga los demas HTMLs que existen, asi cada pestaña que abra un boton carga una diferente pagina
@@ -48,9 +98,26 @@ sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la music
     <!--Aunque pongas algo aqui, nunca cargara-->
 </div>
 <div class="topButtons">
-    <p>aqui iran los botones xd</p>
+    <div class="webControlsButtons">
+        <button>
+            <img src="assets/icons/previousPage.svg">
+        </button>
+        <button>
+            <img src="assets/icons/recentPage.svg">
+        </button>
+    </div>
+
+    <div class="spectralLogo">
+        <img src="assets/icons/logo.svg">
+        <p>SPECTRAL</p>
+    </div>
+
+    <div class="userPfp">
+        <img src="assets/images/temp_pfp.jpg">
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="indexloader.js"></script>
+<script src="musicplayer.js"></script>
 </body>
 </html>
