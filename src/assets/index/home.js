@@ -1,24 +1,34 @@
 // Datos de los albumes, estos se generaran poquito a poquito
 var albums = [
     {   id: '1',
-        image: 'assets/images/temp_cover.png',
-        name: 'Nombre del Álbum 1',
-        artist: 'Artista del Álbum 1'
+        image: 'https://upload.wikimedia.org/wikipedia/en/0/09/Twice_-_Fancy_You.png',
+        name: 'FANCY YOU',
+        artist: 'TWICE'
     },
     {   id: '2',
-        image: 'assets/images/temp_cover.png',
-        name: 'Nombre del Álbum 2',
-        artist: 'Artista del Álbum 2'
+        image: 'https://static.wikia.nocookie.net/kpop/images/d/df/TWICE_Formula_of_Love_O%2BT%3DHeart_digital_signature_version_2_cover_art.png/revision/latest?cb=20220911170039',
+        name: 'Formula of Love: O+T=<3',
+        artist: 'TWICE'
     },
     {   id: '3',
-        image: 'assets/images/temp_cover.png',
-        name: 'Nombre del Álbum 3',
-        artist: 'Artista del Álbum 3'
+        image: 'https://dl.vgmdownloads.com/soundtracks/friday-night-funkin-hotline-024-2022-windows/cover.png',
+        name: 'Hotline 024: Friday Night Funkin',
+        artist: 'Saruky'
     },
     {   id: '4',
-        image: 'assets/images/temp_cover.png',
-        name: 'Nombre del Álbum 4',
-        artist: 'Artista del Álbum 4'
+        image: 'https://uploads.ungrounded.net/tmp/img/161000/iu_161678_1312619.png',
+        name: 'Static Symphony (feat. Sunexo)',
+        artist: 'EliteFerrex'
+    },
+    {   id: '5',
+        image: 'https://i.scdn.co/image/ab67616d0000b273e18ff29a2fe8e9c0df309fa6',
+        name: 'Steven Universe, Vol. 1 (Original Soundtrack)',
+        artist: 'Steven Universe'
+    },
+    {   id: '6',
+        image: 'https://i.scdn.co/image/ab67616d0000b2734b062591b6a5c15652dd2bb5',
+        name: 'POP CUBE',
+        artist: 'imase'
     },
 ];
 

@@ -288,6 +288,12 @@ p {
     transform: scale(0.9);
 }
 
+.buttonsRow p {
+    font-size: 10px;
+    font-family: "book", sans-serif;
+    margin: 5px;
+}
+
 .songPos {
     -webkit-appearance: none;
     width: 250px;
