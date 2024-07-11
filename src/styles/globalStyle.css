@@ -1,0 +1,236 @@
+/* FUENTES */
+@font-face {
+    font-family: 'black';
+    src: url('../assets/fonts/black.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'bold';
+    src: url('../assets/fonts/bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'book';
+    src: url('../assets/fonts/book.ttf') format('truetype');
+}
+
+/* AJUSTES DE ESTILO DE TEXTO */
+h1, h2, h3 {
+    font-family: "black", sans-serif;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-transform: uppercase;
+    margin: 10px auto;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 10px auto;
+}
+
+h3 {
+    font-size: 1.75em;
+    margin: 10px auto;
+}
+
+h4, h5, h6, p {
+    font-family: "book", sans-serif;
+}
+
+h4 {
+    font-size: 1.5em;
+    margin: 10px auto;
+}
+
+h5 {
+    font-size: 1.25em;
+    margin: 20px auto;
+}
+
+h6 {
+    font-size: 1em;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #050505;
+    font-size: 1em;
+    line-height: 1.5;
+    font-family: "book", sans-serif;
+    user-select: none;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+/* Estilos para la barra de scroll */
+::-webkit-scrollbar {
+    width: 7px;
+    height:7px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5a5a5a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-button {display: none;}
+
+::-webkit-scrollbar-thumb:hover {
+    transition-duration: 1s;
+    background: #898989;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    width: 7px
+}
+
+::-webkit-scrollbar-thumb:active {background: #b8b8b8;}
+
+/*BOTONES ARRIBA DE PAGINA ANTERIOR Y BOTON DE USUARIO*/
+.topButtons {
+    position: fixed;
+    top: 1%;
+    left: calc(1% + 210px);
+    width: calc(99% - 220px);
+    height: 50px;
+    margin-top: 5px;
+    padding: 10px;
+    overflow-y: hidden;
+    color: white;
+    background: #121212;
+    box-sizing: border-box;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.webControlsButtons {
+    margin-left: 10px;
+}
+
+.webControlsButtons button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50px;
+}
+
+.webControlsButtons img {
+    width: 15px;
+    height: 15px;
+    align-items: center;
+    filter: invert(100%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(100%) contrast(100%);
+}
+
+.webControlsButtons button:hover {
+    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(0%) contrast(100%);
+}
+
+.webControlsButtons button:active {
+    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(50%) contrast(100%);
+}
+
+.spectralLogo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spectralLogo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.spectralLogo p {
+    font-family: "black", sans-serif;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.userPfp img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+/*VENTANA PRINCIPAL DE LAS DEMAS PÁGINAS*/
+.main {
+    position: fixed;
+    top: calc(1% + 55px);
+    left: calc(1% + 210px);
+    width: calc(99% - 220px);
+    height: calc(100% - 165px);
+    padding: 0 10px 0;
+    overflow-y: auto;
+    color: white;
+    background: #121212;
+    border-radius: 0 0 10px 10px;
+    box-sizing: border-box;
+}
+
+/* Son usados para la pagina de libreria, pagina de plugins y para cargar el inicio */
+.itemsContainer {
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.itemButton {
+    display: inline-block;
+    text-align: center;
+    border-radius: 15px;
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.itemButton:hover {
+    background-color: #373737;
+    transition-duration: 0.2s;
+}
+
+.itemButton:active {background-color: #010101;}
+
+.itemButton img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 10px 10px;
+}
+
+.itemButton p {
+    font-size: 15px;
+    margin: 0 20px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.itemButton span {
+    font-size: 12px;
+    opacity: 50%;
+    margin: 5px 0 10px 0;
+}

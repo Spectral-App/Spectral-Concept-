@@ -1,70 +1,53 @@
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectral</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/globalStyle.css">
+    <link rel="stylesheet" href="styles/sideBar.css">
+    <link rel="stylesheet" href="styles/taskbar.css">"
 </head>
 <body>
-<!--Divs que cargan el menu lateral-->
-<!--El de clase tabsStatic carga el logo, los primeros 3 botones y un separador-->
-<!--El de clase tabsScroll carga el boton de biblioteca y, supuestamente ahi iria tu biblioteca
-es scrolleable osea se mueve pa abajo si se llena-->
-    <div class="tabsStatic">
-        <button class="tabsButton" id="homeButton">
-            <img src="assets/icons/home.svg">
-            <span>Inicio</span>
+<!--MENU LATERAL-->
+    <div class="sidebar_container_static">
+        <button class="sidebar_buttons" contenttype="home" contentid="HOME">
+            <img src="assets/icons/home.svg" class="sidebar_buttons_svg">
+            <div class="sidebar_buttons_text">
+                <span class="sidebar_buttons_title">Inicio</span>
+            </div>
         </button>
 
-        <button class="tabsButton" id="searchButton">
-            <img src="assets/icons/search.svg">
-            <span>Buscar</span>
+        <button class="sidebar_buttons" contenttype="search" contentid="SEARCH">
+            <img src="assets/icons/search.svg" class="sidebar_buttons_svg">
+            <div class="sidebar_buttons_text">
+                <span class="sidebar_buttons_title">Buscar</span>
+            </div>
         </button>
 
-        <button class="tabsButton" id="pluginsButton">
-            <img src="assets/icons/plugins.svg">
-            <span>Plugins</span>
+        <button class="sidebar_buttons" contenttype="plugins" contentid="PLUGINS">
+            <img src="assets/icons/plugins.svg" class="sidebar_buttons_svg">
+            <div class="sidebar_buttons_text">
+                <span class="sidebar_buttons_title">Complementos</span>
+            </div>
         </button>
+
     </div>
-    <div class="tabsScroll">
-        <button class="tabsButton" id="libraryButton" data-openData="idk">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
+    <div class="sidebar_container_dynamic" id="sidebar">
+
+        <button class="sidebar_buttons" contenttype="library" contentid="LIBRARY">
+            <img src="assets/icons/library.svg" class="sidebar_buttons_svg">
+            <div class="sidebar_buttons_text">
+                <span class="sidebar_buttons_title">Mi biblioteca</span>
+            </div>
         </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
-        <button class="tabsButton">
-            <img src="assets/icons/library.svg">
-            <span>Mi biblioteca</span>
-        </button>
+
+    <!--A partir de aqui, los demas botones son generados por codigo-->
     </div>
 <!--Este div carga la barra de musica de abajo, aqui iria el play, pausa, etc-->
 <div class="taskbar">
     <div class="songDetails">
         <button class="coverButton">
-            <img src="assets/images/temp_cover.png" class="songCover" id="SONG_COVER">
+            <img src="./images/temp_cover.png" class="songCover" id="SONG_COVER">
         </button>
 
         <div class="songText">
@@ -75,7 +58,7 @@ es scrolleable osea se mueve pa abajo si se llena-->
 
     <div class="songControl">
         <audio id="SONG" preload="auto">
-            <source src="https://cdn.discordapp.com/attachments/864053779061932063/1230038202874597418/fancy.mp3?ex=6631dd58&is=661f6858&hm=0998d07202c3918aa5559ac51d3a0111d418a5e61dcb4697cad05b439da9c40c&" type="audio/mpeg">
+            <source src="ph.ogg" type="audio/mpeg">
         </audio>
         <div class="buttonsRow">
             <button><img src="assets/icons/backward.svg"></button>
@@ -103,6 +86,7 @@ sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la music
 <div class="main">
     <!--Aunque pongas algo aqui, nunca cargara-->
 </div>
+
 <div class="topButtons">
     <div class="webControlsButtons">
         <button>
@@ -119,11 +103,12 @@ sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la music
     </div>
 
     <div class="userPfp">
-        <img src="assets/images/temp_pfp.jpg">
+        <img src="./images/temp_pfp.jpg">
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="indexloader.js"></script>
+<script src="scripts/jqueryLoader.js"></script>
 <script src="musicplayer.js"></script>
+<script src="scripts/sideBar.js"></script>
+<script src="scripts/loadContent.js"></script>
 </body>
 </html>

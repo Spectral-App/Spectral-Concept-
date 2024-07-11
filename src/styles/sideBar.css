@@ -1,0 +1,91 @@
+/*SIDEBAR*/
+.sidebar_container_static {
+    position: relative;
+    left: 1%;
+    width: 200px;
+    margin-top: -12px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    background-color: #121212;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.sidebar_container_dynamic {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 1%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 200px;
+    height: calc(99.17% - 311px);
+    background-color: #121212;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.sidebar_buttons {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 180px;
+    margin-left: 10px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.sidebar_buttons:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar_buttons:active {
+    text-decoration: underline;
+}
+
+.sidebar_buttons_image {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.sidebar_buttons_svg {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sidebar_buttons_text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar_buttons_title {
+    font-family: "book", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 1);
+}
+
+.sidebar_buttons_subtitle {
+    font-family: "book", sans-serif;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 0.5);
+}

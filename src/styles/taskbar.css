@@ -1,0 +1,159 @@
+/*TASKBAR*/
+.taskbar {
+    position: fixed;
+    bottom: 10px;
+    left: 1%;
+    width: 98%;
+    height: 83px;
+    background-color: #121212;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*Area de los detalles de la cancion que se reproduce actualmente*/
+.songDetails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 7px;
+}
+
+.coverButton {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.coverButton:hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(150%) contrast(100%);
+}
+
+.coverButton:active {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(80%) contrast(100%);
+}
+
+.songCover {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+
+.songText {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 3px;
+    border: none;
+    background-color: transparent;
+}
+
+.songName {
+    font-family: "book", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.songName:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.songArtist {
+    font-family: "book", sans-serif;
+    font-size: 12px;
+    margin-top: 3px;
+    color: #b8b8b8
+}
+
+.songArtist:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*Area de los controles de la reproduccion*/
+
+.songControl {
+    display: inline-block;
+    justify-content: center;
+    align-content: center;
+}
+
+.buttonsRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonsRow button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(300%) contrast(100%);
+}
+
+.buttonsRow button:hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(0%);
+}
+
+.buttonsRow button:active {
+    transform: scale(0.9);
+}
+
+.buttonsRow button:nth-child(2){
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50px;
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%);
+}
+
+.playIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.buttonsRow button:nth-child(2):hover {
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(80%) contrast(100%);
+}
+
+.buttonsRow button:nth-child(2):active  {
+    transform: scale(0.9);
+}
+
+.buttonsRow p {
+    font-size: 10px;
+    font-family: "book", sans-serif;
+    margin: 5px;
+}
+
+.songPos {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 250px;
+    height: 5px;
+    background: linear-gradient(to right, #2B78F7 0%, #2B78F7 00%, #FFFFFF 00%, #FFFFFF 0%);
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.songPos::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #2B78F7;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+
+}
+
+.songPos::-webkit-slider-thumb:hover {
+    border: 6px solid #fff;
+}
