@@ -1,17 +1,17 @@
 /* FUENTES */
 @font-face {
     font-family: 'black';
-    src: url('../assets/fonts/black.otf') format('truetype');
+    src: url('../fonts/black.otf') format('truetype');
 }
 
 @font-face {
     font-family: 'bold';
-    src: url('../assets/fonts/bold.ttf') format('truetype');
+    src: url('../fonts/bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'book';
-    src: url('../assets/fonts/book.ttf') format('truetype');
+    src: url('../fonts/book.ttf') format('truetype');
 }
 
 /* AJUSTES DE ESTILO DE TEXTO */
@@ -72,11 +72,79 @@ p {
     line-height: 1.5;
 }
 
+/*Caja de texto*/
+.input-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+input {
+    font-family: "book", sans-serif;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+label {
+    font-family: "bold", sans-serif;
+    position: absolute;
+    top: 47px;
+    left: 19px;
+    font-size: 12px;
+    color: white;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    padding: 0 2px;
+    background-color: #121212;
+    text-shadow:
+    3px 3px 0 #121212,
+    -3px 3px 0 #121212,
+    -3px -3px 0 #121212,
+    3px -3px 0 #121212;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    opacity: 1; /* Mostrar la etiqueta */
+}
+
+/*Botones*/
+
+button {
+    font-family: "bold", sans-serif;
+    border-radius: 50px;
+    background-color: white;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    font-size: 16px;
+}
+
+button:hover {
+    transform: scale(1.01);
+}
+
+button:active {
+    opacity: 0.5;
+    transform: scale(0.99);
+}
+
 /* Estilos para la barra de scroll */
 ::-webkit-scrollbar {
     width: 7px;
     height:7px;
-
 }
 
 ::-webkit-scrollbar-thumb {
@@ -97,78 +165,6 @@ p {
 }
 
 ::-webkit-scrollbar-thumb:active {background: #b8b8b8;}
-
-/*BOTONES ARRIBA DE PAGINA ANTERIOR Y BOTON DE USUARIO*/
-.topButtons {
-    position: fixed;
-    top: 1%;
-    left: calc(1% + 210px);
-    width: calc(99% - 220px);
-    height: 50px;
-    margin-top: 5px;
-    padding: 10px;
-    overflow-y: hidden;
-    color: white;
-    background: #121212;
-    box-sizing: border-box;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.webControlsButtons {
-    margin-left: 10px;
-}
-
-.webControlsButtons button {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 50px;
-}
-
-.webControlsButtons img {
-    width: 15px;
-    height: 15px;
-    align-items: center;
-    filter: invert(100%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(100%) contrast(100%);
-}
-
-.webControlsButtons button:hover {
-    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(0%) contrast(100%);
-}
-
-.webControlsButtons button:active {
-    filter: invert(0%) sepia(6%) saturate(0%) hue-rotate(174deg) brightness(50%) contrast(100%);
-}
-
-.spectralLogo {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.spectralLogo img {
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-}
-
-.spectralLogo p {
-    font-family: "black", sans-serif;
-    font-size: 20px;
-    margin-left: 5px;
-}
-
-.userPfp img{
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
-    margin-right: 10px;
-}
 
 /*VENTANA PRINCIPAL DE LAS DEMAS PÁGINAS*/
 .main {

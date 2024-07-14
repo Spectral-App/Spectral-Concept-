@@ -1,36 +1,87 @@
-const currentPageData = {
-    contentType: 'home',
-    contentID: 'HOME'
+const mainData = {
+    currPage: {
+        contentType: 'home',
+        contentID: 'HOME',
+        link: 'content/home.html'
+    },
+    history: [],
+    historyPos: 0
 };
 
-function sidebarLoadPage(contentType,contentID) {
-    if (currentPageData.contentID !== contentID) {
-        switch(contentType) {
+const currentSongData = {
+    songName: '',
+    songArtist: '',
+    songAlbum: '',
+    songCover: '',
+    songID: '',
+    songAlbumID: '',
+};  
+
+function loadPage(contentType, contentID, loadState, link) {
+    if (mainData.currPage.contentID !== contentID || loadState !== 'new') {
+        if (!loadState) { 
+            loadState = 'new'; 
+        }
+
+        let destinationPage;
+
+        switch (contentType) {
             case 'home':
-                $('.main').load('content/home.html');
+                destinationPage = 'content/home.html';
                 break;
             case 'search':
-                $('.main').load('content/search.html');
+                destinationPage = 'content/search.html';
                 break;
             case 'plugins':
-                $('.main').load('content/plugins.html');
+                destinationPage = 'content/plugins.html';
                 break;
             case 'library':
-                $('.main').load('content/library.html');
+                destinationPage = 'content/library.html';
                 break;
             case 'album':
-                $('.main').load('content/album.html');
+                destinationPage = 'content/album.html';
+                break;
+            case 'settings':
+                destinationPage = 'content/settings.html';
+                break;
+            case 'user':
+                destinationPage = 'content/user.html';
+                break;
+            case 'custom':
+                destinationPage = link;
                 break;
             default:
-                $('.main').load('content/404.html');
+                destinationPage = 'content/404.html';
                 break;
-        }
-        currentPageData.contentType = contentType;
-        currentPageData.contentID = contentID;
-        // DEBUG
-        console.log('ContentType:', currentPageData.contentType);
-        console.log('ContentID:', currentPageData.contentID);
-    }
-};
+        };
 
-$('.main').load('content/home.html');
+        $('.main').load(destinationPage);
+
+        const pageData = {
+            contentType: contentType,
+            contentID: contentID,
+            link: destinationPage,
+        }
+
+        if (loadState === 'new') {
+            // Si la posición actual no es la última, elimina las entradas después de la posición actual
+            if (mainData.historyPos < mainData.history.length - 1) {
+                mainData.history.splice(mainData.historyPos + 1);
+            }
+
+            // Agrega la nueva página al historial
+            mainData.history.push(pageData);
+            mainData.historyPos = mainData.history.length - 1;
+        }
+
+        mainData.currPage.contentType = contentType;
+        mainData.currPage.contentID = contentID;
+
+        console.log('History Position:', mainData.historyPos);
+        console.log('History Data:', mainData.history);
+        
+        updateButtonStates();
+    }
+}
+
+loadPage('home','HOME')

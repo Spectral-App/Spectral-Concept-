@@ -6,26 +6,27 @@
     <link rel="stylesheet" href="styles/globalStyle.css">
     <link rel="stylesheet" href="styles/sideBar.css">
     <link rel="stylesheet" href="styles/taskbar.css">"
+    <link rel="stylesheet" href="styles/mainToolbar.css">"
 </head>
 <body>
 <!--MENU LATERAL-->
     <div class="sidebar_container_static">
         <button class="sidebar_buttons" contenttype="home" contentid="HOME">
-            <img src="assets/icons/home.svg" class="sidebar_buttons_svg">
+            <img src="icons/home.svg" class="sidebar_buttons_svg">
             <div class="sidebar_buttons_text">
                 <span class="sidebar_buttons_title">Inicio</span>
             </div>
         </button>
 
         <button class="sidebar_buttons" contenttype="search" contentid="SEARCH">
-            <img src="assets/icons/search.svg" class="sidebar_buttons_svg">
+            <img src="icons/search.svg" class="sidebar_buttons_svg">
             <div class="sidebar_buttons_text">
                 <span class="sidebar_buttons_title">Buscar</span>
             </div>
         </button>
 
         <button class="sidebar_buttons" contenttype="plugins" contentid="PLUGINS">
-            <img src="assets/icons/plugins.svg" class="sidebar_buttons_svg">
+            <img src="icons/plugins.svg" class="sidebar_buttons_svg">
             <div class="sidebar_buttons_text">
                 <span class="sidebar_buttons_title">Complementos</span>
             </div>
@@ -35,7 +36,7 @@
     <div class="sidebar_container_dynamic" id="sidebar">
 
         <button class="sidebar_buttons" contenttype="library" contentid="LIBRARY">
-            <img src="assets/icons/library.svg" class="sidebar_buttons_svg">
+            <img src="icons/library.svg" class="sidebar_buttons_svg">
             <div class="sidebar_buttons_text">
                 <span class="sidebar_buttons_title">Mi biblioteca</span>
             </div>
@@ -47,7 +48,7 @@
 <div class="taskbar">
     <div class="songDetails">
         <button class="coverButton">
-            <img src="./images/temp_cover.png" class="songCover" id="SONG_COVER">
+            <img src="images/temp_cover.png" class="songCover" id="SONG_COVER">
         </button>
 
         <div class="songText">
@@ -61,9 +62,9 @@
             <source src="ph.ogg" type="audio/mpeg">
         </audio>
         <div class="buttonsRow">
-            <button><img src="assets/icons/backward.svg"></button>
-            <button id="TOGGLE_PLAY"><img src="assets/icons/play.svg" class="playIcon"></button>
-            <button><img src="assets/icons/forward.svg"></button>
+            <button><img src="icons/backward.svg"></button>
+            <button id="TOGGLE_PLAY"><img src="icons/play.svg" class="playIcon"></button>
+            <button><img src="icons/forward.svg"></button>
         </div>
         <div class="buttonsRow">
             <input type="range" min="0" max="100" value="0" id="PLAYER_PROGRESS" class="songPos">
@@ -87,28 +88,35 @@ sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la music
     <!--Aunque pongas algo aqui, nunca cargara-->
 </div>
 
-<div class="topButtons">
-    <div class="webControlsButtons">
-        <button>
-            <img src="assets/icons/previousPage.svg">
+<div class="main_toolbar">
+    <div class="main_toolbar_buttons_container">
+        <button id="prevPageButton">
+            <img src="icons/previousPage.svg">
         </button>
-        <button>
-            <img src="assets/icons/recentPage.svg">
+        <button id="nextPageButton">
+            <img src="icons/recentPage.svg">
         </button>
     </div>
 
-    <div class="spectralLogo">
-        <img src="assets/icons/logo.svg">
+    <div class="main_toolbar_logo_container">
+        <img src="icons/logo.svg">
         <p>SPECTRAL</p>
     </div>
 
-    <div class="userPfp">
-        <img src="./images/temp_pfp.jpg">
+    <div class="main_toolbar_buttons_container">
+        <button id="settingsButton">
+            <img src="icons/settings.svg">
+        </button>
+        <button id="profileButton" class="main_toolbar_profile_picture_button">
+            <img src="images/temp_pfp.jpg">
+        </button>
     </div>
 </div>
+
 <script src="scripts/jqueryLoader.js"></script>
 <script src="musicplayer.js"></script>
 <script src="scripts/sideBar.js"></script>
 <script src="scripts/loadContent.js"></script>
+<script src="scripts/mainToolbar.js"></script>
 </body>
 </html>

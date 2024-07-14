@@ -1,10 +1,10 @@
 const buttonsData = [
     {
-        buttonTitle: 'Ejemplo Album 1',
-        buttonSubtitle: 'Album • Artista 1',
-        buttonImage: './images/temp_cover.png',
+        buttonTitle: 'Cancioner para Free Fire',
+        buttonSubtitle: 'Playlist • Fuster',
+        buttonImage: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
         buttonContentType: 'album',
-        buttonContentID: '1'
+        buttonContentID: '89127391709'
     },
     {
         buttonTitle: 'Ejemplo Album 2',
@@ -30,7 +30,8 @@ hardcoded_buttons.forEach(button => {
     button.addEventListener('click', () => {
         const contentType = button.getAttribute('contenttype');
         const contentID = button.getAttribute('contentid');
-        sidebarLoadPage(contentType, contentID);
+        loadPage(contentType, contentID);
+        updateHistoryPos('new')
     });
 });
 
@@ -63,7 +64,8 @@ buttonsData.forEach(data => {
     button.appendChild(textContainer);
 
     button.addEventListener('click', () => {
-        sidebarLoadPage(data.buttonContentType, data.buttonContentID);
+        loadPage(data.buttonContentType, data.buttonContentID);
+        historyPos = historyData.length -1;
     });
 
     sidebar.appendChild(button);
