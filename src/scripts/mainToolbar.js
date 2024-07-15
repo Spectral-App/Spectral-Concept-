@@ -40,5 +40,3 @@ function historyNext() {
         updateButtonStates();
     }
 }
-
-updateButtonStates();

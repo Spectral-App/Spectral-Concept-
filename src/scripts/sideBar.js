@@ -31,7 +31,6 @@ hardcoded_buttons.forEach(button => {
         const contentType = button.getAttribute('contenttype');
         const contentID = button.getAttribute('contentid');
         loadPage(contentType, contentID);
-        updateHistoryPos('new')
     });
 });
 

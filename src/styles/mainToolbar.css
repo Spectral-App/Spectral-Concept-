@@ -41,8 +41,7 @@
     height: 16px;
 }
 
-.main_toolbar_buttons_container button:hover,
-.main_toolbar_buttons_container button:focus {
+.main_toolbar_buttons_container button:hover {
     background-color: rgb(255, 255, 255, 0.1);
     transform: scale(1.05);
     outline: none;
@@ -95,8 +94,7 @@
     border-radius: 50%;
 }
 
-.main_toolbar_profile_picture_button:hover,
-.main_toolbar_profile_picture_button:focus  {
+.main_toolbar_profile_picture_button:hover {
     background-color: rgb(255, 255, 255, 0.1);
     transform: scale(1.05);
     outline: none;

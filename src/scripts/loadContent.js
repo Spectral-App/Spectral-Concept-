@@ -54,7 +54,7 @@ function loadPage(contentType, contentID, loadState, link) {
                 destinationPage = 'content/404.html';
                 break;
         };
-
+        $('.main').empty();
         $('.main').load(destinationPage);
 
         const pageData = {
@@ -69,9 +69,12 @@ function loadPage(contentType, contentID, loadState, link) {
                 mainData.history.splice(mainData.historyPos + 1);
             }
 
-            // Agrega la nueva página al historial
-            mainData.history.push(pageData);
-            mainData.historyPos = mainData.history.length - 1;
+            // Verifica si la nueva página es diferente de la última página en el historial
+            if (mainData.history.length === 0 || mainData.history[mainData.history.length - 1].contentID !== contentID) {
+                // Agrega la nueva página al historial
+                mainData.history.push(pageData);
+                mainData.historyPos = mainData.history.length - 1;
+            }
         }
 
         mainData.currPage.contentType = contentType;
@@ -85,3 +88,4 @@ function loadPage(contentType, contentID, loadState, link) {
 }
 
 loadPage('home','HOME')
+updateButtonStates();
