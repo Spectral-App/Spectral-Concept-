@@ -55,10 +55,11 @@ h6 {
     margin-bottom: 6px;
 }
 
-body {
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #050505;
+    background-color: green;
     font-size: 1em;
     line-height: 1.5;
     font-family: "book", sans-serif;
@@ -72,11 +73,18 @@ p {
     line-height: 1.5;
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 /* Caja de texto */
 .textbox_container {
     position: relative;
     margin: 10px 0; /* Reduce el espacio vertical entre las cajas de texto */
 }
+
 
 input, textarea {
     font-family: "book", sans-serif;
@@ -180,18 +188,40 @@ button:active {
 }
 
 /* VENTANA PRINCIPAL DE LAS DEMAS PÁGINAS */
-.main {
-    position: fixed;
-    top: calc(1% + 55px);
-    left: calc(1% + 210px);
-    width: calc(99% - 220px);
-    height: calc(100% - 165px);
-    padding: 0 10px 0;
-    overflow-y: auto;
-    color: white;
-    background: #121212;
-    border-radius: 0 0 10px 10px;
+.appcontainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    background-color: blue;
     box-sizing: border-box;
+}
+
+.sidebar_mainContent {
+    margin: 1%;
+    display: flex;
+    flex-grow: 1;
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+}
+
+.mainContentContainer {
+    flex-grow: 1;
+    color: white;
+    background: red;
+    overflow: auto;
+    border-radius: 10px;
+    margin-left: 1%;
+    box-sizing: border-box;
+}
+
+.main{
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 /* Clases para ajustar el ancho */

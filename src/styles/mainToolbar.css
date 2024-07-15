@@ -1,14 +1,9 @@
 .main_toolbar {
-    position: fixed;
-    top: 1%;
-    left: calc(1% + 210px);
-    width: calc(99% - 220px);
     height: 50px;
-    margin-top: 5px;
     padding: 15px;
     overflow-y: hidden;
     color: white;
-    background: #121212;
+    background: orange;
     box-sizing: border-box;
     border-radius: 10px 10px 0 0;
     display: flex;

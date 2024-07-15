@@ -5,113 +5,80 @@
     <title>Spectral</title>
     <link rel="stylesheet" href="styles/globalStyle.css">
     <link rel="stylesheet" href="styles/sideBar.css">
-    <link rel="stylesheet" href="styles/taskbar.css">"
-    <link rel="stylesheet" href="styles/mainToolbar.css">"
+    <link rel="stylesheet" href="styles/taskbar.css">
+    <link rel="stylesheet" href="styles/mainToolbar.css">
 </head>
+
 <body>
-<!--MENU LATERAL-->
-    <div class="sidebar_container_static">
-        <button class="sidebar_buttons" contenttype="home" contentid="HOME">
-            <img src="icons/home.svg" class="sidebar_buttons_svg">
-            <div class="sidebar_buttons_text">
-                <span class="sidebar_buttons_title">Inicio</span>
+    <div class="appcontainer">
+        <div class="sidebar_mainContent">
+            <div class="sidebarContainer">
+                <div class="sidebar_container_static">
+                    <button class="sidebar_buttons" contenttype="home" contentid="HOME">
+                        <img src="icons/home.svg" class="sidebar_buttons_svg">
+                        <div class="sidebar_buttons_text">
+                            <span class="sidebar_buttons_title">Inicio</span>
+                        </div>
+                    </button>
+            
+                    <button class="sidebar_buttons" contenttype="search" contentid="SEARCH">
+                        <img src="icons/search.svg" class="sidebar_buttons_svg">
+                        <div class="sidebar_buttons_text">
+                            <span class="sidebar_buttons_title">Buscar</span>
+                        </div>
+                    </button>
+            
+                    <button class="sidebar_buttons" contenttype="plugins" contentid="PLUGINS">
+                        <img src="icons/plugins.svg" class="sidebar_buttons_svg">
+                        <div class="sidebar_buttons_text">
+                            <span class="sidebar_buttons_title">Complementos</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="sidebar_container_dynamic" id="sidebar">
+                    <button class="sidebar_buttons" contenttype="library" contentid="LIBRARY">
+                        <img src="icons/library.svg" class="sidebar_buttons_svg">
+                        <div class="sidebar_buttons_text">
+                            <span class="sidebar_buttons_title">Mi biblioteca</span>
+                        </div>
+                    </button>
+                </div>
             </div>
-        </button>
+    
+            <div class="mainContentContainer">
+                <div class="main_toolbar">
+                    <div class="main_toolbar_buttons_container">
+                        <button id="prevPageButton">
+                            <img src="icons/previousPage.svg">
+                        </button>
+                        <button id="nextPageButton">
+                            <img src="icons/recentPage.svg">
+                        </button>
+                    </div>
+                
+                    <div class="main_toolbar_logo_container">
+                        <img src="icons/logo.svg">
+                        <p>SPECTRAL</p>
+                    </div>
+                
+                    <div class="main_toolbar_buttons_container">
+                        <button id="settingsButton">
+                            <img src="icons/settings.svg">
+                        </button>
+                        <button id="profileButton" class="main_toolbar_profile_picture_button">
+                            <img src="images/temp_pfp.jpg">
+                        </button>
+                    </div>
+                </div>
 
-        <button class="sidebar_buttons" contenttype="search" contentid="SEARCH">
-            <img src="icons/search.svg" class="sidebar_buttons_svg">
-            <div class="sidebar_buttons_text">
-                <span class="sidebar_buttons_title">Buscar</span>
+                <div class="main"></div>
             </div>
-        </button>
+        </div>
 
-        <button class="sidebar_buttons" contenttype="plugins" contentid="PLUGINS">
-            <img src="icons/plugins.svg" class="sidebar_buttons_svg">
-            <div class="sidebar_buttons_text">
-                <span class="sidebar_buttons_title">Complementos</span>
-            </div>
-        </button>
-
-    </div>
-    <div class="sidebar_container_dynamic" id="sidebar">
-
-        <button class="sidebar_buttons" contenttype="library" contentid="LIBRARY">
-            <img src="icons/library.svg" class="sidebar_buttons_svg">
-            <div class="sidebar_buttons_text">
-                <span class="sidebar_buttons_title">Mi biblioteca</span>
-            </div>
-        </button>
-
-    <!--A partir de aqui, los demas botones son generados por codigo-->
-    </div>
-<!--Este div carga la barra de musica de abajo, aqui iria el play, pausa, etc-->
-<div class="taskbar">
-    <div class="songDetails">
-        <button class="coverButton">
-            <img src="images/temp_cover.png" class="songCover" id="SONG_COVER">
-        </button>
-
-        <div class="songText">
-            <span class="songName" id="SONG_NAME">Nombre de la Canción</span>
-            <span class="songArtist" id="SONG_ARTIST">Nombre del Artista</span>
+        <div class="taskbar">
         </div>
     </div>
-
-    <div class="songControl">
-        <audio id="SONG" preload="auto">
-            <source src="ph.ogg" type="audio/mpeg">
-        </audio>
-        <div class="buttonsRow">
-            <button><img src="icons/backward.svg"></button>
-            <button id="TOGGLE_PLAY"><img src="icons/play.svg" class="playIcon"></button>
-            <button><img src="icons/forward.svg"></button>
-        </div>
-        <div class="buttonsRow">
-            <input type="range" min="0" max="100" value="0" id="PLAYER_PROGRESS" class="songPos">
-        </div>
-        <div class="buttonsRow">
-            <p id="SONG_CURRTIME">0:00</p>
-            <p>-</p>
-            <p id="SONG_DURATION">0:00</p>
-        </div>
-    </div>
-
-    <div class="extraButtons">
-        <p>PROOF OF CONCEPT</p>
-        No es un producto final
-    </div>
-</div>
-<!--Este div debe estar vacio, en si no carga nada por si solo-->
-<!--JavaScript carga los demas HTMLs que existen, asi cada pestaña que abra un boton carga una diferente pagina
-sin tener que reiniciar toda la pagina solo para cargar algo, asi sigue la musica aunque explores la pagina-->
-<div class="main">
-    <!--Aunque pongas algo aqui, nunca cargara-->
-</div>
-
-<div class="main_toolbar">
-    <div class="main_toolbar_buttons_container">
-        <button id="prevPageButton">
-            <img src="icons/previousPage.svg">
-        </button>
-        <button id="nextPageButton">
-            <img src="icons/recentPage.svg">
-        </button>
-    </div>
-
-    <div class="main_toolbar_logo_container">
-        <img src="icons/logo.svg">
-        <p>SPECTRAL</p>
-    </div>
-
-    <div class="main_toolbar_buttons_container">
-        <button id="settingsButton">
-            <img src="icons/settings.svg">
-        </button>
-        <button id="profileButton" class="main_toolbar_profile_picture_button">
-            <img src="images/temp_pfp.jpg">
-        </button>
-    </div>
-</div>
 
 <script src="scripts/jqueryLoader.js"></script>
 <script src="musicplayer.js"></script>

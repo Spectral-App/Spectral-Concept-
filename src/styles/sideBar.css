@@ -1,29 +1,16 @@
 /*SIDEBAR*/
 .sidebar_container_static {
-    position: relative;
-    left: 1%;
-    width: 200px;
-    margin-top: -12px;
-    margin-bottom: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    background-color: #121212;
+    width: 210px;
+    background-color: lightblue;
     border-radius: 10px;
-    overflow: hidden;
-    box-sizing: border-box;
+    padding: 5px;
 }
 
 .sidebar_container_dynamic {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    left: 1%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 200px;
-    height: calc(99.20% - 311px);
-    background-color: #121212;
+    flex-grow: 1;   
+    padding: 5px;
+    width: 210px;
+    background-color: lightcoral;
     border-radius: 10px;
     overflow-y: auto;
 }
