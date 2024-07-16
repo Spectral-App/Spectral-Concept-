@@ -15,7 +15,7 @@ const currentSongData = {
     songCover: '',
     songID: '',
     songAlbumID: '',
-};  
+};
 
 function loadPage(contentType, contentID, loadState, link) {
     if (mainData.currPage.contentID !== contentID || loadState !== 'new') {
@@ -87,5 +87,9 @@ function loadPage(contentType, contentID, loadState, link) {
     }
 }
 
-loadPage('home','HOME')
-updateButtonStates();
+//Para cargar lo necesario apenas la app termine de cargar
+document.addEventListener('DOMContentLoaded', (event) => {
+    titleBarLoad()
+    loadPage('home','HOME')
+    updateButtonStates();
+});

@@ -1,15 +1,16 @@
 /*TASKBAR*/
 .taskbar {
-    min-height: 100px;
-    height: 100px;
-    background-color: gold;
-    border-radius: 10px;
-    box-sizing: border-box;
-    color: white;
+    width: 97.98%;
+    height: 90px;
+    min-height: 90px;
+    background-color: var(--main-elevated);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1%;
+    justify-content: space-between;
+    padding: 0;
+    border-radius: 10px;
     margin-left: 1%;
     margin-right: 1%;
+    margin-bottom: 1%;
+    box-sizing: border-box;
 }

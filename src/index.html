@@ -1,16 +1,37 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectral</title>
     <link rel="stylesheet" href="styles/globalStyle.css">
+    <link rel="stylesheet" href="styles/titlebar.css">
     <link rel="stylesheet" href="styles/sideBar.css">
     <link rel="stylesheet" href="styles/taskbar.css">
     <link rel="stylesheet" href="styles/mainToolbar.css">
 </head>
-
 <body>
     <div class="appcontainer">
+        <div class="titlebar">
+            <div class="titlebarDraggable">
+                <div class="titlebarLogo">
+                    <img src="icons/logo.svg">
+                    <p>SPECTRAL</p>
+                </div>
+
+                <div class="titlebarButtonsContainer">
+                    <div class="titlebarButton" id="minButton">
+                        <img src="icons/window_minimize.svg">
+                    </div>
+                    <div class="titlebarButton" id="max-resButton">
+                        <img id="maximizeIcon"src="icons/window_maximize.svg">
+                    </div>
+                    <div class="titlebarButton" id="closeButton">
+                        <img src="icons/window_close.svg">
+                    </div>
+                  </div>
+            </div>
+        </div>
         <div class="sidebar_mainContent">
             <div class="sidebarContainer">
                 <div class="sidebar_container_static">
@@ -57,11 +78,6 @@
                         </button>
                     </div>
                 
-                    <div class="main_toolbar_logo_container">
-                        <img src="icons/logo.svg">
-                        <p>SPECTRAL</p>
-                    </div>
-                
                     <div class="main_toolbar_buttons_container">
                         <button id="settingsButton">
                             <img src="icons/settings.svg">
@@ -72,18 +88,23 @@
                     </div>
                 </div>
 
-                <div class="main"></div>
+                <div class="main">
+                </div>
             </div>
         </div>
 
         <div class="taskbar">
         </div>
     </div>
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 
-<script src="scripts/jqueryLoader.js"></script>
-<script src="musicplayer.js"></script>
-<script src="scripts/sideBar.js"></script>
-<script src="scripts/mainToolbar.js"></script>
-<script src="scripts/loadContent.js"></script>
+    <script src="scripts/jqueryLoader.js"></script>
+    <script src="scripts/sideBar.js"></script>
+    <script src="scripts/mainToolbar.js"></script>
+    <script src="scripts/titleBar.js"></script>
+    <script src="scripts/loadContent.js"></script>   
+
+    <script>if (window.module) module = window.module;</script>
 </body>
 </html>

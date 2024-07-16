@@ -48,6 +48,7 @@
   "license": "MIT",
   "dependencies": {
     "electron-builder": "^24.13.3",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.7.1"
   }
 }

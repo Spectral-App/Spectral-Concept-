@@ -1,14 +1,12 @@
 .main_toolbar {
+    min-height: 50px;
     height: 50px;
-    padding: 15px;
-    overflow-y: hidden;
-    color: white;
-    background: orange;
-    box-sizing: border-box;
-    border-radius: 10px 10px 0 0;
+    background-color: var(--main-elevated);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .main_toolbar_buttons_container {
@@ -26,7 +24,7 @@
     margin: 3px;
     border: none;
     border-radius: 50%;
-    background-color: rgb(255, 255, 255, 0.05);
+    background-color: var(--highlight);
     transition: all 0.1s ease;
     padding: 0px;
 }
@@ -37,42 +35,22 @@
 }
 
 .main_toolbar_buttons_container button:hover {
-    background-color: rgb(255, 255, 255, 0.1);
+    background-color: var(--highlight-elevated);
     transform: scale(1.05);
     outline: none;
 }
 
 .main_toolbar_buttons_container button:active {
-    background-color: rgb(255, 255, 255, 0.02);
+    background-color: var(--background);
     transform: scale(0.95);
     opacity: 0.7;
-}
-
-.main_toolbar_logo_container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main_toolbar_logo_container img {
-    width: 32px;
-    height: 32px;
-    margin-right: 5px;
-}
-
-.main_toolbar_logo_container p {
-    font-family: "black", sans-serif;
-    font-size: 20px;
-    margin-left: 5px;
 }
 
 .main_toolbar_profile_picture_button {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: rgb(255, 255, 255, 0.05);
+    background-color: var(--highlight);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,13 +68,13 @@
 }
 
 .main_toolbar_profile_picture_button:hover {
-    background-color: rgb(255, 255, 255, 0.1);
+    background-color: var(--highlight-elevated);
     transform: scale(1.05);
     outline: none;
 }
 
 .main_toolbar_profile_picture_button:active {
-    background-color: rgb(255, 255, 255, 0.02);
+    background-color: var(--background);
     transform: scale(0.95);
     opacity: 0.7;
 }
