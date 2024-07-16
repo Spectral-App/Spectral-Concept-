@@ -3,6 +3,7 @@
   "productName": "Spectral",
   "version": "1.0.0",
   "description": "Music with freedom",
+  "icon": "icon.ico",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -13,7 +14,8 @@
     "build-installer": "electron-builder"
   },
   "build": {
-    "appId": "Spectral",
+    "appId": "com.spectral.spectralapp",
+    "directories": "build",
     "win": {
       "target": [
         "nsis"
@@ -22,7 +24,7 @@
     },
     "nsis": {
       "installerIcon": "icon.ico",
-      "uninstalerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
       "uninstallDisplayName": "Spectral",
       "license": "license.txt",
       "oneClick": false,

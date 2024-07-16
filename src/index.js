@@ -12,6 +12,10 @@ const SPLASH_SCREEN_DELAY = 1000; // 1s delay, just for everyone to see our beau
 
 const createSplashScreen = () => {
   splashWindow = new BrowserWindow({
+    title: "Spectral - Loading",
+    icon: "icon.ico",
+    minWidth: 240,
+    minHeight: 336,
     width: 240,
     height: 336,
     frame: false,
@@ -24,10 +28,6 @@ const createSplashScreen = () => {
 
   splashWindow.once('ready-to-show', () => {
     splashWindow.show();
-    setTimeout(() => {
-      createMainWindow();
-      splashWindow.close();
-    }, SPLASH_SCREEN_DELAY);
   });
 
   splashWindow.on('closed', () => {
@@ -47,7 +47,7 @@ const createMainWindow = () => {
     transparent: true,
     backgroundColor: '#00FFFFFF',
     autoHideMenuBar: true,
-    show: false, // No mostrar la ventana principal inmediatamente
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -58,6 +58,9 @@ const createMainWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   mainWindow.once('ready-to-show', () => {
+    if (splashWindow) {
+      splashWindow.close();
+    }
     mainWindow.show();
   });
 
@@ -68,12 +71,9 @@ const createMainWindow = () => {
 
 app.whenReady().then(() => {
   createSplashScreen();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+      setTimeout(() => {
       createMainWindow();
-    }
-  });
+    }, SPLASH_SCREEN_DELAY);
 });
 
 app.on('window-all-closed', () => {
