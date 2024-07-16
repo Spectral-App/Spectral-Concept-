@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: transparent;
+}
+
+.splash {
+    -webkit-app-region: no-drag;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    overflow: hidden; /* Asegura que la imagen no exceda los bordes redondeados */
+}
+
+.splash img {
+    -webkit-user-drag: none;
+    user-select: none;
+    width: 240px;
+    height: 336px;
+    object-fit: cover;
+}
