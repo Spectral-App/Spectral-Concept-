@@ -16,7 +16,7 @@ Para empezar a personalizar Spectral necesitarás [Git](https://git-scm.com) y [
 
 ```bash
 # Clonar el repositorio.
-git clone https://github.com/NaviVani-dev/Spectral
+git clone https://github.com/Spectral-App/Spectral
 # Ir a la raiz del proyecto.
 cd Spectral
 # Instalar dependencias.
