@@ -1,48 +1,44 @@
 const buttonsData = [
+        {
+            title: 'Cancioner para Free Fire',
+            subtitle: 'Playlist • Fuster',
+            image: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
+            contentType: 'album',
+            contentID: '89127391709',
+            link: ''
+        },
     {
-        buttonTitle: 'Cancioner para Free Fire',
-        buttonSubtitle: 'Playlist • Fuster',
-        buttonImage: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
-        buttonContentType: 'album',
-        buttonContentID: '89127391709'
+        title: 'Ejemplo Album 2',
+        subtitle: 'Album • Artista 2',
+        image: './images/temp_cover.png',
+        contentType: 'album',
+        contentID: '2',
+        link: ''
     },
     {
-        buttonTitle: 'Ejemplo Album 2',
-        buttonSubtitle: 'Album • Artista 2',
-        buttonImage: './images/temp_cover.png',
-        buttonContentType: 'album',
-        buttonContentID: '2'
-    },
-    {
-        buttonTitle: 'Ejemplo Album 3',
-        buttonSubtitle: 'Playlist',
-        buttonImage: './images/temp_cover.png',
-        buttonContentType: 'album',
-        buttonContentID: '3'
+        title: 'Ejemplo Album 3',
+        subtitle: 'Album • Artista 3',
+        image: './images/temp_cover.png',
+        contentType: 'album',
+        contentID: '3',
+        link: ''
     },
 ];
 
-const sidebar = document.getElementById('sidebar');
-const hardcoded_buttons = document.querySelectorAll('.sidebar_container_static .sidebar_buttons, #sidebar .sidebar_buttons');
-
-// Se añaden verificadores de click a los botones hard-codeados
-hardcoded_buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        const contentType = button.getAttribute('contenttype');
-        const contentID = button.getAttribute('contentid');
-        loadPage(contentType, contentID);
-    });
-});
+const sidebar_static = document.getElementById('sidebar_static');
+const sidebar_dynamic = document.getElementById('sidebar_dynamic');
 
 // Añade los botones de albumes, singles y playlists a la sidebar
-buttonsData.forEach(data => {
+function addSidebarButton(container, data) {
     const button = document.createElement('button');
     button.className = 'sidebar_buttons';
-    button.setAttribute('contentType', data.buttonContentType);
-    button.setAttribute('contentID', data.buttonContentID);
+
+    button.onclick = function() {
+        loadPage(data.contentType, data.contentID, 'new', data.link);
+    };
 
     const img = document.createElement('img');
-    img.src = data.buttonImage;
+    img.src = data.image;
     img.className = 'sidebar_buttons_image';
     button.appendChild(img);
 
@@ -51,21 +47,27 @@ buttonsData.forEach(data => {
 
     const title = document.createElement('span');
     title.className = 'sidebar_buttons_title';
-    title.textContent = data.buttonTitle;
+    title.textContent = data.title;
     textContainer.appendChild(title);
 
-    if (data.buttonSubtitle) {
+    if (data.subtitle) {
         const subtitle = document.createElement('span');
         subtitle.className = 'sidebar_buttons_subtitle';
-        subtitle.textContent = data.buttonSubtitle;
+        subtitle.textContent = data.subtitle;
         textContainer.appendChild(subtitle);
     }
+
     button.appendChild(textContainer);
 
-    button.addEventListener('click', () => {
-        loadPage(data.buttonContentType, data.buttonContentID);
-        historyPos = historyData.length -1;
-    });
+    if (container === 'static') {
+        sidebar_static.appendChild(button);
+    } else {
+        sidebar_dynamic.appendChild(button);
+    }
+};
 
-    sidebar.appendChild(button);
+document.addEventListener('DOMContentLoaded', (event) => {
+    buttonsData.forEach(data => {
+        addSidebarButton('dynamic', data)
     });
+});

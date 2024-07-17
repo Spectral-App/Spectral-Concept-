@@ -12,14 +12,18 @@ profileButton.addEventListener('click', () => {loadPage('user', 'USER')});
 function updateButtonStates() {
     if (mainData.historyPos > 0) {
         prevButton.querySelector('img').style.opacity = '1';
+        prevButton.style.cursor = 'pointer';
     } else {
         prevButton.querySelector('img').style.opacity = '0.5';
+        prevButton.style.cursor = 'not-allowed';
     }
 
     if (mainData.historyPos < mainData.history.length - 1) {
         nextButton.querySelector('img').style.opacity = '1';
+        nextButton.style.cursor = 'pointer';
     } else {
         nextButton.querySelector('img').style.opacity = '0.5';
+        nextButton.style.cursor = 'not-allowed';
     }
 }
 

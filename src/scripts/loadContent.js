@@ -47,6 +47,9 @@ function loadPage(contentType, contentID, loadState, link) {
             case 'user':
                 destinationPage = 'content/user.html';
                 break;
+            case 'artist':
+                destinationPage = 'content/artist.html';
+                break;
             case 'custom':
                 destinationPage = link;
                 break;
@@ -80,6 +83,7 @@ function loadPage(contentType, contentID, loadState, link) {
         mainData.currPage.contentType = contentType;
         mainData.currPage.contentID = contentID;
 
+        //TODO: BORRAR EN LA RELEASE FINAL
         console.log('History Position:', mainData.historyPos);
         console.log('History Data:', mainData.history);
         
