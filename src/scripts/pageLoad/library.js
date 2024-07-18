@@ -1,8 +1,8 @@
 
-// scripts/library.js
+
 
 function addLibraryItem() {
-    // Lógica para añadir un ítem a la librería
+    
     const libraryContainer = document.getElementById('userLibrary');
     const newItem = document.createElement('div');
     newItem.className = 'libraryItem';
@@ -11,7 +11,7 @@ function addLibraryItem() {
 }
 
 function createPlaylist() {
-    // Lógica para crear una lista de reproducción
+    
     const playlistContainer = document.getElementById('playlists');
     const newPlaylist = document.createElement('div');
     newPlaylist.className = 'playlistItem';
@@ -20,6 +20,6 @@ function createPlaylist() {
 }
 
 function downloadMusic() {
-    // Lógica para descargar música
+    
     alert('Descargando música...');
 }
