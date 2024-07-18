@@ -1,13 +1,5 @@
 const prevButton = document.getElementById('prevPageButton');
 const nextButton = document.getElementById('nextPageButton');
-const settingsButton = document.getElementById('settingsButton');
-const profileButton = document.getElementById('profileButton');
-
-
-prevButton.addEventListener('click', historyPrevious);
-nextButton.addEventListener('click', historyNext);
-settingsButton.addEventListener('click', () => {loadPage('settings', 'SETTINGS')});
-profileButton.addEventListener('click', () => {loadPage('user', 'USER')});
 
 function updateButtonStates() {
     if (mainData.historyPos > 0) {

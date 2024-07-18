@@ -41,14 +41,17 @@ function loadPage(contentType, contentID, loadState, link) {
             case 'album':
                 destinationPage = 'content/album.html';
                 break;
+            case 'artist':
+                destinationPage = 'content/artist.html';
+                break;
+            case 'login':
+                destinationPage = 'content/login.html';
+                break;
             case 'settings':
                 destinationPage = 'content/settings.html';
                 break;
             case 'user':
                 destinationPage = 'content/user.html';
-                break;
-            case 'artist':
-                destinationPage = 'content/artist.html';
                 break;
             case 'custom':
                 destinationPage = link;

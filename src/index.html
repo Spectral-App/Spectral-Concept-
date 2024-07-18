@@ -70,19 +70,19 @@
             <div class="mainContentContainer">
                 <div class="main_toolbar">
                     <div class="main_toolbar_buttons_container">
-                        <button id="prevPageButton">
+                        <button id="prevPageButton" onclick="historyPrevious()">
                             <img src="icons/previousPage.svg">
                         </button>
-                        <button id="nextPageButton">
+                        <button id="nextPageButton" onclick="historyNext()">
                             <img src="icons/recentPage.svg">
                         </button>
                     </div>
                 
                     <div class="main_toolbar_buttons_container">
-                        <button id="settingsButton">
+                        <button id="settingsButton" onclick="loadPage('settings', 'SETTINGS')">
                             <img src="icons/settings.svg">
                         </button>
-                        <button id="profileButton" class="main_toolbar_profile_picture_button">
+                        <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="loadPage('user', 'USER')">
                             <img src="images/temp_pfp.jpg">
                         </button>
                     </div>
