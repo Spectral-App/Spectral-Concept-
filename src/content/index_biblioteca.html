@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectral Player</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <h1>LIBRERIA</h1>
+    <button onclick="addLibraryItem()">Añadir a la librería</button>
+    <div class="itemsContainer" id="userLibrary"></div>
+    <button onclick="createPlaylist()">Crear lista de reproducción</button>
+    <div class="playlistContainer" id="playlists"></div>
+    <button onclick="downloadMusic()">Descargar música</button>
+    <script src="scripts/pageLoad/libraryLoad.js"></script>
+    <script src="scripts/library.js"></script> <!-- Nuevo script para manejar la lógica de la biblioteca -->
+</body>
+</html>
