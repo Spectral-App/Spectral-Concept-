@@ -230,6 +230,7 @@ button:active {
     box-sizing: border-box;
     border-radius: 10px;
     overflow: hidden; /* Asegura que el contenedor maneje el desbordamiento */
+    opacity: 0;
 }
 
 .sidebar_mainContent {

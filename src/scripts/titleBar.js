@@ -22,11 +22,10 @@ function titleBarLoad() {
         const { ipcRenderer } = require('electron');
         const maximizeButton = document.getElementById('max-resButton');
 
-        // Función para cambiar dinámicamente la imagen del botón de maximizar/restaurar
         async function toggleMaximizeIcon() {
             try {
                 const isMaximized = await ipcRenderer.invoke('is-maximized');
-                const maximizeIcon = document.getElementById('maximizeIcon'); // Obtener el icono dentro del botón
+                const maximizeIcon = document.getElementById('maximizeIcon');
 
                 if (!maximizeIcon) {
                     console.error('Elemento maximizeIcon no encontrado.');
@@ -43,8 +42,7 @@ function titleBarLoad() {
             }
         }
 
-        // Inicialización del botón de maximizar/restaurar
-        toggleMaximizeIcon(); // Llamada inicial para establecer el icono correcto al inicio
+        toggleMaximizeIcon();
 
         // Asociar la función al evento clic del botón
         maximizeButton.addEventListener('click', async () => {
@@ -57,25 +55,27 @@ function titleBarLoad() {
                     ipcRenderer.send('maximize-window');
                 }
                 
-                // Cambiar la imagen después de enviar el comando
                 toggleMaximizeIcon();
             } catch (error) {
                 console.error('Error al cambiar estado de ventana:', error);
             }
         });
 
-        // Botón de minimizar
         document.getElementById('minButton').addEventListener('click', () => {
             ipcRenderer.send('minimize-window');
         });
 
-        // Botón de cerrar
         document.getElementById('closeButton').addEventListener('click', () => {
             ipcRenderer.send('close-window');
         });
     } else {
         let html = document.documentElement;
         html.style.backgroundColor = 'var(--main)';
-        $(".titlebar").remove();
+        let titlebar = document.querySelector('.titlebar');
+        titlebar.remove();
     }
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    titleBarLoad()
+});
