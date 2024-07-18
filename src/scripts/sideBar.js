@@ -1,6 +1,6 @@
 const buttonsData = [
         {
-            title: 'Cancioner para Free Fire',
+            title: 'Cpsito',
             subtitle: 'Playlist • Fuster',
             image: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
             contentType: 'album',
