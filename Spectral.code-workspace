@@ -3,11 +3,5 @@
 		{
 			"path": "."
 		},
-		{
-			"path": "../OneDrive/Documentos/SpectralDEV/login-registro-js-master"
-		}
-	],
-	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "login-registro-js-master"
-	}
+	]
 }

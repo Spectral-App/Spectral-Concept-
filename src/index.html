@@ -36,21 +36,21 @@
         <div class="sidebar_mainContent">
             <div class="sidebarContainer">
                 <div class="sidebar_container_static" id="sidebar_static">
-                    <button class="sidebar_buttons" onclick="loadPage('home', 'HOME')">
+                    <button class="sidebar_buttons" onclick="loadPage('home')">
                         <img src="icons/home.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Inicio</span>
                         </div>
                     </button>
             
-                    <button class="sidebar_buttons" onclick="loadPage('search', 'SEARCH')">
+                    <button class="sidebar_buttons" onclick="loadPage('search')">
                         <img src="icons/search.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Buscar</span>
                         </div>
                     </button>
             
-                    <button class="sidebar_buttons" onclick="loadPage('plugins', 'PLUGINS')">
+                    <button class="sidebar_buttons" onclick="loadPage('plugins')">
                         <img src="icons/plugins.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Complementos</span>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="sidebar_container_dynamic" id="sidebar_dynamic">
-                    <button class="sidebar_buttons" onclick="loadPage('library', 'LIBRARY')">
+                    <button class="sidebar_buttons" onclick="loadPage('library')">
                         <img src="icons/library.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Mi biblioteca</span>
@@ -70,25 +70,23 @@
             <div class="mainContentContainer">
                 <div class="main_toolbar">
                     <div class="main_toolbar_buttons_container">
-                        <button id="prevPageButton" onclick="historyPrevious()">
+                        <button id="prevPageButton" onclick="history.back()">
                             <img src="icons/previousPage.svg">
                         </button>
-                        <button id="nextPageButton" onclick="historyNext()">
-                            <img src="icons/recentPage.svg">
-                        </button>
+
                     </div>
                 
                     <div class="main_toolbar_buttons_container">
-                        <button id="settingsButton" onclick="loadPage('settings', 'SETTINGS')">
+                        <button id="settingsButton" onclick="loadPage('settings')">
                             <img src="icons/settings.svg">
                         </button>
-                        <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="loadPage('user', 'USER')">
+                        <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="loadPage('user')">
                             <img src="images/temp_pfp.jpg">
                         </button>
                     </div>
                 </div>
 
-                <div class="main">
+                <div class="main" id="main">
                 </div>
             </div>
         </div>
@@ -114,14 +112,11 @@
     </div>
 
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
-    <script src="scripts/jqueryLoader.js"></script>
     <script src="scripts/sideBar.js"></script>
     <script src="scripts/taskBar.js"></script>
     <script src="scripts/mainToolbar.js"></script>
     <script src="scripts/titleBar.js"></script>
     <script src="scripts/loadContent.js"></script>   
-
     <script>if (window.module) module = window.module;</script>
 </body>
 </html>
