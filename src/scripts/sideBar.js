@@ -4,7 +4,7 @@ const buttonsData = [
             subtitle: 'Playlist • Fuster',
             image: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
             contentType: 'album',
-            contentID: '89127391709',
+            contentID: '1e61lxs',
             link: ''
         },
     {
@@ -12,7 +12,7 @@ const buttonsData = [
         subtitle: 'Album • Artista 2',
         image: './images/temp_cover.png',
         contentType: 'album',
-        contentID: '2',
+        contentID: '1e6bljn',
         link: ''
     },
     {
@@ -20,7 +20,7 @@ const buttonsData = [
         subtitle: 'Album • Artista 3',
         image: './images/temp_cover.png',
         contentType: 'album',
-        contentID: '3',
+        contentID: '1e63evp',
         link: ''
     },
 ];
@@ -32,9 +32,14 @@ const sidebar_dynamic = document.getElementById('sidebar_dynamic');
 function addSidebarButton(container, data) {
     const button = document.createElement('button');
     button.className = 'sidebar_buttons';
-
+    let buttonLink
+    if (data.link.toString() !== '') {
+        buttonLink = data.link;
+    } else {
+        buttonLink = data.contentType
+    }
     button.onclick = function() {
-        loadPage(data.contentType, data.contentID, 'new', data.link);
+        loadPage(buttonLink,data.contentID);
     };
 
     const img = document.createElement('img');
