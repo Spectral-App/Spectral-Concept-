@@ -1,6 +1,3 @@
-
-
-
 function addLibraryItem() {
     
     const libraryContainer = document.getElementById('userLibrary');

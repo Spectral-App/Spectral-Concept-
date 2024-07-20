@@ -110,13 +110,13 @@ p {
 }
 
 /* Caja de texto */
-.textbox_container {
+.normal-textbox {
     position: relative;
     margin: 10px 0; /* Reduce el espacio vertical entre las cajas de texto */
 }
 
-
-input, textarea {
+.normal-textbox input,
+.normal-textbox textarea {
     font-family: "book", sans-serif;
     background-color: var(--highlight);
     border: 2px solid rgba(255, 255, 255, 0.05);
@@ -125,25 +125,25 @@ input, textarea {
     color: var(--text);
     transition: all 0.3s ease;
     outline: none;
-    margin: 5 10px;
+    margin: 5px 10px;
 }
 
-textarea {
+.normal-textbox textarea {
     resize: none;
 }
 
-input:hover,
-textarea:hover {
+.normal-textbox input:hover,
+.normal-textbox textarea:hover {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-input:focus,
-textarea:focus {
+.normal-textbox input:focus,
+.normal-textbox textarea:focus {
     background-color: var(--background);
     border-color: rgba(255, 255, 255, 0.15);
 }
 
-label {
+.normal-textbox label {
     font-family: "bold", sans-serif;
     position: absolute;
     top: -8px;
@@ -161,15 +161,15 @@ label {
     1px -1px 0 var(--background);
 }
 
-input:focus + label,
-input:not(:placeholder-shown) + label,
-textarea:focus + label,
-textarea:not(:placeholder-shown) + label {
+.normal-textbox input:focus + label,
+.normal-textbox input:not(:placeholder-shown) + label,
+.normal-textbox textarea:focus + label,
+.normal-textbox textarea:not(:placeholder-shown) + label {
     opacity: 1;
 }
 
 /* Botones */
-button {
+.rounded-button {
     font-family: "bold", sans-serif;
     border-radius: 50px;
     background-color: var(--text);
@@ -182,11 +182,11 @@ button {
     font-size: 16px;
 }
 
-button:hover {
+.rounded-button:hover {
     transform: scale(1.01);
 }
 
-button:active {
+.rounded-button:active {
     opacity: 0.5;
     transform: scale(0.99);
 }
@@ -266,27 +266,6 @@ button:active {
     background-color: var(--main-elevated);
     overflow-y: auto;
     padding: 30px 2% 2% 2%;
-}
-
-/* Clases para ajustar el ancho */
-.width-20 {
-    width: 20% !important;
-}
-
-.width-40 {
-    width: 40% !important;
-}
-
-.width-60 {
-    width: 60% !important;
-}
-
-.width-80 {
-    width: 80% !important;
-}
-
-.width-100 {
-    width: 100% !important;
 }
 
 /* Son usados para la pagina de libreria, pagina de plugins y para cargar el inicio */

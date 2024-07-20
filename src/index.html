@@ -13,6 +13,7 @@
 
 <body>
     <div class="appcontainer">
+        <audio id="mainSong" preload="auto" src=""></audio>
         <div class="titlebar">
             <div class="titlebarDraggable">
                 <div class="titlebarLogo">
@@ -37,21 +38,21 @@
             <div class="sidebarContainer">
                 <div class="sidebar_container_static" id="sidebar_static">
                     <button class="sidebar_buttons" onclick="loadPage('home')">
-                        <img src="icons/home.svg" class="sidebar_buttons_svg">
+                        <img src="icons/buttons/home.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Inicio</span>
                         </div>
                     </button>
             
                     <button class="sidebar_buttons" onclick="loadPage('search')">
-                        <img src="icons/search.svg" class="sidebar_buttons_svg">
+                        <img src="icons/buttons/search.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Buscar</span>
                         </div>
                     </button>
             
                     <button class="sidebar_buttons" onclick="loadPage('plugins')">
-                        <img src="icons/plugins.svg" class="sidebar_buttons_svg">
+                        <img src="icons/buttons/plugin.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Complementos</span>
                         </div>
@@ -60,7 +61,7 @@
 
                 <div class="sidebar_container_dynamic" id="sidebar_dynamic">
                     <button class="sidebar_buttons" onclick="loadPage('library')">
-                        <img src="icons/library.svg" class="sidebar_buttons_svg">
+                        <img src="icons/buttons/library.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Mi biblioteca</span>
                         </div>
@@ -71,14 +72,14 @@
                 <div class="main_toolbar">
                     <div class="main_toolbar_buttons_container">
                         <button id="prevPageButton" onclick="history.back()">
-                            <img src="icons/previousPage.svg">
+                            <img src="icons/buttons/previousPage.svg">
                         </button>
 
                     </div>
                 
                     <div class="main_toolbar_buttons_container">
                         <button id="settingsButton" onclick="loadPage('settings')">
-                            <img src="icons/settings.svg">
+                            <img src="icons/buttons/settings.svg">
                         </button>
                         <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="loadPage('user')">
                             <img src="images/temp_pfp.jpg">
@@ -90,28 +91,62 @@
                 </div>
             </div>
         </div>
-        <div class="taskbar">
-            <div class="taskbar_songDetails">
+        <div id="taskbar">
+            <div id="taskbar_songDetails">
                 <button id="taskbar_songCover" onclick="loadPage('album', 'ALBUM-ID')">
                     <img src="images/temp_cover.png">
                 </button>
-                <div class="taskbar_textContainer">
-                    <div id="taskbar_titleWrapper">
-                        <a id="taskbar_songTitle" onclick="loadPage('album', 'ALBUM-ID')">12345678901234567890</a>
-                        <div class="fader fader-left"></div>
-                        <div class="fader fader-right"></div>
-                    </div>
-                    <div class="taskbar_textWrapper">
-                        <a id="taskbar_songArtist" onclick="loadPage('artist', 'ARTIST-ID')">Nombre del artistaaaaaaaaaaaaaaaaaaZ</a>
-                        <div class="fader fader-left" id="fader-left-artist"></div>
-                        <div class="fader fader-right" id="fader-right-artist"></div>
-                    </div>
+                <div id="taskbar_textContainer">
+                    <a id="taskbar_songTitle" onclick="loadPage('album', 'ALBUM-ID')">Placeholder</a>
+                    <a id="taskbar_songArtist" onclick="loadPage('artist', 'ARTIST-ID')">Placeholder</a>
                 </div>
+            </div>
+
+            <div id="taskbar_player">
+                <div id="taskbar_playerButtonsContainer">
+                    <button class="taskbar_mediaButtons">
+                        <img src="icons/musicPlayer/shuffle.svg">
+                    </button>
+                    <button class="taskbar_mediaButtons">
+                        <img src="icons/musicPlayer/previous.svg">
+                    </button>
+                    <button class="taskbar_mediaButtons" id="taskbar_playButton" onclick="controlSong()">
+                        <img src="icons/musicPlayer/play.svg">
+                    </button>
+                    <button class="taskbar_mediaButtons">
+                        <img src="icons/musicPlayer/next.svg">
+                    </button>
+                    <button class="taskbar_mediaButtons">
+                        <img src="icons/musicPlayer/repeat.svg">
+                    </button>
+                </div>
+                <div id="taskbar_progressbarContainer">
+                    <p class="taskbar_progressbarText" id="taskbar_actualTime">--:--</p>
+                    <div id="taskbar_progressBar">
+                        <div id="taskbar_progresbar_progress"></div>
+                        <div id="taskbar_progresbarHandler"></div>
+                    </div>
+                    <p class="taskbar_progressbarText" id="taskbar_totalTime">--:--</p>
+                </div>
+            </div>
+
+            <div id="taskbar_extraOptions">
+                <button class="taskbar_mediaButtons" id="taskbar_muteButton" onclick="muteSong()">
+                    <img src="icons/musicPlayer/full_sound.svg">
+                </button>
+                <div id="taskbar_volumeBar">
+                    <div id="taskbar_volumebar_progress"></div>
+                    <div id="taskbar_volumebarHandler"></div>
+                </div>
+                <button class="taskbar_mediaButtons">
+                    <img src="icons/musicPlayer/fullscreen.svg">
+                </button>
             </div>
         </div>       
     </div>
 
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="scripts/libs/mutag.min.js"></script>   
     <script src="scripts/sideBar.js"></script>
     <script src="scripts/taskBar.js"></script>
     <script src="scripts/mainToolbar.js"></script>

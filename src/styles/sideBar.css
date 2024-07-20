@@ -3,14 +3,14 @@
     width: 100%;
     background-color: var(--main-elevated);
     border-radius: 10px;
-    padding: 10px 5px;
+    padding: 10px;
 }
 
 .sidebar_container_dynamic {
     width: 100%;
     height: 100%;
     margin-top: 5%;
-    padding: 10px 5px;
+    padding: 10px;
     background-color: var(--main-elevated);
     border-radius: 10px;
     overflow-x: hidden;
@@ -18,13 +18,13 @@
 }
 
 .sidebar_buttons {
-    width: calc(100% - 19px);
+    width: calc(100%);
     background-color: var(--main-elevated);
     color: var(--text);
     display: flex;
     align-items: center;
     border: none;
-    padding: 7px 5px;
+    padding: 9px 15px; 
     text-align: left;
     cursor: pointer;
     border-radius: 10px;
