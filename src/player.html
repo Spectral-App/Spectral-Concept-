@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player</title>
+  <link rel="stylesheet" href="styles/globalStyle.css">
+  <link rel="stylesheet" href="styles/trayPlayer.css">
+</head>
+<body>
+  <div class="appcontainer">
+    <div class="titlebar">
+        <div class="titlebarLogo">
+            <img src="icons/logo.svg">
+            <p>SPECTRAL</p>
+        </div>
+        <div class="titlebarbuttonscontainer">
+            <button class="titlebarbutton" id="openbutton" onclick="ipcRenderer.send('toogle-main-window')">
+                <img src="icons/window_maximize.svg">
+            </button>
+            <button class="titlebarbutton" id="closebutton" onclick="ipcRenderer.send('close-spectral')">
+                <img src="icons/window_close.svg">
+            </button>
+        </div>
+    </div>
+    <div id="datacontainer">
+        <div id="songmetadata">
+            <img id="songCover" src="images/temp_cover.png">
+            <div id="songDetails">
+                <p id="songTitle">¡Reproduce algo!</p>
+                <p id="songArtist">Abre contenido en Spectral</p>
+            </div>
+        </div>
+        <div id="playercontrols">
+            <button class="playercontrolsbuttons" id="shufflebutton">
+                <img src="icons/musicPlayer/shuffle.svg">
+            </button>
+            <button class="playercontrolsbuttons">
+                <img src="icons/musicPlayer/previous.svg" id="previousbutton">
+            </button>
+            <button class="playercontrolsbuttons" id="playButton">
+                <img src="icons/musicPlayer/play_alt.svg">
+            </button>
+            <button class="playercontrolsbuttons" id="nextbutton">
+                <img src="icons/musicPlayer/next.svg">
+            </button>
+            <button class="playercontrolsbuttons" id="repeatbutton">
+                <img src="icons/musicPlayer/repeat.svg">
+            </button>
+        </div>
+    </div>
+  </div>
+  <script src="scripts/trayPlayer.js"></script>
+</body>
+</html>
