@@ -1,6 +1,6 @@
 const buttonsData = [
         {
-            title: 'Cpsito',
+            title: 'Javier Album',
             subtitle: 'Playlist • Fuster',
             image: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
             contentType: 'album',

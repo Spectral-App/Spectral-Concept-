@@ -1,4 +1,138 @@
-<h1>pagina plugins</h1>
-<h2>texto</h2>
-<h3>texto</h3>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Complementos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: calc(100% - 110px);
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .search-bar button {
+            padding: 10px;
+            margin-left: 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: #5cff5c;
+            color: #1c1c1c;
+        }
+        .plugin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #333;
+            border-radius: 5px;
+        }
+        .plugin-name {
+            font-size: 1.2em;
+        }
+        .plugin-actions button {
+            background-color: #ff5c5c;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .plugin-actions button.install {
+            background-color: #5cff5c;
+            color: #1c1c1c;
+        }
+        .plugin-actions button.manage {
+            background-color: #5c5cff;
+        }
+        .plugin-actions button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>COMPLEMENTOS</h1>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Buscar complemento...">
+            <button onclick="searchPlugin()">Buscar</button>
+        </div>
+        <div id="plugin-list">
+            <div class="plugin">
+                <span class="plugin-name">Complemento 1</span>
+                <div class="plugin-actions">
+                    <button class="install" onclick="installPlugin(this)">Instalar</button>
+                    <button class="delete" onclick="deletePlugin(this)">Eliminar</button>
+                    <button class="manage" onclick="managePlugin(this)">Gestionar</button>
+                </div>
+            </div>
+            <div class="plugin">
+                <span class="plugin-name">Complemento 2</span>
+                <div class="plugin-actions">
+                    <button class="install" onclick="installPlugin(this)">Instalar</button>
+                    <button class="delete" onclick="deletePlugin(this)">Eliminar</button>
+                    <button class="manage" onclick="managePlugin(this)">Gestionar</button>
+                </div>
+            </div>
+            <div class="plugin">
+                <span class="plugin-name">Complemento 3</span>
+                <div class="plugin-actions">
+                    <button class="install" onclick="installPlugin(this)">Instalar</button>
+                    <button class="delete" onclick="deletePlugin(this)">Eliminar</button>
+                    <button class="manage" onclick="managePlugin(this)">Gestionar</button>
+                </div>
+            </div>
+        </div>
+        <!-- Añade más complementos según sea necesario -->
+    </div>
+    <script>
+        function searchPlugin() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const plugins = document.querySelectorAll('.plugin');
+            plugins.forEach(plugin => {
+                const pluginName = plugin.querySelector('.plugin-name').textContent.toLowerCase();
+                if (pluginName.includes(searchValue)) {
+                    plugin.style.display = 'flex';
+                } else {
+                    plugin.style.display = 'none';
+                }
+            });
+        }
+
+        function installPlugin(button) {
+            alert('Instalar complemento: ' + button.parentElement.parentElement.querySelector('.plugin-name').textContent);
+        }
+
+        function deletePlugin(button) {
+            alert('Eliminar complemento: ' + button.parentElement.parentElement.querySelector('.plugin-name').textContent);
+        }
+
+        function managePlugin(button) {
+            alert('Gestionar complemento: ' + button.parentElement.parentElement.querySelector('.plugin-name').textContent);
+        }
+    </script>
+</body>
+</html>
+
 <script src="scripts/pageLoad/pluginsLoad.js"></script>
