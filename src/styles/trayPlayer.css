@@ -1,0 +1,144 @@
+.appcontainer {
+    opacity: 1;
+}
+
+.titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 30px;
+    height: 30px;
+    width: calc(100% - 2px);
+    background: var(--main);
+    margin-bottom: -1%;
+}
+
+.titlebarLogo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titlebarLogo img {
+    width: 16px;
+    height: 16px;
+    margin-left: 12px;
+    opacity: 0.5;
+}
+
+.titlebarLogo p {
+    font-family: "black", sans-serif;
+    font-size: 14px;
+    margin-left: 5px;
+    opacity: 0.5;
+    color: var(--text);
+}
+
+.titlebarbuttonscontainer {
+    margin-left: auto;
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin: -1px;
+}
+
+.titlebarbutton {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.titlebarbutton:hover {
+    transition: all 0.3s ease;
+    background-color: var(--highlight);
+}
+
+.titlebarbutton:active {
+    transition: all 0.1s ease;
+    opacity: 0.25;
+}
+
+.titlebarbutton img {
+    width: 10px;
+    height: 10px;
+}
+
+#datacontainer {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+    margin: 5px 10px;
+}
+
+#songmetadata {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-width: 280px;
+    width: 280px;
+}
+
+#songDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#songCover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+}
+
+#songTitle, #songArtist {
+    white-space: nowrap;
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#songTitle {
+    font-family: "bold", sans-serif;
+    font-size: 1em;
+    color: var(--text)
+}
+
+#songArtist {
+    font-family: "book", sans-serif;
+    font-size: 0.8em;
+    color: var(--subtext)
+}
+
+#playercontrols {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.playercontrolsbuttons {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    margin: 8px 0;
+}
+
+.playercontrolsbuttons img{
+    width: 30px;
+    height: 30px;
+}

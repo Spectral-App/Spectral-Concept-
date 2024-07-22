@@ -1,5 +1,4 @@
 .titlebar {
-    background-color: brown;
     display: block;
     min-height: 36px;
     height: 36px;
@@ -44,7 +43,7 @@
     -webkit-app-region: no-drag;
     margin-left: auto;
     display: flex;
-    position: relative; /* Cambio a relative */
+    position: relative;
     align-items: center;
     margin: -1px;
 }

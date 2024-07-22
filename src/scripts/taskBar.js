@@ -1,4 +1,4 @@
-
+const { ipcRenderer } = require('electron');
 
 const taskbarObjects = {
   song: document.getElementById('mainSong'),
@@ -45,6 +45,7 @@ async function loadSong(data) {
   let songTitle;
   let songArtist;
   let songCoverArt;
+  let tray_data;
 
   if (data.link) {
     try {
@@ -85,8 +86,18 @@ async function loadSong(data) {
     album: "",
     artwork: [{src: songCoverArt,},],
   }); 
+
   taskbarObjects.playbutton.src = 'icons/musicPlayer/pause.svg'
   taskbarObjects.song.play();
+
+  tray_data = {
+    title: songTitle,
+    artist: songArtist,
+    cover: songCoverArt,
+    isplaying: true
+  }
+
+  ipcRenderer.send('send-player-data', tray_data);
 }
 
 function controlSong() {
