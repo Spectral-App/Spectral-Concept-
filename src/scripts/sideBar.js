@@ -1,78 +1,64 @@
-const buttonsData = [
-        {
-            title: 'Javier Album',
-            subtitle: 'Playlist • Fuster',
-            image: 'https://i1.sndcdn.com/artworks-uBPnBHsutxH7Uok6-QtaQsA-t500x500.jpg',
-            contentType: 'album',
-            contentID: '1e61lxs',
-            link: ''
-        },
-    {
-        title: 'Ejemplo Album 2',
-        subtitle: 'Album • Artista 2',
-        image: './images/temp_cover.png',
-        contentType: 'album',
-        contentID: '1e6bljn',
-        link: ''
-    },
-    {
-        title: 'Ejemplo Album 3',
-        subtitle: 'Album • Artista 3',
-        image: './images/temp_cover.png',
-        contentType: 'album',
-        contentID: '1e63evp',
-        link: ''
-    },
-];
-
 const sidebar_static = document.getElementById('sidebar_static');
 const sidebar_dynamic = document.getElementById('sidebar_dynamic');
 
-// Añade los botones de albumes, singles y playlists a la sidebar
-function addSidebarButton(container, data) {
+const buttonTemplate = {
+    buttonlink: 'link/to/html',
+    buttonlinkid: 'content/id/OPTIONAL',
+    buttonparameters: {exampleParameter: 'yessir'},
+    title: 'button title',
+    subtitle: 'button subtitle',//an optional parameter
+    icon: 'path/to/icon',
+}
+
+function addSidebarContentButton(album, artist, cover) {
     const button = document.createElement('button');
     button.className = 'sidebar_buttons';
-    let buttonLink
-    if (data.link.toString() !== '') {
-        buttonLink = data.link;
-    } else {
-        buttonLink = data.contentType
-    }
+  
     button.onclick = function() {
-        loadPage(buttonLink,data.contentID);
+        loadPage('album',btoa(unescape(encodeURIComponent(album))));
     };
-
+  
     const img = document.createElement('img');
-    img.src = data.image;
+    img.src = cover;
     img.className = 'sidebar_buttons_image';
     button.appendChild(img);
-
+  
     const textContainer = document.createElement('div');
     textContainer.className = 'sidebar_buttons_text';
-
+  
     const title = document.createElement('span');
     title.className = 'sidebar_buttons_title';
-    title.textContent = data.title;
+    title.textContent = album;
     textContainer.appendChild(title);
-
-    if (data.subtitle) {
-        const subtitle = document.createElement('span');
-        subtitle.className = 'sidebar_buttons_subtitle';
-        subtitle.textContent = data.subtitle;
-        textContainer.appendChild(subtitle);
-    }
-
+  
+    const subtitle = document.createElement('span');
+    subtitle.className = 'sidebar_buttons_subtitle';
+    subtitle.textContent = 'Album • ' + artist;
+    textContainer.appendChild(subtitle);
+  
     button.appendChild(textContainer);
+  
+    return button;
+  }
 
-    if (container === 'static') {
-        sidebar_static.appendChild(button);
-    } else {
-        sidebar_dynamic.appendChild(button);
+async function loadSidebarLibrary() {
+    let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
+    if (savedMusicDirectories && savedMusicDirectories.length > 0) {
+        let addedAlbums = [];
+        for (const directory of savedMusicDirectories) {
+            songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
+            for (const song of songsList) {
+                const extractedSongData = await extractSongMetadata(song);
+                if (!addedAlbums.includes(extractedSongData.album)) {
+                    addedAlbums.push(extractedSongData.album);
+                    const songObject = addSidebarContentButton(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
+                    sidebar_dynamic.appendChild(songObject);
+                }
+            }
+        }
     }
-};
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    buttonsData.forEach(data => {
-        addSidebarButton('dynamic', data)
-    });
+    loadSidebarLibrary()
 });

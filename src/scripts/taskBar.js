@@ -16,13 +16,17 @@ const taskbarObjects = {
 };
 
 const currentSongData = {
-  name: '',
+  link: '',
+  title: '',
   artist: '',
   album: '',
+  genre: '',
   cover: '',
-  ID: '',
-  albumID: '',
-  artistID: ''
+  number: '0',
+  date: null,
+  duration: null,
+  copyright: null,
+  lyrics: null,
 };
 
 let isDragging = false;
@@ -30,74 +34,33 @@ let isVolumeDragging = false;
 let newTime = 0;
 let newVolume = 1;
 
-/**
- * Carga una cancion en el reproductor de musica
- * @param {Array} data - Los datos de la cancion para poder cargarla.
- * @description link: El link del archivo, puede ser una ruta local.
- * @description title: El titulo de la canción
- * @description album: El album de la canción
- * @description author: El artista de la canción
- * En caso de que title, album y author esten vacios, la funcion tratara de escanear los metadatos del archivo por estos datos.
- * Si no hay titulo disponible, se usa el nombre del archivo.
- * Para los demas parametros se dejan vacios los valores
- */
 async function loadSong(data) {
-  let songTitle;
-  let songArtist;
-  let songCoverArt;
-  let tray_data;
+  taskbarObjects.song.src = data.link;
+  taskbarObjects.title.textContent = data.title;
+  taskbarObjects.artist.textContent = data.artist;
+  taskbarObjects.coverart.src = data.cover;
 
-  if (data.link) {
-    try {
-      taskbarObjects.song.src = data.link;
-      const response = await fetch(data.link);
-      const blob = await response.blob();
-      const file = new File([blob], 'song.mp3', { type: blob.type });
-      
-      // extracts every needed metadata from the file
-      const tags = await window.mutag.fetch(file);
-
-      const title = tags.TIT2 || file.name.split('/').pop(); // title
-      const artist = tags.TPE1 || 'Artista desconocido'; // artist name
-      const album = tags.TALB || 'Álbum desconocido'; // album name
-      const coverart = tags.APIC ? URL.createObjectURL(tags.APIC) : 'images/temp_cover.png'; // link of the image
-
-      songTitle = title;
-      songArtist = artist;
-      songCoverArt = coverart;
-
-    } catch (error) {
-      console.error('Error al obtener los metadatos:', error);
-    }
-  } else if (data.title && data.coverart && data.album && data.artist) {
-    songTitle = data.title;
-    songArtist = data.artist;
-    songCoverArt = data.coverart;
-  } else {
-    console.error('Faltan parámetros necesarios para actualizar la canción.');
-  }
-
-  taskbarObjects.title.textContent = songTitle;
-  taskbarObjects.artist.textContent = songArtist;
-  taskbarObjects.coverart.src = songCoverArt;
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: songTitle,
-    artist: songArtist,
-    album: "",
-    artwork: [{src: songCoverArt,},],
-  }); 
-
-  taskbarObjects.playbutton.src = 'icons/musicPlayer/pause.svg'
+  taskbarObjects.playbutton.src = 'icons/musicPlayer/pause.svg';
   taskbarObjects.song.play();
 
   tray_data = {
-    title: songTitle,
-    artist: songArtist,
-    cover: songCoverArt,
+    title: data.title,
+    artist: data.artist,
+    cover: data.cover,
     isplaying: true
   }
 
   ipcRenderer.send('send-player-data', tray_data);
+  changeMediaSession(data.title,data.artist,data.album,data.cover)
+}
+
+function changeMediaSession(songTitle,songArtist,songAlbum,songCoverArt) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: songTitle,
+    artist: songArtist,
+    album: songAlbum,
+    artwork: [{src: songCoverArt,},],
+  });
 }
 
 function controlSong() {

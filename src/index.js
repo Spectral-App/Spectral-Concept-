@@ -1,5 +1,6 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, dialog } = require('electron');
 const path = require('node:path');
+const fs = require('fs');
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -86,6 +87,7 @@ const createPlayerProcess = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      
     }
   });
 
@@ -106,25 +108,26 @@ app.whenReady().then(() => {
     createMainWindow();
     createPlayerProcess();
     tray = new Tray(path.join('icon.ico'));
-
-    tray.on('click', () => {
-      if (playerProcess) {
-        if (playerProcess.isVisible()) {
-          playerProcess.hide();
-        } else {
-          playerProcess.show();
-          const { x, y } = tray.getBounds();
-          const { width, height } = playerProcess.getBounds();
-          playerProcess.setPosition(Math.round(x - width / 2), Math.round(y - height));
-        }
-      } else {
-        createPlayerProcess();
-      }
-    });
-
-    tray.setContextMenu(Menu.buildFromTemplate([]));
+    tray.setToolTip('Spectral')
+    tray.on('double-click', () => { showTrayMenu() });
+    tray.on('right-click', () => { showTrayMenu() });
   }, SPLASH_SCREEN_DELAY);
 });
+
+function showTrayMenu() {
+  if (playerProcess) {
+    if (playerProcess.isVisible()) {
+      playerProcess.hide();
+    } else {
+      playerProcess.show();
+      const { x, y } = tray.getBounds();
+      const { width, height } = playerProcess.getBounds();
+      playerProcess.setPosition(Math.round(x - width / 2), Math.round(y - height));
+    }
+  } else {
+    createPlayerProcess();
+  }
+}
 
 app.on('activate', () => {
   if (mainWindow === null) {
@@ -156,7 +159,7 @@ ipcMain.on('toogle-main-window', () => {
   } else {
     mainWindow.show();
   }
-}); 
+});
 
 ipcMain.on('close-spectral', () => {
   app.quit();
@@ -174,14 +177,51 @@ ipcMain.on('tray-song-data-send', (event, message) => {
   mainWindow.webContents.send('tray-song-data-recieve', message);
 });
 
+ipcMain.handle('selectDirectory', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory']
+  });
+  return result.filePaths[0];
+});
+
+ipcMain.handle('searchForSongFiles', async (event, folderPath) => {
+  const audioExtensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg'];
+  const searchInsideFolders = true;
+  const audioFiles = await searchFiles(folderPath, audioExtensions, searchInsideFolders);
+  return audioFiles;
+});
+
+async function searchFiles(folderPath, audioExtensions, searchInsideFolders) {
+  const files = await new Promise((resolve, reject) => {
+    fs.readdir(folderPath, (err, files) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(files);
+      }
+    });
+  });
+  const audioFiles = files
+    .map(file => path.join(folderPath, file))
+    .filter(filePath => audioExtensions.includes(path.extname(filePath).toLowerCase()));
+  if (searchInsideFolders) {
+    const folders = files.filter(file => fs.statSync(path.join(folderPath, file)).isDirectory());
+    for (const folder of folders) {
+      const childFiles = await searchFiles(path.join(folderPath, folder), audioExtensions, searchInsideFolders);
+      audioFiles.push(...childFiles);
+    }
+  }
+  return audioFiles;
+}
+
 app.on('before-quit', () => {
   if (tray) {
     tray.destroy();
   }
   if (mainWindow) {
-    mainWindow.destroy(); // Destruye mainWindow
+    mainWindow.destroy();
   }
   if (playerProcess) {
-    playerProcess.destroy(); // Destruye playerProcess
+    playerProcess.destroy();
   }
 });

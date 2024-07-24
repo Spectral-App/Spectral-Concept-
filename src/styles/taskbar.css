@@ -167,6 +167,7 @@
 #taskbar_extraOptions{
     justify-content: flex-end;
     gap: 10px;
+    padding-right: 10px;
 }
 
 .taskbar_progressbarText {

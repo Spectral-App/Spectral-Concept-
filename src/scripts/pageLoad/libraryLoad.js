@@ -1,96 +1,94 @@
-// Datos de los albumes, estos se generaran poquito a poquito
-var albums = [
-    {   id: '1',
-        image: './images/temp_cover.png',
-        name: 'FANCY YOU',
-        artist: 'TWICE'
-    },
-    {   id: '2',
-        image: './images/temp_cover.png',
-        name: 'Formula of Love: O+T=<3',
-        artist: 'TWICE'
-    },
-    {   id: '3',
-        image: './images/temp_cover.png',
-        name: 'Hotline 024: Friday Night Funkin',
-        artist: 'Saruky'
-    },
-    {   id: '4',
-        image: './images/temp_cover.png',
-        name: 'Static Symphony (feat. Sunexo)',
-        artist: 'EliteFerrex'
-    },
-    {   id: '5',
-        image: './images/temp_cover.png',
-        name: 'Steven Universe, Vol. 1 (Original Soundtrack)',
-        artist: 'Steven Universe'
-    },
-    {   id: '6',
-        image: './images/temp_cover.png',
-        name: 'POP CUBE',
-        artist: 'imase'
-    },
-    {   id: '7',
-        image: './images/temp_cover.png',
-        name: 'HOPE ON THE STREET VOL.1',
-        artist: 'j-hope'
-    },
-    {   id: '8',
-        image: './images/temp_cover.png',
-        name: 'GOLDEN',
-        artist: 'Jung Kook'
-    },
-    {   id: '9',
-        image: './images/temp_cover.png',
-        name: '1749',
-        artist: 'Lemaitre'
-    },
-    {   id: '10',
-        image: './images/temp_cover.png',
-        name: 'BOUNCE INTO THE MUSIC',
-        artist: 'SIAMES'
-    },
-    {   id: '11',
-        image: './images/temp_cover.png',
-        name: 'VULTURES 1',
-        artist: 'Kanye West'
-    },
-    {   id: '12',
-        image: './images/temp_cover.png',
-        name: 'Graduation',
-        artist: 'Kanye West'
+if (!musicLibrary) {
+    const musicLibrary = document.getElementById('musicLibrary'); 
+}
+async function openDirectory() {
+    const savedDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
+    const selectedDirectory = await ipcRenderer.invoke('selectDirectory');
+
+    if (selectedDirectory) {
+        const isAlreadyAdded = savedDirectories.includes(selectedDirectory);
+        savedDirectories.push(selectedDirectory);
+        localStorage.setItem('savedMusicDirectories', JSON.stringify(savedDirectories));
+
+        if (isAlreadyAdded) {
+            sendNotification('¡Esta carpeta ya esta añadida!', 'warning');
+        } else {
+            sendNotification('Carpeta añadida a tu biblioteca', 'success');
+        }
+
+        const files = await ipcRenderer.invoke('searchForSongFiles', selectedDirectory);
+
+        if (files) {
+            return files;
+        } else {
+            sendNotification('Hubo un error en la importación', 'error');
+            return [];
+        }
     }
-];
+}
 
-var itemsContainer = document.getElementById('userLibrary');
+function createMusicObject(title, subtitle, imageUrl = 'images/temp_cover.png') {
+    const musicContent = document.createElement('div');
+    musicContent.className = 'musicContent';
 
-albums.forEach(function(album) {
-    // Crear el boton en general
-    var button = document.createElement('div');
-    button.classList.add('itemButton');
+    musicContent.onclick = function() {
+        loadPage('album',btoa(unescape(encodeURIComponent(title))));
+    };
 
-    // Añade un id, util para cargar los datos con la API al final
-    button.id = album.id;
+    const musicImage = document.createElement('img');
+    musicImage.src = imageUrl;
 
-    // Luego añade la imagen
-    var image = document.createElement('img');
-    image.classList.add('itemImage');
-    image.src = album.image;
-    image.alt = album.name;
-    button.appendChild(image);
+    const musicInfo = document.createElement('div');
+    musicInfo.className = 'musicContent_info';
 
-    // El nombre del album
-    var name = document.createElement('p');
-    name.classList.add('itemName');
-    name.textContent = album.name;
-    button.appendChild(name);
+    const musicTitle = document.createElement('p');
+    musicTitle.className = 'musicContent_title';
+    musicTitle.textContent = title || 'Unknown Song';
 
-    // Al final el artista
-    var artist = document.createElement('span');
-    artist.classList.add('itemAuthor');
-    artist.textContent = album.artist;
-    button.appendChild(artist);
+    const musicSubtitle = document.createElement('p');
+    musicSubtitle.className = 'musicContent_subtitle';
+    musicSubtitle.textContent = subtitle || 'Unknown Artist';
 
-    // Y pum, se crea el boton :D
-    itemsContainer.appendChild(button);
-});
+    musicInfo.appendChild(musicTitle);
+    musicInfo.appendChild(musicSubtitle);
+
+    musicContent.appendChild(musicImage);
+    musicContent.appendChild(musicInfo);
+
+    return musicContent;
+}
+
+async function addNewSongsToLibrary() {
+    const loadedSongs = await openDirectory();
+    if (loadedSongs && loadedSongs.length > 0) {
+        let addedAlbums = [];
+        for (const song of loadedSongs) {
+            const extractedSongData = await extractSongMetadata(song);
+            if (!addedAlbums.includes(extractedSongData.album)) {
+                addedAlbums.push(extractedSongData.album);
+                const songObject = createMusicObject(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
+                musicLibrary.appendChild(songObject);
+            }
+        }
+    }
+}
+
+async function loadMusicLibrary() {
+    let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
+    if (savedMusicDirectories && savedMusicDirectories.length > 0) {
+        let addedAlbums = [];
+        for (const directory of savedMusicDirectories) {
+            songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
+            for (const song of songsList) {
+                const extractedSongData = await extractSongMetadata(song);
+                if (!addedAlbums.includes(extractedSongData.album)) {
+                    addedAlbums.push(extractedSongData.album);
+                    const songObject = createMusicObject(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
+                    musicLibrary.appendChild(songObject);
+                }
+            }
+        }
+    }
+}
+
+loadMusicLibrary()
