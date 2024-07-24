@@ -55,6 +55,7 @@ async function loadSong(data, startSong = true) {
     taskbarObjects.title.textContent = data.title;
     taskbarObjects.artist.textContent = data.artist;
     taskbarObjects.coverart.src = data.cover;
+    taskbarObjects.totaltime.textContent = data.duration;
 
     if (startSong === true) {
       taskbarObjects.playbutton.src = 'icons/musicPlayer/pause.svg';
@@ -108,16 +109,21 @@ taskbarObjects.song.addEventListener('ended', () => {
   nextSong(true)
 })
 
-function previousSong() {
-  if (shuffleState) {
-    //TODO: logica entera de un historial para poder volver y regresar sin afectar el modo aleatorio
-  } else {
-    if (actualSong-1 < 0) {
-      actualSong = songsQueue.length-1
+function previousSong(clicks) {
+  if (clicks === 1) {
+    taskbarObjects.progressbar.style.width = '0%';
+    taskbarObjects.song.currentTime = 0;
+  } else if (clicks === 2) {
+    if (shuffleState) {
+      //TODO: logica entera de un historial para poder volver y regresar sin afectar el modo aleatorio
     } else {
-      actualSong-=1
+      if (actualSong-1 < 0) {
+        actualSong = songsQueue.length-1
+      } else {
+        actualSong-=1
+      }
+      updateQueue(songsQueue,actualSong);
     }
-    updateQueue(songsQueue,actualSong);
   }
 }
 
