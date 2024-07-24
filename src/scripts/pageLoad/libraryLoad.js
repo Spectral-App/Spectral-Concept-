@@ -32,7 +32,7 @@ function createMusicObject(title, subtitle, imageUrl = 'images/temp_cover.png') 
     musicContent.className = 'musicContent';
 
     musicContent.onclick = function() {
-        loadPage('album',btoa(title));
+        loadPage('album',btoa(unescape(encodeURIComponent(title))));
     };
 
     const musicImage = document.createElement('img');

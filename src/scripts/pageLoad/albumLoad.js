@@ -1,6 +1,6 @@
 async function selectSongsByAlbum() {
     let selectedSongs = [];
-    const selectedAlbum = (atob(checkURL().contentID));
+    const selectedAlbum = (decodeURIComponent(escape(atob(checkURL().contentID))));
     let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
     if (savedMusicDirectories && savedMusicDirectories.length > 0) {
         for (const directory of savedMusicDirectories) {

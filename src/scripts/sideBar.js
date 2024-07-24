@@ -15,7 +15,7 @@ function addSidebarContentButton(album, artist, cover) {
     button.className = 'sidebar_buttons';
   
     button.onclick = function() {
-      loadPage('album', btoa(album));
+        loadPage('album',btoa(unescape(encodeURIComponent(album))));
     };
   
     const img = document.createElement('img');
