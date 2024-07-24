@@ -1,12 +1,22 @@
-<section>
-    <h2>Login</h2>
-    <form id="loginForm">
-        <label>Mail</label>
-        <input type="email" placeholder="..." id="email" required autofocus>
-        <label>Contraseña</label>
-        <input type="password" placeholder="..." id="password" required>
-        <input type="submit" value="Ingresar">
-    </form>
-    <p>No tienes una cuenta? <a onclick="loadPage('signup')">Registro</a></p>
-</section>
-<script src="scripts/pageLoad/account/login.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <section>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label>Correo electrónico</label>
+            <input type="email" placeholder="..." id="email" required autofocus>
+            <label>Contraseña</label>
+            <input type="password" placeholder="..." id="password" required>
+            <input type="submit" value="Ingresar">
+        </form>
+        <p>No tienes una cuenta? <a href="javascript:void(0);" onclick="loadPage('signup.html')">Registro</a></p>
+    </section>
+    <script src="scripts/pageLoad/account/common.js"></script>
+    <script src="scripts/pageLoad/account/login.js"></script>
+</body>
+</html>
