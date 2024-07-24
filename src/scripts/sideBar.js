@@ -45,6 +45,7 @@ async function loadSidebarLibrary() {
     let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
     if (savedMusicDirectories && savedMusicDirectories.length > 0) {
         let addedAlbums = [];
+        sidebar_dynamic.innerHTML = '';
         for (const directory of savedMusicDirectories) {
             songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
             for (const song of songsList) {

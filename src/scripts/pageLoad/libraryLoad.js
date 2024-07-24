@@ -1,7 +1,7 @@
 if (!musicLibrary) {
     const musicLibrary = document.getElementById('musicLibrary'); 
 }
-async function openDirectory() {
+async function addDirectory() {
     const savedDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
     const selectedDirectory = await ipcRenderer.invoke('selectDirectory');
 
@@ -14,15 +14,6 @@ async function openDirectory() {
             sendNotification('¡Esta carpeta ya esta añadida!', 'warning');
         } else {
             sendNotification('Carpeta añadida a tu biblioteca', 'success');
-        }
-
-        const files = await ipcRenderer.invoke('searchForSongFiles', selectedDirectory);
-
-        if (files) {
-            return files;
-        } else {
-            sendNotification('Hubo un error en la importación', 'error');
-            return [];
         }
     }
 }
@@ -59,18 +50,9 @@ function createMusicObject(title, subtitle, imageUrl = 'images/temp_cover.png') 
 }
 
 async function addNewSongsToLibrary() {
-    const loadedSongs = await openDirectory();
-    if (loadedSongs && loadedSongs.length > 0) {
-        let addedAlbums = [];
-        for (const song of loadedSongs) {
-            const extractedSongData = await extractSongMetadata(song);
-            if (!addedAlbums.includes(extractedSongData.album)) {
-                addedAlbums.push(extractedSongData.album);
-                const songObject = createMusicObject(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
-                musicLibrary.appendChild(songObject);
-            }
-        }
-    }
+    await addDirectory();
+    loadMusicLibrary();
+    loadSidebarLibrary()
 }
 
 async function loadMusicLibrary() {

@@ -59,13 +59,16 @@
                     </button>
                 </div>
 
-                <div class="sidebar_container_dynamic" id="sidebar_dynamic">
+                <div class="sidebar_container_dynamic">
                     <button class="sidebar_buttons" onclick="loadPage('library')">
                         <img src="icons/buttons/library.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Mi biblioteca</span>
                         </div>
                     </button>
+                    <div id="sidebar_dynamic">
+
+                    </div>
                 </div>
             </div>
             <div class="mainContentContainer">
@@ -93,30 +96,30 @@
         </div>
         <div id="taskbar">
             <div id="taskbar_songDetails">
-                <button id="taskbar_songCover" onclick="loadPage('album', 'ALBUM-ID')">
+                <button id="taskbar_songCover">
                     <img src="images/temp_cover.png">
                 </button>
                 <div id="taskbar_textContainer">
-                    <a id="taskbar_songTitle" onclick="loadPage('album', 'ALBUM-ID')">¡Reproduce algo!</a>
-                    <a id="taskbar_songArtist" onclick="loadPage('artist', 'ARTIST-ID')">Abre contenido en Spectral</a>
+                    <a id="taskbar_songTitle">¡Reproduce algo!</a>
+                    <a id="taskbar_songArtist">Abre contenido en Spectral</a>
                 </div>
             </div>
 
             <div id="taskbar_player">
                 <div id="taskbar_playerButtonsContainer">
-                    <button class="taskbar_mediaButtons">
+                    <button class="taskbar_mediaButtons" id="taskbar_shuffleButton" onclick="toggleShuffle()">
                         <img src="icons/musicPlayer/shuffle.svg">
                     </button>
-                    <button class="taskbar_mediaButtons">
+                    <button class="taskbar_mediaButtons" onclick="previousSong()">
                         <img src="icons/musicPlayer/previous.svg">
                     </button>
                     <button class="taskbar_mediaButtons" id="taskbar_playButton" onclick="controlSong()">
                         <img src="icons/musicPlayer/play.svg">
                     </button>
                     <button class="taskbar_mediaButtons">
-                        <img src="icons/musicPlayer/next.svg">
+                        <img src="icons/musicPlayer/next.svg" onclick="nextSong()">
                     </button>
-                    <button class="taskbar_mediaButtons">
+                    <button class="taskbar_mediaButtons" id="taskbar_repeatButton" onclick="toggleRepeat()">
                         <img src="icons/musicPlayer/repeat.svg">
                     </button>
                 </div>

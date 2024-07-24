@@ -16,12 +16,12 @@ async function selectSongsByAlbum() {
     return selectedSongs;
 };
 
-function createSongEntry(data) {
+function createSongEntry(data,queue,actualSongNum) {
     const songEntry = document.createElement('div');
     songEntry.className = 'album_songEntry';
 
     songEntry.ondblclick= function() {
-        loadSong(data)
+        updateQueue(queue,actualSongNum)
     }
   
     const songEntryNumber = document.createElement('div');
@@ -35,7 +35,7 @@ function createSongEntry(data) {
     playButton.className = 'album_songEntryNumber_play';
 
     playButton.onclick= function() {
-        loadSong(data)
+        updateQueue(queue,actualSongNum)
     }
   
     const playImg = document.createElement('img');
@@ -80,7 +80,9 @@ async function loadAlbumMetadata() {
         artist: document.getElementById('album_artist'),
         date: document.getElementById('album_date'),
         songcount: document.getElementById('album_songCount'),
+        shufflebutton: document.getElementById('album_shuffleButton'),
         playbutton: document.getElementById('album_playButton'),
+        downloadbutton: document.getElementById('album_downloadButton'),
         songlistcontainer: document.getElementById('album_songsLists'),
     }
 
@@ -90,7 +92,6 @@ async function loadAlbumMetadata() {
     const demosong = albumContent[0];
     const phSongMetadata = await extractSongMetadata(demosong);
 
-    //to get the image dominant color for the bg
     const colorThief = new ColorThief();
 
     albumObjects.cover.src = phSongMetadata.cover;
@@ -104,9 +105,32 @@ async function loadAlbumMetadata() {
         const songMetadata = await extractSongMetadata(song);
         albumSongs.push(songMetadata);
     }
-    albumSongs.sort((a,b) => a.number - b.number)
+    albumSongs.sort((a,b) => a.number - b.number);
+    let queue = albumSongs;
+    let actualSongNum = 0;
+
+    albumObjects.shufflebutton.onclick= function() {
+        //fucking shitty code but it works
+        updateQueue(queue)
+        if (!shuffleState) {
+            taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle_on.svg';
+            shuffleState = true;
+        };
+        nextSong();
+    }
+
+    albumObjects.playbutton.onclick= function() {
+        updateQueue(queue)
+    }
+
+    albumObjects.downloadbutton.onclick= function() {
+        sendNotification('Ventana de descarga!')
+    }
+
+
     for (const song of albumSongs) {
-        const songEntry = createSongEntry(song);
+        const songEntry = createSongEntry(song,queue,actualSongNum);
+        actualSongNum += 1;
         albumObjects.songlistcontainer.appendChild(songEntry);
     }
 
