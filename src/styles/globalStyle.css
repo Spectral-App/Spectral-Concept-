@@ -24,7 +24,7 @@
     --notification: #3281EA;
     --notification-error: #F05454;
     --notification-warning: #FFD369;
-    --notification-confirm: #BEF992;
+    --notification-success: #BEF992;
 }
 
 /* FUENTES */
@@ -108,6 +108,39 @@ p {
     margin: 0;
     padding: 0;
 }
+
+/*POPUP*/
+#notificationPopup{
+    z-index: 10;
+    display: flex;
+    position: fixed;
+    bottom: 15%;
+    left: 50%;
+    max-width: 480px;
+    height: 45px;
+    max-height: 45px;
+    transform: translate(-50%, -50%);
+    background-color: var(--notification);
+    border-radius: 10px;
+    font-family: "book", sans-serif;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+    transition: opacity 0.3s ease;
+    align-items: center;
+    padding: 10px;
+    align-content: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+#notificationPopup p {
+    color: var(--text);
+    font-family: "bold", sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 /* Caja de texto */
 .normal-textbox {
@@ -248,7 +281,7 @@ p {
     width: 210px;
     border-radius: 10px;
     margin-right: 1%;
-    overflow: hidden; /* Asegura que el contenedor maneje el desbordamiento */
+    overflow: hidden;
 }
 
 .mainContentContainer {
@@ -256,7 +289,7 @@ p {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    overflow: hidden; /* Asegura que el contenedor maneje el desbordamiento */
+    overflow: hidden;
 }
 
 .main {
@@ -265,10 +298,321 @@ p {
     flex-grow: 1;
     background-color: var(--main-elevated);
     overflow-y: auto;
-    padding: 30px 2% 2% 2%;
+    padding: 50px 3% 3% 3%;
 }
 
-/* Son usados para la pagina de libreria, pagina de plugins y para cargar el inicio */
+#musicLibrary {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    overflow-x: hidden;
+    justify-items: center;
+}
+
+.musicContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 120px;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 5px;
+    text-overflow: ellipsis;
+    transition: opacity 0.3s ease;
+    margin: 0;
+}
+
+
+.musicContent:hover {
+    background-color: var(--highlight-elevated);
+}
+
+.musicContent:active {
+    background-color: var(--background);
+}
+
+.musicContent img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.musicContent_info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    white-space: nowrap; 
+
+}
+
+.musicContent_title {
+    font-family: "bold", sans-serif;
+    font-size: 0.8em;
+    color: var(--text);
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.musicContent_subtitle {
+    font-family: "book", sans-serif;
+    font-size: 0.7em;
+    color: var(--subtext);
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#albumPageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#albumContent {
+    margin: -50px -3% -18% -3%;
+    padding: 50px 3% 20% 3%;
+    transition: opacity 0.3s ease;
+}
+
+#album_contentInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+#album_cover {
+    border-radius: 10px;
+    height: 22vh;
+    width: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+#album_contentText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+}
+
+#album_contentType {
+    font-family: "bold", sans-serif;
+    font-size: 12px;
+    color: var(--subtext);
+}
+
+#album_contentTitle {
+    font-family: "black", sans-serif;
+    font-size: clamp(3vw, 3.3vw, 4.3vw);
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.25;
+    text-align: center;
+}
+
+#album_contentExtrasContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.album_contentExtra {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+    color: var(--subtext);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#album_playerControls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap : 15px;
+    margin: 10px 0;
+}
+
+.album_playerControlsButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.75;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s ease;
+}
+
+#album_playButton {
+    border: none;
+    background-color: var(--text);
+    padding: 7px 12px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.album_playerControlsButtons:hover,
+#album_playButton:hover {
+    transform: scale(1.05);
+}
+
+.album_playerControlsButtons:active,
+#album_playButton:active {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+#album_playButton p {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+}
+
+.album_playerControlsButtons img {
+    width: 26px;
+    height: 26px;
+}
+
+#album_songsLists {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.album_songEntry {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.album_songEntry:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.album_songEntryNumber {
+    height: 100%;
+    width: 6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.album_songEntryNumber p {
+    font-family: "bold", sans-serif;
+    font-size: 14px;
+    color: var(--subtext);
+    transition: all 0.3s ease;
+    margin: 0;
+    position: absolute;
+}
+
+.album_songEntryNumber_play {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.album_songEntryNumber_play:hover {
+    transform: scale(1.1);
+}
+
+.album_songEntryNumber_play:active {
+    opacity: 0.5;
+    transform: scale(0.9);
+}
+
+.album_songEntry:hover .album_songEntryNumber_play {
+    opacity: 1;
+}
+
+.album_songEntry:hover .album_songEntryNumber p  {
+    opacity: 0;
+}
+
+.album_songEntryNumber_play img {
+    width: 2.8vw;
+    height: 2.8vw;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.album_songEntryTitle {
+    height: 100%;
+    width: 41.5%;
+    display: flex;
+    align-items: center;
+}
+
+.album_songEntryTitle p {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album_songEntryArtist {
+    height: 100%;
+    width: 41.5%;
+    display: flex;
+    align-items: center;
+}
+
+.album_songEntryArtist p {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+    color: var(--subtext);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album_songEntryDuration {
+    height: 100%;
+    width: 11%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.album_songEntryDuration p {
+    font-family: "bold", sans-serif;
+    font-size: 14px;
+    color: var(--subtext);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*UNUSED*/
 .itemsContainer {
     background: transparent;
     display: flex;
