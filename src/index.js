@@ -127,16 +127,20 @@ app.whenReady().then(() => {
     createTrayProcess();
     tray = new Tray(fullTrayIconPath);
     tray.setToolTip('Spectral')
-    tray.on('click', () => {
-      setTimeout(() => {
-        if (!mainWindow.isFocused() && mainWindow.isVisible()) {
-          mainWindow.focus();
-        } else {
-          mainWindow.show();
-        }
-      }, 100);
-    });
-    tray.on('right-click', () => { showTrayMenu() });
+    if (process.platform === 'linux') {
+      tray.on('click', () => {showTrayMenu()});
+    } else {
+      tray.on('click', () => {
+        setTimeout(() => {
+          if (!mainWindow.isFocused() && mainWindow.isVisible()) {
+            mainWindow.focus();
+          } else {
+            mainWindow.show();  
+          }
+        }, 100);
+      });
+      tray.on('right-click', () => { showTrayMenu() });
+    }
   }, SPLASH_SCREEN_DELAY);
 });
 
