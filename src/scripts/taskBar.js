@@ -33,7 +33,6 @@ const taskbarObjects = {
 
 let songsQueue = [];
 let actualSong = 0;
-let songHistory = []
 
 let shuffleState = false;
 let repeatState = 'none' //can be none, once or all
@@ -62,15 +61,8 @@ async function loadSong(data, startSong = true) {
       taskbarObjects.song.play();
     }
 
-    tray_data = {
-      title: data.title,
-      artist: data.artist,
-      cover: data.cover,
-      isplaying: true
-    }
-
-    ipcRenderer.send('send-player-data', tray_data);
     changeMediaSession(data.title, data.artist, data.album, data.cover)
+
   } catch (error) {
     console.error(error)
     sendNotification('No se pudo cargar la cancion', 'error');
@@ -96,11 +88,9 @@ function controlSong() {
   }
 }
 
-//this pile of code acts like the brain of the progressbar, pretty cool
 taskbarObjects.song.addEventListener('timeupdate', () => {
   if (!isDragging) {
     taskbarObjects.actualtime.textContent = formatTime(taskbarObjects.song.currentTime)
-    taskbarObjects.totaltime.textContent = formatTime(taskbarObjects.song.duration)
     taskbarObjects.progressbar.style.width = ((taskbarObjects.song.currentTime / taskbarObjects.song.duration) * 100) + '%'
   }
 })
@@ -150,6 +140,9 @@ function nextSong(isAuto = false) {
         updateQueue(songsQueue,actualSong);
       } else if (repeatState === 'none') {
         updateQueue(songsQueue,actualSong,false);
+        taskbarObjects.progressbar.style.width = '0%';
+        taskbarObjects.song.currentTime = 0;
+        taskbarObjects.totaltime.textContent = data.duration;
       }
     } else {
       actualSong+=1;
@@ -213,7 +206,6 @@ function toggleShuffle() {
   }
 }
 
-// code to format the text for the taskbar
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
@@ -243,6 +235,100 @@ function calculateNewVolume(clientX) {
   } else { // in case of error
     taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg'
   }
+}
+
+function saveData() {
+  let playerdata = {
+    songsQueue: [],
+    actualSong: 0,
+    newVolume: 0,
+    shuffleState: false,
+    repeatState: 'none',
+  }
+  playerdata.songsQueue = songsQueue;
+  playerdata.actualSong = actualSong;
+  playerdata.newVolume = newVolume;
+  playerdata.shuffleState = shuffleState;
+  playerdata.repeatState = repeatState;
+
+  let playingsongpos = taskbarObjects.song.currentTime
+
+  localStorage.setItem('taskbarData', JSON.stringify(playerdata));
+  localStorage.setItem('songData', playingsongpos);
+}
+
+
+ipcRenderer.on('app-closing', (event, message) => {
+  saveData()
+});
+
+window.addEventListener('beforeunload', (event) => {
+  saveData()
+});
+
+async function restoreData() {
+  const playerdata = JSON.parse(localStorage.getItem('taskbarData'));
+  const playingsongpos = localStorage.getItem('songData');
+  console.log(playerdata)
+  console.log(playingsongpos)
+  if (playerdata && playerdata.songsQueue.length > 0 && playingsongpos) {
+    songsQueue = playerdata.songsQueue;
+    actualSong = playerdata.actualSong;
+    shuffleState = playerdata.shuffleState;
+    repeatState = playerdata.repeatState;
+    newVolume = playerdata.newVolume;
+
+    //RELOADS EVERY SONG METADATA - made just for the cover art being missing every restart
+    for (const song of songsQueue) {
+      let songLink = song.link;
+      let songCover = await extractSongMetadata(songLink);
+      song.cover = songCover.cover
+    }
+
+    //load every song that the user had loaded before exiting
+    //also loads the last played song
+    updateQueue(songsQueue, actualSong, false);
+
+    //gets the last known position of the song
+    taskbarObjects.song.currentTime = playingsongpos;
+    taskbarObjects.actualtime.textContent = formatTime(taskbarObjects.song.currentTime)
+    taskbarObjects.progressbar.style.width = ((taskbarObjects.song.currentTime / taskbarObjects.song.duration) * 100) + '%'
+
+    //same shit but updates the volume bar
+    taskbarObjects.song.volume = newVolume;
+    taskbarObjects.volumebar.style.width = newVolume * 100 + '%';
+
+    if (taskbarObjects.song.volume === 0) {
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/no_sound.svg'
+    } else if (taskbarObjects.song.volume < 0.5) {
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/low_sound.svg'
+    } else if (taskbarObjects.song.volume >= 0.5) {
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg'
+    } else { // in case of error
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg'
+    }
+
+    //adjusts the icons depending of the current state of the shuffle
+    if (!shuffleState) {
+      taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle.svg';
+    } else if (shuffleState) {
+      taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle_on.svg';
+    }
+
+    //same shit but for the repeat button
+    if (repeatState === 'none') {
+      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat.svg';
+    } else if (repeatState === 'all') {
+      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_on.svg';
+    } else if (repeatState === 'once') {
+      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_once.svg';
+    }
+
+    console.log('Datos restaurados con éxito.');
+  } else {
+    console.log('No hay datos guardados para restaurar.');
+  }
+  await ipcRenderer.invoke('spectral-is-loaded');
 }
 
 taskbarObjects.volumebar_container.addEventListener('mousedown', (e) => {
@@ -281,8 +367,20 @@ document.addEventListener('mouseleave', () => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  //TODO: REPLACE WITH USER LAST VOLUME DATA
-  taskbarObjects.volumebar.style.width = '100%';
+  restoreData()
+});
+
+document.addEventListener('keydown', (event) => {
+  const activeElement = document.activeElement;
+
+  if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+    if (event.code === 'Space') {
+      controlSong()
+      event.preventDefault();
+    } else if (event.code === 'KeyM') {
+      muteSong()
+    }
+  }
 });
 
 // media session controls
@@ -292,12 +390,10 @@ navigator.mediaSession.setActionHandler("play", () => {
 navigator.mediaSession.setActionHandler("pause", () => {
   controlSong()
 });
-navigator.mediaSession.setActionHandler("stop", () => {
-  console.log('STOP FROM MEDIA SESSION')
-});
+
 navigator.mediaSession.setActionHandler("previoustrack", () => {
-  console.log('PREVIOUS FROM MEDIA SESSION')
+  previousSong(2)
 });
 navigator.mediaSession.setActionHandler("nexttrack", () => {
-  console.log('NEXT FROM MEDIA SESSION')
+  nextSong()
 });

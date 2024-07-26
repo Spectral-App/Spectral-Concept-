@@ -14,7 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    overflow: hidden; /* Asegura que la imagen no exceda los bordes redondeados */
+    overflow: hidden;
 }
 
 .splash img {

@@ -109,6 +109,10 @@ p {
     padding: 0;
 }
 
+img {
+    -webkit-user-drag: none;
+}
+
 /*POPUP*/
 #notificationPopup{
     z-index: 10;
@@ -304,25 +308,22 @@ p {
 #musicLibrary {
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    overflow-x: hidden;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     justify-items: center;
+    overflow-x: hidden;
 }
 
 .musicContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 120px;
+    justify-content: center;
+    width: 150px;
     border-radius: 10px;
     padding: 10px;
-    gap: 5px;
-    text-overflow: ellipsis;
-    transition: opacity 0.3s ease;
-    margin: 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
 }
-
 
 .musicContent:hover {
     background-color: var(--highlight-elevated);
@@ -333,26 +334,32 @@ p {
 }
 
 .musicContent img {
-    width: 100px;
-    height: 100px;
+    width: auto;
+    height: auto;
+    max-width: 125px;
+    max-height: 125px;
+    min-width: 110px;
+    min-height: 110px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .musicContent_info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
-    white-space: nowrap; 
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .musicContent_title {
     font-family: "bold", sans-serif;
     font-size: 0.8em;
     color: var(--text);
-    width: 100%;
     text-align: center;
-    white-space: nowrap;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -361,12 +368,12 @@ p {
     font-family: "book", sans-serif;
     font-size: 0.7em;
     color: var(--subtext);
-    width: 100%;
     text-align: center;
-    white-space: nowrap;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 #albumPageContainer {
     display: flex;
@@ -568,6 +575,7 @@ p {
     width: 41.5%;
     display: flex;
     align-items: center;
+    margin-right: 5px;
 }
 
 .album_songEntryTitle p {
@@ -584,6 +592,7 @@ p {
     width: 41.5%;
     display: flex;
     align-items: center;
+    margin-right: 5px;
 }
 
 .album_songEntryArtist p {

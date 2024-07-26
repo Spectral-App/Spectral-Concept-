@@ -76,7 +76,7 @@ function loadPage(contentData, contentID, URLParameters = {}, functionParameters
 function checkURL() {
     const actualURL = window.location.href;
 
-    if (actualURL.includes('app')) {
+    if (actualURL.includes('#app/')) {
         const croppedURL = actualURL.split('app/')[1];
 
         const [contentData, remainingURL] = croppedURL.split('/');

@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, Tray, ipcMain, dialog, nativeImage } = require('electron');
+const chokidar = require('chokidar');
 const path = require('node:path');
-const fs = require('fs');
+const fs = require('fs').promises;
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -8,14 +9,18 @@ if (require('electron-squirrel-startup')) {
 
 let mainWindow;
 let splashWindow;
-let playerProcess;
-let tray = null;
+let trayProcess;
+let tray;
 const SPLASH_SCREEN_DELAY = 1000;
 
+const iconPath = process.platform === 'win32' ? 'icon.ico' : 'icon.png';
+const trayIconPath = process.platform === 'win32' ? 'icon-tray.ico' : 'icon-tray.png';
+const fullIconPath = path.join(__dirname, '../build', iconPath);
+const fullTrayIconPath = path.join(__dirname, '../build', trayIconPath);
 const createSplashScreen = () => {
   splashWindow = new BrowserWindow({
-    title: "Spectral - Loading",
-    icon: "icon.ico",
+    title: "Spectral",
+    icon: fullIconPath,
     minWidth: 240,
     minHeight: 336,
     width: 240,
@@ -40,7 +45,7 @@ const createSplashScreen = () => {
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
     title: "Spectral",
-    icon: "icon.ico",
+    icon: fullIconPath,
     width: 1280,
     height: 720,
     minWidth: 800,
@@ -59,25 +64,28 @@ const createMainWindow = () => {
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  mainWindow.once('ready-to-show', () => {
-    if (splashWindow) {
-      splashWindow.close();
-    }
-    mainWindow.show();
-  });
-
   mainWindow.on("close", (event) => {
     event.preventDefault();
     mainWindow.hide();
   });
+
+  mainWindow.on('show', () => {
+    setTimeout(() => {
+      mainWindow.setOpacity(1);
+    }, 50);
+  });
+  
+  mainWindow.on('hide', () => {
+    mainWindow.setOpacity(0);
+  });
 };
 
-const createPlayerProcess = () => {
-  playerProcess = new BrowserWindow({
-    minWidth: 300,
-    minHeight: 140,
-    width: 300,
-    height: 140,
+const createTrayProcess = () => {
+  trayProcess = new BrowserWindow({
+    minWidth: 150,
+    minHeight: 105,
+    width: 150,
+    height: 105,
     frame: false,
     show: false,
     transparent: true,
@@ -91,14 +99,24 @@ const createPlayerProcess = () => {
     }
   });
 
-  playerProcess.on('blur', () => {
-    playerProcess.hide();
+  trayProcess.on('blur', () => {
+    trayProcess.hide();
   });
 
-  playerProcess.loadFile(path.join(__dirname, 'player.html'));
+  trayProcess.loadFile(path.join(__dirname, 'tray.html'));
 
-  playerProcess.on('closed', () => {
-    playerProcess = null;
+  trayProcess.on('closed', () => {
+    trayProcess = null;
+  });
+
+  trayProcess.on('show', () => {
+    setTimeout(() => {
+      trayProcess.setOpacity(1);
+    }, 50);
+  });
+  
+  trayProcess.on('hide', () => {
+    trayProcess.setOpacity(0);
   });
 };
 
@@ -106,26 +124,34 @@ app.whenReady().then(() => {
   createSplashScreen();
   setTimeout(() => {
     createMainWindow();
-    createPlayerProcess();
-    tray = new Tray(path.join('icon.ico'));
+    createTrayProcess();
+    tray = new Tray(fullTrayIconPath);
     tray.setToolTip('Spectral')
-    tray.on('double-click', () => { showTrayMenu() });
+    tray.on('click', () => {
+      setTimeout(() => {
+        if (!mainWindow.isFocused() && mainWindow.isVisible()) {
+          mainWindow.focus();
+        } else {
+          mainWindow.show();
+        }
+      }, 100);
+    });
     tray.on('right-click', () => { showTrayMenu() });
   }, SPLASH_SCREEN_DELAY);
 });
 
 function showTrayMenu() {
-  if (playerProcess) {
-    if (playerProcess.isVisible()) {
-      playerProcess.hide();
+  if (trayProcess) {
+    if (trayProcess.isVisible()) {
+      trayProcess.hide();
     } else {
-      playerProcess.show();
+      trayProcess.show();
       const { x, y } = tray.getBounds();
-      const { width, height } = playerProcess.getBounds();
-      playerProcess.setPosition(Math.round(x - width / 2), Math.round(y - height));
+      const { width, height } = trayProcess.getBounds();
+      trayProcess.setPosition(Math.round(x - width / 2), Math.round(y - height));
     }
   } else {
-    createPlayerProcess();
+    createTrayProcess();
   }
 }
 
@@ -137,6 +163,7 @@ app.on('activate', () => {
   }
 });
 
+// for the custom titlebar buttons
 ipcMain.on('minimize-window', () => {
   mainWindow.minimize();
 });
@@ -162,6 +189,7 @@ ipcMain.on('toogle-main-window', () => {
 });
 
 ipcMain.on('close-spectral', () => {
+  mainWindow.webContents.send('app-closing', '');
   app.quit();
 });
 
@@ -169,12 +197,11 @@ ipcMain.handle('is-maximized', () => {
   return mainWindow.isMaximized();
 });
 
-ipcMain.on('send-player-data', (event, data) => {
-  playerProcess.webContents.send('receive-player-data', data);
-});
-
-ipcMain.on('tray-song-data-send', (event, message) => {
-  mainWindow.webContents.send('tray-song-data-recieve', message);
+ipcMain.handle('spectral-is-loaded', () => {
+  if (splashWindow) {
+    splashWindow.close();
+  }
+  mainWindow.show();
 });
 
 ipcMain.handle('selectDirectory', async () => {
@@ -185,32 +212,31 @@ ipcMain.handle('selectDirectory', async () => {
 });
 
 ipcMain.handle('searchForSongFiles', async (event, folderPath) => {
-  const audioExtensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg'];
-  const searchInsideFolders = true;
-  const audioFiles = await searchFiles(folderPath, audioExtensions, searchInsideFolders);
-  return audioFiles;
+  const audioExtensions = new Set(['.mp3', '.flac', '.aac', '.ogg']);
+  return await searchFiles(folderPath, audioExtensions);
 });
 
-async function searchFiles(folderPath, audioExtensions, searchInsideFolders) {
-  const files = await new Promise((resolve, reject) => {
-    fs.readdir(folderPath, (err, files) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(files);
+async function searchFiles(folderPath, audioExtensions) {
+  let audioFiles = [];
+
+  try {
+    const entries = await fs.readdir(folderPath, { withFileTypes: true });
+
+    const tasks = entries.map(async (entry) => {
+      const fullPath = path.join(folderPath, entry.name);
+      if (entry.isFile() && audioExtensions.has(path.extname(entry.name).toLowerCase())) {
+        audioFiles.push(fullPath);
+      } else if (entry.isDirectory()) {
+        const childFiles = await searchFiles(fullPath, audioExtensions);
+        audioFiles = audioFiles.concat(childFiles);
       }
     });
-  });
-  const audioFiles = files
-    .map(file => path.join(folderPath, file))
-    .filter(filePath => audioExtensions.includes(path.extname(filePath).toLowerCase()));
-  if (searchInsideFolders) {
-    const folders = files.filter(file => fs.statSync(path.join(folderPath, file)).isDirectory());
-    for (const folder of folders) {
-      const childFiles = await searchFiles(path.join(folderPath, folder), audioExtensions, searchInsideFolders);
-      audioFiles.push(...childFiles);
-    }
+
+    await Promise.all(tasks);
+  } catch (error) {
+    console.error('Error reading directory:', error);
   }
+
   return audioFiles;
 }
 
@@ -221,7 +247,7 @@ app.on('before-quit', () => {
   if (mainWindow) {
     mainWindow.destroy();
   }
-  if (playerProcess) {
-    playerProcess.destroy();
+  if (trayProcess) {
+    trayProcess.destroy();
   }
 });

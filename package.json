@@ -15,12 +15,27 @@
   },
   "build": {
     "appId": "com.spectral.spectralapp",
-    "directories": "build",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "build/**/*",
+      "src/**/*",
+      "package.json",
+      "node_modules/**/*"
+    ],
     "win": {
       "target": [
         "nsis"
       ],
       "icon": "icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "icon.png"
     },
     "nsis": {
       "installerIcon": "icon.ico",
@@ -47,8 +62,9 @@
     "name": "NaviVani",
     "email": "navivani.contact@gmail.com"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "dependencies": {
+    "chokidar": "^3.6.0",
     "electron-builder": "^24.13.3",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.7.1"

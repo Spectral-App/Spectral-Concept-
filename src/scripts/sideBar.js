@@ -61,5 +61,5 @@ async function loadSidebarLibrary() {
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    loadSidebarLibrary()
+    // loadSidebarLibrary()
 });

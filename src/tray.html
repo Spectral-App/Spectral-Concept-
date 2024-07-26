@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player</title>
+    <link rel="stylesheet" href="styles/globalStyle.css">
+    <link rel="stylesheet" href="styles/trayPlayer.css">
+</head>
+
+<body>
+    <div class="appcontainer">
+        <div id="spectralLogo">
+            <img src="icons/logo.svg">
+            <p>SPECTRAL</p>
+        </div>
+        <div class="separator"></div>
+        <button class="trayOption" id="openbutton" onclick="ipcRenderer.send('toogle-main-window')">
+            <p>Mostrar Spectral</p>
+        </button>
+        <button class="trayOption" id="closebutton" onclick="ipcRenderer.send('close-spectral')">
+            <p>Salir</p>
+        </button>
+    </div>
+    <script src="scripts/trayPlayer.js"></script>
+</body>
+
+</html>
