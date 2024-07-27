@@ -149,7 +149,7 @@ img {
 /* Caja de texto */
 .normal-textbox {
     position: relative;
-    margin: 10px 0; /* Reduce el espacio vertical entre las cajas de texto */
+    margin: 10px 0;
 }
 
 .normal-textbox input,
@@ -540,6 +540,9 @@ img {
 
 .album_songEntryNumber_play {
     background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     position: absolute;
     opacity: 0;
@@ -621,7 +624,24 @@ img {
     text-overflow: ellipsis;
 }
 
-/*UNUSED*/
+#searchBarContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#searchBar {
+    font-family: "book", sans-serif;
+    font-size: 15px;
+    color: var(--subtext);
+    width: 70%;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+}
+
+/*UNUSED-DELETE AFTER TESTING*/
 .itemsContainer {
     background: transparent;
     display: flex;

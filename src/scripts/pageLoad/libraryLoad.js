@@ -1,30 +1,53 @@
-if (!musicLibrary) {
-    const musicLibrary = document.getElementById('musicLibrary'); 
-}
 async function addDirectory() {
-    const savedDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
+    let savedDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
     const selectedDirectory = await ipcRenderer.invoke('selectDirectory');
 
     if (selectedDirectory) {
-        console.log(savedDirectories)
-        const isAlreadyAdded = savedDirectories.includes(selectedDirectory);
+        let isAlreadyAdded = false;
+        let isParentDirectory = false;
+
+        savedDirectories = savedDirectories.filter(directory => {
+            if (selectedDirectory.startsWith(directory) && selectedDirectory !== directory) {
+                isAlreadyAdded = true;
+                return true;
+            }
+            if (directory.startsWith(selectedDirectory) && directory !== selectedDirectory) {
+                isParentDirectory = true;
+                return false;
+            }
+            return true;
+        });
 
         if (isAlreadyAdded) {
-            sendNotification('¡Esta carpeta ya esta añadida!', 'warning');
+            sendNotification('¡Esta carpeta ya está añadida!', 'warning');
         } else {
-            sendNotification('Carpeta añadida a tu biblioteca', 'success');
+            if (isParentDirectory) {
+                sendNotification('Carpeta padre añadida, subcarpetas eliminadas', 'info');
+            } else {
+                sendNotification('Carpeta añadida a tu biblioteca', 'success');
+            }
             savedDirectories.push(selectedDirectory);
             localStorage.setItem('savedMusicDirectories', JSON.stringify(savedDirectories));
+            ipcRenderer.invoke('set-folders', savedDirectories)
+            .then(() => {
+                console.log('started watching folders');
+            })
+            .catch(err => {
+                console.error('Error setting folders:', err);
+            });
         }
     }
 }
 
+
 function createMusicObject(title, subtitle, imageUrl = 'images/temp_cover.png') {
+    const contentID = encodeText(title)
     const musicContent = document.createElement('div');
     musicContent.className = 'musicContent';
+    musicContent.setAttribute('lbry-content-id', contentID);
 
     musicContent.onclick = function() {
-        loadPage('album',btoa(unescape(encodeURIComponent(title))));
+        loadPage('album',contentID);
     };
 
     const musicImage = document.createElement('img');
@@ -57,38 +80,17 @@ async function addNewSongsToLibrary() {
 
     if (directoriesBefore !== directoriesAfter) {
         loadMusicLibrary();
-        // loadSidebarLibrary();
+        loadSidebarLibrary();
     }
 }
 
 async function loadMusicLibrary() {
-    let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
-    if (savedMusicDirectories && savedMusicDirectories.length > 0) {
-        let filesArrays = [];
-        let localSongs = [];
-        for (const directory of savedMusicDirectories) {
-            songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
-            for (const song of songsList) {
-                const extractedSongData = await extractSongMetadata(song);
-                let songData = {
-                    album: extractedSongData.album,
-                    link: extractedSongData.link
-                }
-                localSongs.push(songData)
-
-                //TODO: hacer que songdata se añada a un array
-                //las canciones deberan cargar a partir del array en lugar de leer una por una y descartandolas
-                //el array debe reusarse paar la sidebar y los albumes
-                //para la sidebar evita que se analizen todas las carpetas dos veces
-                //para los albumes, con el array, se escanean los links de las canciones que coincidan con el nombre del album
-                if (!filesArrays.includes(extractedSongData.album)) {
-                    filesArrays.push(extractedSongData.album);
-                    const songObject = createMusicObject(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
-                    musicLibrary.appendChild(songObject);
-                }
-            }
-        }
-        console.log(localSongs)
+    const musicLibrary = document.getElementById('musicLibrary');
+    for (const album of localSongs) {
+        const demosong = album.songs[0]
+        const metadata = await extractSongMetadata(demosong)
+        const songObject = createMusicObject(metadata.album,metadata.artist,metadata.cover)
+        musicLibrary.appendChild(songObject);
     }
 }
 

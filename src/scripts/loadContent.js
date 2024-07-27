@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         loadPage(urlData.contentData, urlData.contentID, urlData.parameters, ['refresh']);
     }
 
-    // Avoid seeing some objects that have not yet loaded
     document.querySelector('.appcontainer').style.opacity = '1';
 });
+
+

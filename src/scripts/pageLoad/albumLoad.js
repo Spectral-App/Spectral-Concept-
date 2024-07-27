@@ -1,19 +1,7 @@
 async function selectSongsByAlbum() {
-    let selectedSongs = [];
-    const selectedAlbum = (decodeURIComponent(escape(atob(checkURL().contentID))));
-    let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
-    if (savedMusicDirectories && savedMusicDirectories.length > 0) {
-        for (const directory of savedMusicDirectories) {
-            songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
-            for (const song of songsList) {
-                const extractedSongData = await extractSongMetadata(song);
-                if (extractedSongData.album === selectedAlbum) {
-                    selectedSongs.push(song)
-                }
-            }
-        }
-    }
-    return selectedSongs;
+    const selectedAlbum = (decodeText(checkURL().contentID));
+    let songsInAlbum = localSongs.find(album => album.album === selectedAlbum)?.songs || [];
+    return songsInAlbum;
 };
 
 function createSongEntry(data,queue,actualSongNum) {

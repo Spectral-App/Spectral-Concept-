@@ -1,5 +1,3 @@
-const { ipcRenderer } = require('electron');
-
 const playerObjects = {
     openbutton: document.getElementById('openbutton'),
     closebutton: document.getElementById('closebutton'),

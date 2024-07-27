@@ -1,5 +1,3 @@
-const { ipcRenderer } = require('electron');
-
 const taskbarObjects = {
   song: document.getElementById('mainSong'),
   title: document.getElementById('taskbar_songTitle'),
@@ -56,12 +54,12 @@ async function loadSong(data, startSong = true) {
     taskbarObjects.coverart.src = data.cover;
     taskbarObjects.totaltime.textContent = data.duration;
 
+    changeMediaSession(data.title, data.artist, data.album, data.cover)
+    
     if (startSong === true) {
       taskbarObjects.playbutton.src = 'icons/musicPlayer/pause.svg';
       taskbarObjects.song.play();
     }
-
-    changeMediaSession(data.title, data.artist, data.album, data.cover)
 
   } catch (error) {
     console.error(error)
@@ -269,8 +267,6 @@ window.addEventListener('beforeunload', (event) => {
 async function restoreData() {
   const playerdata = JSON.parse(localStorage.getItem('taskbarData'));
   const playingsongpos = localStorage.getItem('songData');
-  console.log(playerdata)
-  console.log(playingsongpos)
   if (playerdata && playerdata.songsQueue.length > 0 && playingsongpos) {
     songsQueue = playerdata.songsQueue;
     actualSong = playerdata.actualSong;

@@ -17,6 +17,11 @@ const iconPath = process.platform === 'win32' ? 'icon.ico' : 'icon.png';
 const trayIconPath = process.platform === 'win32' ? 'icon-tray.ico' : 'icon-tray.png';
 const fullIconPath = path.join(__dirname, '../build', iconPath);
 const fullTrayIconPath = path.join(__dirname, '../build', trayIconPath);
+
+let watcher;
+const audioExtensions = new Set(['.mp3', '.flac', '.aac', '.ogg']);
+const watchedFolders = new Set();
+
 const createSplashScreen = () => {
   splashWindow = new BrowserWindow({
     title: "Spectral",
@@ -74,7 +79,7 @@ const createMainWindow = () => {
       mainWindow.setOpacity(1);
     }, 50);
   });
-  
+
   mainWindow.on('hide', () => {
     mainWindow.setOpacity(0);
   });
@@ -95,7 +100,7 @@ const createTrayProcess = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      
+
     }
   });
 
@@ -114,7 +119,7 @@ const createTrayProcess = () => {
       trayProcess.setOpacity(1);
     }, 50);
   });
-  
+
   trayProcess.on('hide', () => {
     trayProcess.setOpacity(0);
   });
@@ -128,14 +133,14 @@ app.whenReady().then(() => {
     tray = new Tray(fullTrayIconPath);
     tray.setToolTip('Spectral')
     if (process.platform === 'linux') {
-      tray.on('click', () => {showTrayMenu()});
+      tray.on('click', () => { showTrayMenu() });
     } else {
       tray.on('click', () => {
         setTimeout(() => {
           if (!mainWindow.isFocused() && mainWindow.isVisible()) {
             mainWindow.focus();
           } else {
-            mainWindow.show();  
+            mainWindow.show();
           }
         }, 100);
       });
@@ -157,6 +162,45 @@ function showTrayMenu() {
   } else {
     createTrayProcess();
   }
+}
+
+function isAudioFile(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  return audioExtensions.has(ext);
+}
+
+
+function startWatching(foldersArray) {
+  if (watcher) {
+    watcher.close();
+  }
+
+  watcher = chokidar.watch(foldersArray, { persistent: true });
+
+  watcher.on('ready', () => {
+    const watchedPaths = watcher.getWatched();
+    for (const directory in watchedPaths) {
+      watchedPaths[directory].forEach(filePath => {
+        const fullPath = `${directory}\\${filePath}`;
+        if (isAudioFile(fullPath)) {
+          mainWindow.webContents.send('library-file-added', fullPath);
+        }
+      });
+    }
+  });
+
+  watcher.on('add', filePath => {
+    if (isAudioFile(filePath)) {
+      mainWindow.webContents.send('library-file-added', filePath);
+    }
+  });
+
+  watcher.on('unlink', filePath => {
+    if (isAudioFile(filePath)) {
+      mainWindow.webContents.send('library-file-deleted', filePath);
+    }
+  });
+
 }
 
 app.on('activate', () => {
@@ -208,6 +252,10 @@ ipcMain.handle('spectral-is-loaded', () => {
   mainWindow.show();
 });
 
+ipcMain.handle('set-folders', (event, foldersArray) => {
+  startWatching(foldersArray);
+});
+
 ipcMain.handle('selectDirectory', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory']
@@ -215,34 +263,6 @@ ipcMain.handle('selectDirectory', async () => {
   return result.filePaths[0];
 });
 
-ipcMain.handle('searchForSongFiles', async (event, folderPath) => {
-  const audioExtensions = new Set(['.mp3', '.flac', '.aac', '.ogg']);
-  return await searchFiles(folderPath, audioExtensions);
-});
-
-async function searchFiles(folderPath, audioExtensions) {
-  let audioFiles = [];
-
-  try {
-    const entries = await fs.readdir(folderPath, { withFileTypes: true });
-
-    const tasks = entries.map(async (entry) => {
-      const fullPath = path.join(folderPath, entry.name);
-      if (entry.isFile() && audioExtensions.has(path.extname(entry.name).toLowerCase())) {
-        audioFiles.push(fullPath);
-      } else if (entry.isDirectory()) {
-        const childFiles = await searchFiles(fullPath, audioExtensions);
-        audioFiles = audioFiles.concat(childFiles);
-      }
-    });
-
-    await Promise.all(tasks);
-  } catch (error) {
-    console.error('Error reading directory:', error);
-  }
-
-  return audioFiles;
-}
 
 app.on('before-quit', () => {
   if (tray) {
