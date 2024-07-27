@@ -100,7 +100,6 @@ const createTrayProcess = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-
     }
   });
 
@@ -133,7 +132,7 @@ app.whenReady().then(() => {
     tray = new Tray(fullTrayIconPath);
     tray.setToolTip('Spectral')
     if (process.platform === 'linux') {
-      tray.on('click', () => { showTrayMenu() });
+      tray.on('click', (event, bounds) => { showTrayMenu(bounds) });
     } else {
       tray.on('click', () => {
         setTimeout(() => {
@@ -144,20 +143,27 @@ app.whenReady().then(() => {
           }
         }, 100);
       });
-      tray.on('right-click', () => { showTrayMenu() });
+      tray.on('right-click', (event, bounds) => { showTrayMenu(bounds) });
     }
   }, SPLASH_SCREEN_DELAY);
 });
 
-function showTrayMenu() {
+function showTrayMenu(bounds) {
   if (trayProcess) {
     if (trayProcess.isVisible()) {
       trayProcess.hide();
     } else {
       trayProcess.show();
-      const { x, y } = tray.getBounds();
+      let { x, y } = bounds || tray.getBounds();
       const { width, height } = trayProcess.getBounds();
-      trayProcess.setPosition(Math.round(x - width / 2), Math.round(y - height));
+      if (process.platform === 'linux') {
+        x = x - Math.round(width / 2);
+        y = y - height;
+      } else {
+        x = Math.round(x - width / 2);
+        y = Math.round(y - height);
+      }
+      trayProcess.setPosition(x, y);
     }
   } else {
     createTrayProcess();
@@ -168,7 +174,6 @@ function isAudioFile(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   return audioExtensions.has(ext);
 }
-
 
 function startWatching(foldersArray) {
   if (watcher) {
@@ -200,7 +205,6 @@ function startWatching(foldersArray) {
       mainWindow.webContents.send('library-file-deleted', filePath);
     }
   });
-
 }
 
 app.on('activate', () => {
@@ -262,7 +266,6 @@ ipcMain.handle('selectDirectory', async () => {
   });
   return result.filePaths[0];
 });
-
 
 app.on('before-quit', () => {
   if (tray) {

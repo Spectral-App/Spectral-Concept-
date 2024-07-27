@@ -16,11 +16,15 @@ async function extractSongMetadata(songRoute) {
     try {
         songData.link = songRoute;
 
-        const response = await fetch(songRoute);
+        const isLocalFile = !songRoute.startsWith('http');
+        const fileUrl = isLocalFile ? `file:///${songRoute.replace(/\\/g, '/')}` : songRoute;
+
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+
         const arrayBuffer = await response.arrayBuffer();
 
-        const url = new URL(songRoute);
-        const pathname = decodeURIComponent(url.pathname);
+        const pathname = decodeURIComponent(new URL(fileUrl).pathname);
         const fileName = pathname.split('/').pop().replace(/\.[^/.]+$/, "");
         const folderName = decodeURIComponent(pathname.split('/').slice(-2, -1)[0]);
 
@@ -50,7 +54,7 @@ async function extractSongMetadata(songRoute) {
         
         songData.date = tags.TDRC ? tags.TDRC.data : new Date().toISOString().split('T')[0];
 
-        const audio = new Audio(songRoute);
+        const audio = new Audio(fileUrl);
         await new Promise((resolve) => {
             audio.addEventListener('loadedmetadata', () => {
                 const duration = audio.duration;
