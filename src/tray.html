@@ -12,18 +12,17 @@
 <body>
     <div class="appcontainer">
         <div id="spectralLogo">
-            <img src="icons/logo.svg">
+            <img src="icons/logo.svg" alt="Spectral Logo">
             <p>SPECTRAL</p>
         </div>
         <div class="separator"></div>
-        <button class="trayOption" id="openbutton" onclick="ipcRenderer.send('toogle-main-window')">
+        <button class="trayOption" id="openbutton">
             <p>Mostrar Spectral</p>
         </button>
-        <button class="trayOption" id="closebutton" onclick="ipcRenderer.send('close-spectral')">
+        <button class="trayOption" id="closebutton">
             <p>Salir</p>
         </button>
     </div>
-    <script src="scripts/trayPlayer.js"></script>
 </body>
 
 </html>

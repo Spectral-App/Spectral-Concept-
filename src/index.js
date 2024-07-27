@@ -98,6 +98,7 @@ const createTrayProcess = () => {
     focusable: true,
     resizable: false,
     webPreferences: {
+      preload: path.join(__dirname, 'scripts/tray.js'),
       nodeIntegration: true,
       contextIsolation: false,
     }
@@ -154,14 +155,23 @@ function showTrayMenu(bounds) {
       trayProcess.hide();
     } else {
       trayProcess.show();
-      let { x, y } = bounds || tray.getBounds();
       const { width, height } = trayProcess.getBounds();
+      let x = bounds.x - Math.round(width / 2);
+      let y = bounds.y - height;
       if (process.platform === 'linux') {
-        x = x - Math.round(width / 2);
-        y = y - height;
+        trayProcess.setBounds({
+          x: Math.max(0, x),
+          y: Math.max(0, y),
+          width,
+          height
+        });
       } else {
-        x = Math.round(x - width / 2);
-        y = Math.round(y - height);
+        trayProcess.setBounds({
+          x,
+          y,
+          width,
+          height
+        });
       }
       trayProcess.setPosition(x, y);
     }
@@ -184,9 +194,10 @@ function startWatching(foldersArray) {
 
   watcher.on('ready', () => {
     const watchedPaths = watcher.getWatched();
+    const os_weird_route_thingy = process.platform === 'linux' ? '/' : '\\';
     for (const directory in watchedPaths) {
       watchedPaths[directory].forEach(filePath => {
-        const fullPath = `${directory}\\${filePath}`;
+        const fullPath = `${directory}${os_weird_route_thingy}${filePath}`;
         if (isAudioFile(fullPath)) {
           mainWindow.webContents.send('library-file-added', fullPath);
         }

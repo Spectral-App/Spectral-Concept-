@@ -67,6 +67,7 @@
     "chokidar": "^3.6.0",
     "electron-builder": "^24.13.3",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-tray-window": "^1.2.7",
     "jquery": "^3.7.1",
     "update-electron-app": "^3.0.0"
   }
