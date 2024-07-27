@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Tray, ipcMain, dialog, nativeImage } = require('electron');
 const chokidar = require('chokidar');
+const positioner = require('electron-traywindow-positioner');
 const path = require('node:path');
 const fs = require('fs').promises;
 
@@ -155,25 +156,8 @@ function showTrayMenu(bounds) {
       trayProcess.hide();
     } else {
       trayProcess.show();
-      const { width, height } = trayProcess.getBounds();
-      let x = bounds.x - Math.round(width / 2);
-      let y = bounds.y - height;
-      if (process.platform === 'linux') {
-        trayProcess.setBounds({
-          x: Math.max(0, x),
-          y: Math.max(0, y),
-          width,
-          height
-        });
-      } else {
-        trayProcess.setBounds({
-          x,
-          y,
-          width,
-          height
-        });
-      }
-      trayProcess.setPosition(x, y);
+      positioner.position(trayProcess, tray.getBounds());
+      //here
     }
   } else {
     createTrayProcess();
