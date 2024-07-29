@@ -1,8 +1,10 @@
-async function selectSongsByAlbum() {
+async function selectSongsByArtist() {
     const metaurl = (decodeText(checkURL().contentID));
+    console.log(metaurl)
     const meta = await extractSongMetadata(metaurl);
-    const selectedAlbum = meta.album;
-    let songsInAlbum = localAlbums.find(album => album.album === selectedAlbum)?.songs || [];
+    console.log(meta)
+    const selectedAlbum = meta.artist;
+    let songsInAlbum = localArtists.find(artist => artist.name === selectedAlbum)?.songs || [];
     return songsInAlbum;
 };
 
@@ -67,7 +69,6 @@ async function loadAlbumMetadata() {
         background: document.getElementById('albumContent'),
         cover: document.getElementById('album_cover'),
         title: document.getElementById('album_contentTitle'),
-        artist: document.getElementById('album_artist'),
         date: document.getElementById('album_date'),
         songcount: document.getElementById('album_songCount'),
         shufflebutton: document.getElementById('album_shuffleButton'),
@@ -78,15 +79,13 @@ async function loadAlbumMetadata() {
 
     albumObjects.background.style.opacity = '0';
 
-    const albumContent = await selectSongsByAlbum();
+    const albumContent = await selectSongsByArtist();
     const demosong = albumContent[0];
     const phSongMetadata = await extractSongMetadata(demosong);
 
     const colorThief = new ColorThief();
 
-    albumObjects.cover.src = phSongMetadata.cover;
-    albumObjects.title.textContent = phSongMetadata.album;
-    albumObjects.artist.textContent = phSongMetadata.artist;
+    albumObjects.title.textContent = phSongMetadata.artist;
     albumObjects.date.textContent = phSongMetadata.date.split('-')[0];
     albumObjects.songcount.textContent = albumContent.length + ' Canciones';
 
@@ -123,6 +122,7 @@ async function loadAlbumMetadata() {
         actualSongNum += 1;
         albumObjects.songlistcontainer.appendChild(songEntry);
     }
+    
     let coverDominantColor = colorThief.getColor(albumObjects.cover);
     let rgbColor = 'rgb('+coverDominantColor[0]+','+coverDominantColor[1]+','+coverDominantColor[2]+')';
 

@@ -131,26 +131,10 @@ app.whenReady().then(() => {
   setTimeout(() => {
     createMainWindow();
     createTrayProcess();
-    tray = new Tray(fullTrayIconPath);
-    tray.setToolTip('Spectral')
-    if (process.platform === 'linux') {
-      tray.on('click', (event, bounds) => { showTrayMenu(bounds) });
-    } else {
-      tray.on('click', () => {
-        setTimeout(() => {
-          if (!mainWindow.isFocused() && mainWindow.isVisible()) {
-            mainWindow.focus();
-          } else {
-            mainWindow.show();
-          }
-        }, 100);
-      });
-      tray.on('right-click', (event, bounds) => { showTrayMenu(bounds) });
-    }
   }, SPLASH_SCREEN_DELAY);
 });
 
-function showTrayMenu(bounds) {
+function showTrayMenu() {
   if (trayProcess) {
     if (trayProcess.isVisible()) {
       trayProcess.hide();
@@ -249,10 +233,24 @@ ipcMain.handle('spectral-is-loaded', () => {
     splashWindow.close();
   }
   mainWindow.show();
-});
-
-ipcMain.handle('set-folders', (event, foldersArray) => {
-  startWatching(foldersArray);
+  if (!tray) {
+    tray = new Tray(fullTrayIconPath);
+    tray.setToolTip('Spectral')
+    if (process.platform === 'linux') {
+      tray.on('click', (event, bounds) => { showTrayMenu(bounds) });
+    } else {
+      tray.on('click', () => {
+        setTimeout(() => {
+          if (!mainWindow.isFocused() && mainWindow.isVisible()) {
+            mainWindow.focus();
+          } else {
+            mainWindow.show();
+          }
+        }, 100);
+      });
+      tray.on('right-click', (event) => { showTrayMenu() });
+    }
+  }
 });
 
 ipcMain.handle('selectDirectory', async () => {
@@ -260,6 +258,14 @@ ipcMain.handle('selectDirectory', async () => {
     properties: ['openDirectory']
   });
   return result.filePaths[0];
+});
+
+ipcMain.handle('set-folders', (event, foldersArray) => {
+  startWatching(foldersArray);
+});
+
+ipcMain.handle('start-search', (event, content) => {
+  mainWindow.webContents.send('search-content', content);
 });
 
 app.on('before-quit', () => {

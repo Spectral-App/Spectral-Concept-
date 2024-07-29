@@ -1,17 +1,17 @@
 const { ipcRenderer } = require('electron');
 const sidebar_static = document.getElementById('sidebar_static');
 
-const buttonTemplate = {
-    buttonlink: 'link/to/html',
-    buttonlinkid: 'content/id/OPTIONAL',
-    buttonparameters: {exampleParameter: 'yessir'},
-    title: 'button title',
-    subtitle: 'button subtitle',//an optional parameter
-    icon: 'path/to/icon',
-}
+// const buttonTemplate = {
+//     buttonlink: 'link/to/html',
+//     buttonlinkid: 'content/id/OPTIONAL',
+//     buttonparameters: {exampleParameter: 'yessir'},
+//     title: 'button title',
+//     subtitle: 'button subtitle',   an optional parameter
+//     icon: 'path/to/icon',
+// }
 
-function addSidebarContentButton(album, artist, cover) {
-    const albumID = encodeText(album)
+function addSidebarContentButton(id,album, artist, cover) {
+    const albumID = encodeText(id);
     const button = document.createElement('button');
     button.className = 'sidebar_buttons';
     button.setAttribute('sdbr-content-id', albumID);
@@ -44,10 +44,10 @@ function addSidebarContentButton(album, artist, cover) {
   }
 
 async function loadSidebarLibrary() {
-    for (const album of localSongs) {
+    for (const album of localAlbums) {
         const demosong = album.songs[0]
         const metadata = await extractSongMetadata(demosong)
-        const songObject = addSidebarContentButton(metadata.album,metadata.artist,metadata.cover)
+        const songObject = addSidebarContentButton(metadata.link,metadata.album,metadata.artist,metadata.cover)
         sidebar_dynamic.appendChild(songObject);
     }
 }

@@ -1,6 +1,24 @@
-<h1>PAGINA ARTISTAS</h1>
-<h2>PAGINA ARTISTAS</h2>
-<h3>PAGINA ARTISTAS</h3>
-<h4>PAGINA ARTISTAS</h4>
-<h5>PAGINA ARTISTAS</h5>
-<h6>PAGINA ARTISTAS</h6>
+<div id="albumPageContainer">
+    <div id="albumContent">
+        <div id="album_contentInfo">
+            <img src="images/temp_pfp.jpg" id="album_cover">
+            <div id="album_contentText">
+                <p id="album_contentType">ARTISTA</p>
+                <p id="album_contentTitle"></p>
+                <div id="album_contentExtrasContainer">
+                    <p id="album_date" class="album_contentExtra"></p>
+                    <p class="album_contentExtra"> • </p>
+                    <p id="album_songCount" class="album_contentExtra"></p>
+                </div>
+            </div>
+        </div>
+        <div id="album_playerControls">
+            <button id="album_shuffleButton" class="album_playerControlsButtons"><img src="icons/musicPlayer/shuffle.svg"></button>
+            <button id="album_playButton"><p>Reproducir</p></button>
+            <button id="album_downloadButton" class="album_playerControlsButtons"><img src="icons/buttons/download.svg"></button>
+        </div>
+    </div>
+    <div id="album_songsLists"></div>
+</div>
+
+<script src="scripts/pageLoad/artistLoad.js"></script>

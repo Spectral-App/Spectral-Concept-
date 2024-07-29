@@ -39,40 +39,6 @@ async function addDirectory() {
     }
 }
 
-
-function createMusicObject(title, subtitle, imageUrl = 'images/temp_cover.png') {
-    const contentID = encodeText(title)
-    const musicContent = document.createElement('div');
-    musicContent.className = 'musicContent';
-    musicContent.setAttribute('lbry-content-id', contentID);
-
-    musicContent.onclick = function() {
-        loadPage('album',contentID);
-    };
-
-    const musicImage = document.createElement('img');
-    musicImage.src = imageUrl;
-
-    const musicInfo = document.createElement('div');
-    musicInfo.className = 'musicContent_info';
-
-    const musicTitle = document.createElement('p');
-    musicTitle.className = 'musicContent_title';
-    musicTitle.textContent = title || 'Unknown Song';
-
-    const musicSubtitle = document.createElement('p');
-    musicSubtitle.className = 'musicContent_subtitle';
-    musicSubtitle.textContent = subtitle || 'Unknown Artist';
-
-    musicInfo.appendChild(musicTitle);
-    musicInfo.appendChild(musicSubtitle);
-
-    musicContent.appendChild(musicImage);
-    musicContent.appendChild(musicInfo);
-
-    return musicContent;
-}
-
 async function addNewSongsToLibrary() {
     const directoriesBefore = localStorage.getItem('savedMusicDirectories') || [];
     await addDirectory();
@@ -86,10 +52,10 @@ async function addNewSongsToLibrary() {
 
 async function loadMusicLibrary() {
     const musicLibrary = document.getElementById('musicLibrary');
-    for (const album of localSongs) {
+    for (const album of localAlbums) {
         const demosong = album.songs[0]
         const metadata = await extractSongMetadata(demosong)
-        const songObject = createMusicObject(metadata.album,metadata.artist,metadata.cover)
+        const songObject = createMusicObject(metadata.link,metadata.album,metadata.artist,metadata.cover)
         musicLibrary.appendChild(songObject);
     }
 }

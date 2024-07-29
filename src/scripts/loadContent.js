@@ -16,7 +16,7 @@ const mainDiv = document.getElementById("mainContainer");
  * @description refresh - Carga la pagina a pesar de que ya este cargada actualmente.
  */
 function loadPage(contentData, contentID, URLParameters = {}, functionParameters = []) {
-    const contentTypes = ['home', 'search', 'plugins', 'library', 'album', 'playlist', 'song', 'artist', 'settings', 'user', 'signup', 'login', 'developer-menu'];
+    const contentTypes = ['home', 'search', 'plugins', 'library', 'album','genre' ,'playlist', 'song', 'artist', 'settings', 'user', 'signup', 'login', 'developer-menu'];
     const contentType = contentData.toLowerCase();
     const contentParameters = new URLSearchParams(URLParameters);
     

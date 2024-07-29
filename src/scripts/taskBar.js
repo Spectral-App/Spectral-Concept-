@@ -138,6 +138,7 @@ function nextSong(isAuto = false) {
         updateQueue(songsQueue,actualSong);
       } else if (repeatState === 'none') {
         updateQueue(songsQueue,actualSong,false);
+        taskbarObjects.playbutton.src = 'icons/musicPlayer/play.svg'
         taskbarObjects.progressbar.style.width = '0%';
         taskbarObjects.song.currentTime = 0;
         taskbarObjects.totaltime.textContent = data.duration;
@@ -207,7 +208,7 @@ function toggleShuffle() {
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  return `${minutes.toString().padStart(1, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
 function calculateNewTime(clientX) {
@@ -322,7 +323,10 @@ async function restoreData() {
 
     console.log('Datos restaurados con éxito.');
   } else {
-    console.log('No hay datos guardados para restaurar.');
+    taskbarObjects.playbutton.src = 'icons/musicPlayer/play.svg'
+    taskbarObjects.progressbar.style.width = '0%';
+    taskbarObjects.song.currentTime = 0;
+    taskbarObjects.totaltime.textContent = data.duration;
   }
   await ipcRenderer.invoke('spectral-is-loaded');
 }
