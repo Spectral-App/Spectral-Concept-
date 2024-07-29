@@ -1,21 +1,23 @@
+const { ipcRenderer } = require('electron');
 const sidebar_static = document.getElementById('sidebar_static');
-const sidebar_dynamic = document.getElementById('sidebar_dynamic');
 
-const buttonTemplate = {
-    buttonlink: 'link/to/html',
-    buttonlinkid: 'content/id/OPTIONAL',
-    buttonparameters: {exampleParameter: 'yessir'},
-    title: 'button title',
-    subtitle: 'button subtitle',//an optional parameter
-    icon: 'path/to/icon',
-}
+// const buttonTemplate = {
+//     buttonlink: 'link/to/html',
+//     buttonlinkid: 'content/id/OPTIONAL',
+//     buttonparameters: {exampleParameter: 'yessir'},
+//     title: 'button title',
+//     subtitle: 'button subtitle',   an optional parameter
+//     icon: 'path/to/icon',
+// }
 
-function addSidebarContentButton(album, artist, cover) {
+function addSidebarContentButton(id,album, artist, cover) {
+    const albumID = encodeText(id);
     const button = document.createElement('button');
     button.className = 'sidebar_buttons';
+    button.setAttribute('sdbr-content-id', albumID);
   
     button.onclick = function() {
-        loadPage('album',btoa(unescape(encodeURIComponent(album))));
+        loadPage('album',albumID);
     };
   
     const img = document.createElement('img');
@@ -42,23 +44,10 @@ function addSidebarContentButton(album, artist, cover) {
   }
 
 async function loadSidebarLibrary() {
-    let savedMusicDirectories = JSON.parse(localStorage.getItem('savedMusicDirectories')) || [];
-    if (savedMusicDirectories && savedMusicDirectories.length > 0) {
-        let addedAlbums = [];
-        for (const directory of savedMusicDirectories) {
-            songsList = await ipcRenderer.invoke('searchForSongFiles', directory);
-            for (const song of songsList) {
-                const extractedSongData = await extractSongMetadata(song);
-                if (!addedAlbums.includes(extractedSongData.album)) {
-                    addedAlbums.push(extractedSongData.album);
-                    const songObject = addSidebarContentButton(extractedSongData.album, extractedSongData.artist, extractedSongData.cover);
-                    sidebar_dynamic.appendChild(songObject);
-                }
-            }
-        }
+    for (const album of localAlbums) {
+        const demosong = album.songs[0]
+        const metadata = await extractSongMetadata(demosong)
+        const songObject = addSidebarContentButton(metadata.link,metadata.album,metadata.artist,metadata.cover)
+        sidebar_dynamic.appendChild(songObject);
     }
 }
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    loadSidebarLibrary()
-});

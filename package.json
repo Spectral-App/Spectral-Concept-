@@ -15,12 +15,27 @@
   },
   "build": {
     "appId": "com.spectral.spectralapp",
-    "directories": "build",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "build/**/*",
+      "src/**/*",
+      "package.json",
+      "node_modules/**/*"
+    ],
     "win": {
       "target": [
         "nsis"
       ],
       "icon": "icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "icon.png"
     },
     "nsis": {
       "installerIcon": "icon.ico",
@@ -40,17 +55,20 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "29.3.0"
+    "electron": "^31.3.0"
   },
   "keywords": [],
   "author": {
     "name": "NaviVani",
     "email": "navivani.contact@gmail.com"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "dependencies": {
+    "chokidar": "^3.6.0",
     "electron-builder": "^24.13.3",
     "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.7.1"
+    "electron-traywindow-positioner": "^1.2.0",
+    "jquery": "^3.7.1",
+    "update-electron-app": "^3.0.0"
   }
 }

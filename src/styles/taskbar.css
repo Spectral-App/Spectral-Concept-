@@ -39,17 +39,11 @@
     padding: 0;
     margin: 5px 10px;
     border-radius: 5px;
-    cursor: pointer;
     width: 70px;
     height: 70px;
     flex-shrink: 0;
     background-color: transparent;
     border: none;
-}
-
-#taskbar_songCover:hover {
-    opacity: 0.5;
-    border-radius: 5px;
 }
 
 #taskbar_songCover img {
@@ -73,11 +67,6 @@
     box-sizing: border-box;
     position: relative;
     text-overflow: hidden;
-}
-
-#taskbar_songTitle:hover, #taskbar_songArtist:hover {
-    cursor: pointer;
-    text-decoration: underline;
 }
 
 #taskbar_songTitle {

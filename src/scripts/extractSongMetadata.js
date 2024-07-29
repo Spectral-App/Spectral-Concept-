@@ -1,6 +1,6 @@
 async function extractSongMetadata(songRoute) {
     const songData = {
-        link: '',
+        link: songRoute,
         title: '',
         artist: 'Artista desconocido',
         album: '',
@@ -14,13 +14,15 @@ async function extractSongMetadata(songRoute) {
     };
 
     try {
-        songData.link = songRoute;
+        const isLocalFile = !songRoute.startsWith('http');
+        const fileUrl = isLocalFile ? `file:///${songRoute.replace(/\\/g, '/')}` : songRoute;
 
-        const response = await fetch(songRoute);
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+
         const arrayBuffer = await response.arrayBuffer();
 
-        const url = new URL(songRoute);
-        const pathname = decodeURIComponent(url.pathname);
+        const pathname = decodeURIComponent(new URL(fileUrl).pathname);
         const fileName = pathname.split('/').pop().replace(/\.[^/.]+$/, "");
         const folderName = decodeURIComponent(pathname.split('/').slice(-2, -1)[0]);
 
@@ -50,6 +52,31 @@ async function extractSongMetadata(songRoute) {
         
         songData.date = tags.TDRC ? tags.TDRC.data : new Date().toISOString().split('T')[0];
 
+        const audio = new Audio(fileUrl);
+        await new Promise((resolve) => {
+            audio.addEventListener('loadedmetadata', () => {
+                const duration = audio.duration;
+                const minutes = Math.floor(duration / 60);
+                const seconds = Math.floor(duration % 60).toString().padStart(2, '0');
+                songData.duration = `${minutes}:${seconds}`;
+                resolve();
+            });
+            audio.addEventListener('error', () => {
+                songData.duration = '--:--';
+                resolve();
+            });
+        });
+
+        songData.copyright = tags.TCOP ? tags.TCOP.data : null;
+        songData.lyrics = tags.lyrics || null;
+
+    } catch (error) {
+        const pathname = decodeURIComponent(new URL(songRoute).pathname);
+        const fileName = pathname.split('/').pop().replace(/\.[^/.]+$/, "");
+        const folderName = decodeURIComponent(pathname.split('/').slice(-2, -1)[0]);
+        songData.title = fileName;
+        songData.album = folderName
+        songData.date = new Date().toISOString().split('T')[0];
         const audio = new Audio(songRoute);
         await new Promise((resolve) => {
             audio.addEventListener('loadedmetadata', () => {
@@ -60,16 +87,10 @@ async function extractSongMetadata(songRoute) {
                 resolve();
             });
             audio.addEventListener('error', () => {
-                songData.duration = null;
+                songData.duration = '--:--';
                 resolve();
             });
         });
-
-        songData.copyright = tags.TCOP ? tags.TCOP.data : null;
-        songData.lyrics = tags.lyrics || null;
-
-    } catch (error) {
-        console.error('Error al procesar los metadatos:', error);
     }
 
     return songData;

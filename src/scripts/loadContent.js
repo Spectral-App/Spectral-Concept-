@@ -16,7 +16,7 @@ const mainDiv = document.getElementById("mainContainer");
  * @description refresh - Carga la pagina a pesar de que ya este cargada actualmente.
  */
 function loadPage(contentData, contentID, URLParameters = {}, functionParameters = []) {
-    const contentTypes = ['home', 'search', 'plugins', 'library', 'album', 'playlist', 'song', 'artist', 'settings', 'user', 'signup', 'login', 'developer-menu'];
+    const contentTypes = ['home', 'search', 'plugins', 'library', 'album','genre' ,'playlist', 'song', 'artist', 'settings', 'user', 'signup', 'login', 'developer-menu'];
     const contentType = contentData.toLowerCase();
     const contentParameters = new URLSearchParams(URLParameters);
     
@@ -76,7 +76,7 @@ function loadPage(contentData, contentID, URLParameters = {}, functionParameters
 function checkURL() {
     const actualURL = window.location.href;
 
-    if (actualURL.includes('app')) {
+    if (actualURL.includes('#app/')) {
         const croppedURL = actualURL.split('app/')[1];
 
         const [contentData, remainingURL] = croppedURL.split('/');
@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         loadPage(urlData.contentData, urlData.contentID, urlData.parameters, ['refresh']);
     }
 
-    // Avoid seeing some objects that have not yet loaded
     document.querySelector('.appcontainer').style.opacity = '1';
 });
+
+

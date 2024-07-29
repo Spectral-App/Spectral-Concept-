@@ -1,53 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu de Buscar</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        .search-container {
-            text-align: center;
-        }
-
-        .search-header {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-input {
-            width: 300px;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 25px;
-        }
-    </style>
-</head>
-<body>
-    <div class="search-container">
-        <div class="search-header">MENU DE BUSCAR</div>
-        <div class="search-box">
-            <input type="text" class="search-input" placeholder="Buscar...">
-        </div>
+<script>ipcRenderer.removeAllListeners('search-content');</script>
+<div id="searchBarContainer">
+    <img id="searchIcon" src="icons/buttons/search.svg">
+    <input type="text" id="searchBar" placeholder="Escribe algo para buscar..." spellcheck="false"
+        oninput="toggleClearIcon()">
+    <img id="clearIcon" src="icons/buttons/close.svg" onclick="clearSearch()" style="display: none;">
+</div>
+<div id="searchResults">
+    <div id="searchHint">
+        <img src="icons/logo.svg">
+        <p>Busca en todo tu contenido</p>
     </div>
-</body>
-</html>
-
+</div>
 <script src="scripts/pageLoad/searchLoad.js"></script>
+<script src="scripts/search/localSearch.js"></script>

@@ -109,6 +109,10 @@ p {
     padding: 0;
 }
 
+img {
+    -webkit-user-drag: none;
+}
+
 /*POPUP*/
 #notificationPopup{
     z-index: 10;
@@ -145,7 +149,7 @@ p {
 /* Caja de texto */
 .normal-textbox {
     position: relative;
-    margin: 10px 0; /* Reduce el espacio vertical entre las cajas de texto */
+    margin: 10px 0;
 }
 
 .normal-textbox input,
@@ -304,25 +308,22 @@ p {
 #musicLibrary {
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    overflow-x: hidden;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     justify-items: center;
+    overflow-x: hidden;
 }
 
 .musicContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 120px;
+    justify-content: center;
+    width: 150px;
     border-radius: 10px;
     padding: 10px;
-    gap: 5px;
-    text-overflow: ellipsis;
-    transition: opacity 0.3s ease;
-    margin: 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
 }
-
 
 .musicContent:hover {
     background-color: var(--highlight-elevated);
@@ -333,26 +334,32 @@ p {
 }
 
 .musicContent img {
-    width: 100px;
-    height: 100px;
+    width: auto;
+    height: auto;
+    max-width: 125px;
+    max-height: 125px;
+    min-width: 110px;
+    min-height: 110px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .musicContent_info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
-    white-space: nowrap; 
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .musicContent_title {
     font-family: "bold", sans-serif;
     font-size: 0.8em;
     color: var(--text);
-    width: 100%;
     text-align: center;
-    white-space: nowrap;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -361,12 +368,12 @@ p {
     font-family: "book", sans-serif;
     font-size: 0.7em;
     color: var(--subtext);
-    width: 100%;
     text-align: center;
-    white-space: nowrap;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 #albumPageContainer {
     display: flex;
@@ -533,6 +540,9 @@ p {
 
 .album_songEntryNumber_play {
     background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     position: absolute;
     opacity: 0;
@@ -568,6 +578,7 @@ p {
     width: 41.5%;
     display: flex;
     align-items: center;
+    margin-right: 5px;
 }
 
 .album_songEntryTitle p {
@@ -584,6 +595,7 @@ p {
     width: 41.5%;
     display: flex;
     align-items: center;
+    margin-right: 5px;
 }
 
 .album_songEntryArtist p {
@@ -612,7 +624,112 @@ p {
     text-overflow: ellipsis;
 }
 
-/*UNUSED*/
+#searchBarContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--highlight-elevated);
+    border-radius: 50px;
+    border: 2px solid #ffffff00;
+    transition: all 0.1s ease;
+}
+
+#searchBarContainer:hover {
+    border: 2px solid #ffffff50;
+}
+
+#searchIcon, #clearIcon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.35;
+    transition: all 0.1s ease;
+}
+
+#searchIcon {
+    margin-left: 10px;
+}
+
+#clearIcon {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#clearIcon:hover {
+    opacity: 1;
+}
+
+#searchBar {
+    font-family: "book", sans-serif;
+    font-size: 15px;
+    color: var(--subtext);
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.1s ease;
+    padding-left: 10px;
+}
+
+#searchBar:focus {
+    outline: none;
+}
+
+#searchBarContainer:has(#searchBar:focus) {
+    background-color: var(--background);
+    border: 2px solid white;
+}
+
+#searchResults {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#searchHint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 15%;
+}
+
+#searchHint img {
+    width: 150px;
+    height: auto;
+    opacity: 0.15;
+}
+
+#searchHint p {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    opacity: 0.25;
+}
+
+.searchResults_content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.searchResults_contentTitle {
+    font-family: "bold", sans-serif;
+    font-size: 20px;
+    color: var(--text);
+}
+
+.searchResults_objects {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+/*UNUSED-DELETE AFTER TESTING*/
 .itemsContainer {
     background: transparent;
     display: flex;
