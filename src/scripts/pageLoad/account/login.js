@@ -1,4 +1,4 @@
-function Registro() {
+function Login() {
     const loginForm = document.querySelector('#loginForm')
 loginForm.addEventListener('submit', (e)=>{
     e.preventDefault()
@@ -16,4 +16,4 @@ loginForm.addEventListener('submit', (e)=>{
 })
 }
 
-Registro()
+Login()
