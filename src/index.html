@@ -148,6 +148,39 @@
         </div>       
     </div>
 
+    <div id="accountPopup">
+        <div id="accountPopup_container">
+            <img id="account_deco1" src="images/account_deco1.png">
+            <img id="account_deco2" src="images/account_deco2.png">
+            <div id="loginContainer">
+                <div id="loginContainer_logo">
+                    <img src="icons/logo.svg">
+                    <p>SPECTRAL</p>
+                </div>
+                <p id="loginContainer_title">Iniciar sesión</p>
+                <div class="normal-textbox" id="loginContainer_username" style="display:none">
+                    <input type="email" placeholder="Escribe tu nombre de usuario..." style="width: 325px;margin:-15px 0 -15px 0">
+                    <label style="margin-top: -7px;">Nombre de usuario</label>
+                </div>
+                <div class="normal-textbox" id="loginContainer_email">
+                    <input type="email" placeholder="Escribe tu correo..." style="width: 325px;margin:-15px 0 -15px 0">
+                    <label style="margin-top: -7px;">Correo electronico</label>
+                </div>
+                <div class="normal-textbox" id="loginContainer_password">
+                    <input type="password" placeholder="Escribe tu contraseña..." style="width: 325px;margin:-15px 0 -15px 0">
+                    <label style="margin-top: -7px;">Contraseña</label>
+                </div>
+                <button id="loginContainer_button" class="rounded-button">Iniciar sesión</button>
+                <div id="loginContainer_options">
+                    <p id="loginContainer_text1"">Registrarse</p>
+                    <p id="loginContainer_text2">•</p>
+                    <p id="loginContainer_text3"">Olvide mi contraseña</p>
+                </div>
+            </div>
+        </div>
+        <p id="accountPopup_tip" onclick="togglePopup()">-- Haz click aqui para seguir como invitado --</p>
+    </div>
+
     <div id="notificationPopup">
         <p>Test</p>
     </div>
@@ -160,6 +193,7 @@
     <script src="scripts/sideBar.js"></script>
     <script src="scripts/taskBar.js"></script>
     <script src="scripts/mainToolbar.js"></script>
+    <script src="scripts/accountPopup.js"></script>
     <script src="scripts/notificationPopup.js"></script>
     <script src="scripts/generateMusicObjets.js"></script>
     <script src="scripts/extractSongMetadata.js"></script>

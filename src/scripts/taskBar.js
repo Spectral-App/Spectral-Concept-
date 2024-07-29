@@ -268,6 +268,12 @@ window.addEventListener('beforeunload', (event) => {
 async function restoreData() {
   const playerdata = JSON.parse(localStorage.getItem('taskbarData'));
   const playingsongpos = localStorage.getItem('songData');
+
+  const defaultVolume = 1;
+  const defaultShuffleState = false;
+  const defaultRepeatState = 'none';
+  const defaultSongCover = 'path/to/default/cover/image';
+
   if (playerdata && playerdata.songsQueue.length > 0 && playingsongpos) {
     songsQueue = playerdata.songsQueue;
     actualSong = playerdata.actualSong;
@@ -275,61 +281,69 @@ async function restoreData() {
     repeatState = playerdata.repeatState;
     newVolume = playerdata.newVolume;
 
-    //RELOADS EVERY SONG METADATA - made just for the cover art being missing every restart
+    // RELOADS EVERY SONG METADATA
     for (const song of songsQueue) {
       let songLink = song.link;
       let songCover = await extractSongMetadata(songLink);
-      song.cover = songCover.cover
+      song.cover = songCover.cover || defaultSongCover;
     }
 
-    //load every song that the user had loaded before exiting
-    //also loads the last played song
     updateQueue(songsQueue, actualSong, false);
 
-    //gets the last known position of the song
     taskbarObjects.song.currentTime = playingsongpos;
-    taskbarObjects.actualtime.textContent = formatTime(taskbarObjects.song.currentTime)
-    taskbarObjects.progressbar.style.width = ((taskbarObjects.song.currentTime / taskbarObjects.song.duration) * 100) + '%'
+    taskbarObjects.actualtime.textContent = formatTime(taskbarObjects.song.currentTime);
+    taskbarObjects.progressbar.style.width = ((taskbarObjects.song.currentTime / taskbarObjects.song.duration) * 100) + '%';
 
-    //same shit but updates the volume bar
-    taskbarObjects.song.volume = newVolume;
-    taskbarObjects.volumebar.style.width = newVolume * 100 + '%';
+    taskbarObjects.song.volume = newVolume || defaultVolume;
+    taskbarObjects.volumebar.style.width = (taskbarObjects.song.volume * 100) + '%';
 
     if (taskbarObjects.song.volume === 0) {
-      taskbarObjects.mutebutton.src = 'icons/musicPlayer/no_sound.svg'
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/no_sound.svg';
     } else if (taskbarObjects.song.volume < 0.5) {
-      taskbarObjects.mutebutton.src = 'icons/musicPlayer/low_sound.svg'
-    } else if (taskbarObjects.song.volume >= 0.5) {
-      taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg'
-    } else { // in case of error
-      taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg'
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/low_sound.svg';
+    } else {
+      taskbarObjects.mutebutton.src = 'icons/musicPlayer/full_sound.svg';
     }
 
-    //adjusts the icons depending of the current state of the shuffle
-    if (!shuffleState) {
-      taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle.svg';
-    } else if (shuffleState) {
-      taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle_on.svg';
-    }
+    taskbarObjects.shufflebutton.src = shuffleState ? 'icons/musicPlayer/shuffle_on.svg' : 'icons/musicPlayer/shuffle.svg';
 
-    //same shit but for the repeat button
-    if (repeatState === 'none') {
-      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat.svg';
-    } else if (repeatState === 'all') {
-      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_on.svg';
-    } else if (repeatState === 'once') {
-      taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_once.svg';
+    switch (repeatState) {
+      case 'none':
+        taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat.svg';
+        break;
+      case 'all':
+        taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_on.svg';
+        break;
+      case 'once':
+        taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat_once.svg';
+        break;
     }
 
     console.log('Datos restaurados con éxito.');
   } else {
-    taskbarObjects.playbutton.src = 'icons/musicPlayer/play.svg'
+    songsQueue = [];
+    actualSong = null;
+    shuffleState = defaultShuffleState;
+    repeatState = defaultRepeatState;
+    newVolume = defaultVolume;
+
+    taskbarObjects.playbutton.src = 'icons/musicPlayer/play.svg';
     taskbarObjects.progressbar.style.width = '0%';
     taskbarObjects.song.currentTime = 0;
-    taskbarObjects.totaltime.textContent = data.duration;
+    taskbarObjects.totaltime.textContent = '0:00';
+
+    taskbarObjects.song.volume = newVolume;
+    taskbarObjects.volumebar.style.width = (newVolume * 100) + '%';
+    taskbarObjects.mutebutton.src = newVolume === 0 ? 'icons/musicPlayer/no_sound.svg' : (newVolume < 0.5 ? 'icons/musicPlayer/low_sound.svg' : 'icons/musicPlayer/full_sound.svg');
+    taskbarObjects.shufflebutton.src = 'icons/musicPlayer/shuffle.svg';
+    taskbarObjects.repeatbutton.src = 'icons/musicPlayer/repeat.svg';
+
+    console.log('No hay datos guardados. Se cargaron los parámetros predeterminados.');
   }
+
   await ipcRenderer.invoke('spectral-is-loaded');
 }
+
 
 taskbarObjects.volumebar_container.addEventListener('mousedown', (e) => {
   isVolumeDragging = true;

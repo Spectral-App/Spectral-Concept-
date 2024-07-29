@@ -3,8 +3,8 @@
     min-height: 36px;
     height: 36px;
     width: calc(100% - 2px);
-    background: var(--main);
     margin-bottom: -1%;
+    z-index: 100;
 }
 
 .titlebarDraggable {

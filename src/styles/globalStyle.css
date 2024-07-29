@@ -13,7 +13,7 @@
     --shadow: #252525;
     --selected-row: #CECECE;
     /*colores alternativos para los botones*/
-    --button: #3281EA;
+    --button: #0097fc;
     --button-active: #0284E8;
     --button-disabled: #303030;
     /*scrollbar*/
@@ -21,7 +21,7 @@
     --scrollbar-hover: #FFFFFF50;
     --scrollbar-highligth: #FFFFFF75;
     /*colores extra*/
-    --notification: #3281EA;
+    --notification: #0097fc;
     --notification-error: #F05454;
     --notification-warning: #FFD369;
     --notification-success: #BEF992;
@@ -727,6 +727,144 @@ img {
     flex-direction: row;
     gap: 10px;
     overflow-y: auto;
+}
+
+#accountPopup {
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+#accountPopup_tip {
+    font-family: "bold", sans-serif;
+    font-size: 12px;
+    color: var(--subtext);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+#accountPopup_tip:hover {
+    text-decoration: underline;
+}
+
+#accountPopup_container {
+    width: 400px;
+    min-width: 400px;
+    height: 550px;
+    border-radius: 10px;
+    background-color: var(--main-elevated);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#account_deco1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 275px;
+    height: 100px;
+}
+
+#account_deco2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 275px;
+    height: 100px;
+}
+
+#loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#loginContainer_logo {
+    display: flex;
+    flex-direction:row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#loginContainer_logo img {
+    width: 50px;
+    height: 50px;
+    cursor: help;
+    transition: transform 0.8s ease;
+}
+
+#loginContainer_logo img:active {
+    animation: easteregg 0.5s ease-in;
+}
+
+@keyframes easteregg { /*wink wink*/
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.2);
+    }
+    70% {
+      transform: rotate(360deg) scale(0.9);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+}
+
+#loginContainer_logo p {
+    font-family: "black", sans-serif;
+    font-size: 40px;
+    color: var(--text);
+}
+
+#loginContainer_title {
+    font-family: "bold", sans-serif;
+    font-size: 20px;
+    color: var(--text);
+}
+
+#loginContainer_options {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+#loginContainer_text1,
+#loginContainer_text2,
+#loginContainer_text3 {
+    font-family: "bold", sans-serif;
+    font-size: 13px;
+    color: var(--text);
+}
+
+#loginContainer_text1,
+#loginContainer_text3 {
+    cursor: pointer;
+    color: var(--button);
+}
+
+#loginContainer_text1:hover,
+#loginContainer_text3:hover {
+    text-decoration: underline;
 }
 
 /*UNUSED-DELETE AFTER TESTING*/

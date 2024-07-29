@@ -3,5 +3,8 @@
 		{
 			"path": "."
 		},
+		{
+			"path": "../../../../laragon/www/Spectral"
+		}
 	]
 }
