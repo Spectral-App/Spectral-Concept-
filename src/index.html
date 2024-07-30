@@ -84,7 +84,7 @@
                         <button id="settingsButton" onclick="loadPage('settings')">
                             <img src="icons/buttons/settings.svg">
                         </button>
-                        <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="loadPage('user')">
+                        <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="accountButton()">
                             <img src="images/temp_pfp.jpg">
                         </button>
                     </div>
@@ -148,7 +148,7 @@
         </div>       
     </div>
 
-    <div id="accountPopup">
+    <div id="accountPopup" style="opacity: 0;pointer-events: none;">
         <div id="accountPopup_container">
             <img id="account_deco1" src="images/account_deco1.png">
             <img id="account_deco2" src="images/account_deco2.png">
@@ -197,6 +197,7 @@
     <script src="scripts/notificationPopup.js"></script>
     <script src="scripts/generateMusicObjets.js"></script>
     <script src="scripts/extractSongMetadata.js"></script>
+    <script src="scripts/loadPlugins.js"></script>
     <script src="scripts/library/foldersContentHandler.js"></script>
     <script src="scripts/loadContent.js"></script>   
     <script>if (window.module) module = window.module;</script>

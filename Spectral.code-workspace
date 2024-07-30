@@ -6,5 +6,8 @@
 		{
 			"path": "../../../../laragon/www/Spectral"
 		}
-	]
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Spectral_Electron_Beta"
+	}
 }

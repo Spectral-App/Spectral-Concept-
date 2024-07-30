@@ -80,7 +80,7 @@ ipcRenderer.on('library-file-deleted', async (event, file_path) => {
             localAlbums[albumIndex].songs.splice(songIndex, 1);
 
             if (localAlbums[albumIndex].songs.length === 0) {
-                let albumID = encodeText(localAlbums[albumIndex].album);
+                let albumID = encodeText(localAlbums[albumIndex].link);
                 const sdbr_entry = document.querySelector(`button[sdbr-content-id="${albumID}"]`);
                 if (sdbr_entry) { sdbr_entry.remove(); }
                 const lbry_entry = document.querySelector(`div[lbry-content-id="${albumID}"]`);

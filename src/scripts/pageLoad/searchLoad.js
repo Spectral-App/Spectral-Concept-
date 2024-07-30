@@ -22,6 +22,7 @@ function clearSearch() {
     searchBar.focus();
 }
 
+//checar el cuadro de texto
 searchBar.addEventListener('keyup', () => {
     var searchBar = document.getElementById('searchBar');
     clearTimeout(window.typingTimer);
