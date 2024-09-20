@@ -867,54 +867,67 @@ img {
     text-decoration: underline;
 }
 
-/*UNUSED-DELETE AFTER TESTING*/
-.itemsContainer {
-    background: transparent;
+#pluginsMarket {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.pluginEntry {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    white-space: nowrap;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-.itemButton {
-    display: inline-block;
-    text-align: center;
-    border-radius: 15px;
-    width: 150px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
+.pluginEntry:hover {
+    background-color: var(--main-elevated-hover);
 }
 
-.itemButton:hover {
-    background-color: #373737;
-    transition-duration: 0.2s;
+.pluginEntry_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
-.itemButton:active {
-    background-color: #010101;
+.pluginEntry_info img {
+    width: 130px;
+    height: 130px;
+    border-radius: 10px;
 }
 
-.itemButton img {
-    width: 125px;
-    height: 125px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin: 10px 10px;
+.pluginEntry_title {
+    font-family: "bold", sans-serif;
+    font-size: 20px;
+    color: var(--text);
 }
 
-.itemButton p {
+.pluginEntry_description {
+    font-family: "book", sans-serif;
     font-size: 15px;
-    margin: 0 20px;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    color: var(--subtext);
 }
 
-.itemButton span {
-    font-size: 12px;
-    opacity: 50%;
-    margin: 5px 0 10px 0;
+.pluginEntry_buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.pluginEntry_button {
+    font-family: "bold", sans-serif;
+    font-size: 15px;
+    color: var(--background);
+    background-color: var(--text);
+    border: none;
+    border-radius: 50px;
+    padding: 15px;
+    cursor: pointer;
 }

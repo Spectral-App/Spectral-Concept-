@@ -41,6 +41,9 @@ const createSplashScreen = () => {
 
   splashWindow.once('ready-to-show', () => {
     splashWindow.show();
+    setTimeout(() => {
+      createMainWindow();
+    }, SPLASH_SCREEN_DELAY);
   });
 
   splashWindow.on('closed', () => {
@@ -84,54 +87,16 @@ const createMainWindow = () => {
   mainWindow.on('hide', () => {
     mainWindow.setOpacity(0);
   });
-};
 
-const createTrayProcess = () => {
-  trayProcess = new BrowserWindow({
-    minWidth: 150,
-    minHeight: 105,
-    width: 150,
-    height: 105,
-    frame: false,
-    show: false,
-    transparent: true,
-    skipTaskbar: true,
-    focusable: true,
-    resizable: false,
-    webPreferences: {
-      preload: path.join(__dirname, 'scripts/tray.js'),
-      nodeIntegration: true,
-      contextIsolation: false,
-    }
-  });
-
-  trayProcess.on('blur', () => {
-    trayProcess.hide();
-  });
-
-  trayProcess.loadFile(path.join(__dirname, 'tray.html'));
-
-  trayProcess.on('closed', () => {
-    trayProcess = null;
-  });
-
-  trayProcess.on('show', () => {
-    setTimeout(() => {
-      trayProcess.setOpacity(1);
-    }, 50);
-  });
-
-  trayProcess.on('hide', () => {
-    trayProcess.setOpacity(0);
+  mainWindow.once('ready-to-show', () => {
+    splashWindow.close();
+    mainWindow.show();
   });
 };
 
 app.whenReady().then(() => {
   createSplashScreen();
-  setTimeout(() => {
-    createMainWindow();
-    createTrayProcess();
-  }, SPLASH_SCREEN_DELAY);
+  createTrayProcess();
 });
 
 function showTrayMenu() {
@@ -141,7 +106,6 @@ function showTrayMenu() {
     } else {
       trayProcess.show();
       positioner.position(trayProcess, tray.getBounds());
-      //here
     }
   } else {
     createTrayProcess();
@@ -194,7 +158,6 @@ app.on('activate', () => {
   }
 });
 
-// for the custom titlebar buttons
 ipcMain.on('minimize-window', () => {
   mainWindow.minimize();
 });

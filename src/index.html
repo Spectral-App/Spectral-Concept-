@@ -43,14 +43,14 @@
                             <span class="sidebar_buttons_title">Inicio</span>
                         </div>
                     </button>
-            
+
                     <button class="sidebar_buttons" onclick="loadPage('search')">
                         <img src="icons/buttons/search.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
                             <span class="sidebar_buttons_title">Buscar</span>
                         </div>
                     </button>
-            
+
                     <button class="sidebar_buttons" onclick="loadPage('plugins')">
                         <img src="icons/buttons/plugin.svg" class="sidebar_buttons_svg">
                         <div class="sidebar_buttons_text">
@@ -79,10 +79,10 @@
                         </button>
 
                     </div>
-                
+
                     <div class="main_toolbar_buttons_container">
-                        <button id="settingsButton" onclick="loadPage('settings')">
-                            <img src="icons/buttons/settings.svg">
+                        <button id="settingsButton" onclick="logoutButton(0)" ondblclick="logoutButton(1)">
+                            <img src="icons/buttons/logout.svg">
                         </button>
                         <button id="profileButton" class="main_toolbar_profile_picture_button" onclick="accountButton()">
                             <img src="images/temp_pfp.jpg">
@@ -145,7 +145,7 @@
                     <img src="icons/musicPlayer/fullscreen.svg">
                 </button>
             </div>
-        </div>       
+        </div>
     </div>
 
     <div id="accountPopup" style="opacity: 0;pointer-events: none;">
@@ -199,7 +199,7 @@
     <script src="scripts/extractSongMetadata.js"></script>
     <script src="scripts/loadPlugins.js"></script>
     <script src="scripts/library/foldersContentHandler.js"></script>
-    <script src="scripts/loadContent.js"></script>   
+    <script src="scripts/loadContent.js"></script>
     <script>if (window.module) module = window.module;</script>
 </body>
 </html>
